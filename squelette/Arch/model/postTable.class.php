@@ -13,7 +13,7 @@ class postTable
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.post where id='".$id."'" ;
     $res = $connection->doQueryObject( $sql, "post" );
-    return ($res==true)?res:NULL;
+    return ($res==false)?false:$res;
   }
 
 }
