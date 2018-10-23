@@ -5,7 +5,7 @@ class message extends basemodel
 
   public function getPost($id)
   {
-    return (isset($id) && this->id==$id)?postTable::getPostById($id):false;
+    return (isset($id) && $this->id==$id)?postTable::getPostById($id):false;
   }
 
   public function getParent()
@@ -15,18 +15,17 @@ class message extends basemodel
 
   public function getLikes()
   {
-    return $this->like;
+    return $this->aime;
   }
 
   public function getEmetteur()
   {
-    return $this->emet;
+    return $this->emetteur;
   }
 
   public function getDestinataire()
   {
-    return $this->dest;
+    return $this->destinataire;
   }
-
 
 }

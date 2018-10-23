@@ -12,7 +12,7 @@ class messageTable
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.message";
     $res = $connection->doQueryObject( $sql, "messageTable"  );
-    return (is_array($res))?res:false;
+    return (is_array($res))?$res:false;
   }
 
   /**
