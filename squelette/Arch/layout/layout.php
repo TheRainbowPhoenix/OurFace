@@ -15,7 +15,13 @@
     <meta name="keywords" content="arch,php">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:200,300,400,500,700" type="text/css">
     <link rel="stylesheet" href="css/styles.css" type="text/css">
-
+    <link rel="icon" type="image/png" sizes="192x192"  href="images/favicon/arch-192.png">
+    <link rel="icon" type="image/png" sizes="24x24" href="images/favicon/arch.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/arch-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/arch-32.png">
+    <meta name="msapplication-TileColor" content="#bd9cd7">
+  <meta name="msapplication-TileImage" content="images/favicon/arch-144.png">
+  <meta name="theme-color" content="#bd9cd7">
   </head>
 
   <body>
