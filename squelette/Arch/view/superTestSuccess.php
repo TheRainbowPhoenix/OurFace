@@ -32,8 +32,7 @@ if (isset($_SESSION['logged'])  && $_SESSION['logged']===true ) {
             echo $context->error;
           } else {
             $ret = $context->db->doQuery("select * from fredouil.utilisateur where identifiant='1' OR 1=1 --");
-            echo json_encode($ret);
-
+            //echo json_encode($ret);
           }
            ?>
         </span>

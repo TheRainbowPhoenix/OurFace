@@ -3,6 +3,31 @@
 abstract class basemodel
 {
 
+  private $data = array();
+
+  public function __construct($tableau)
+  {
+    if(isset($tableau) && !is_null($tableau) && is_array($tableau)) {
+      foreach ($tableau as $key => $value) {
+        $this->__set($value, $key);
+      }
+    }
+  }
+
+  public function __set($key, $value)
+  {
+    $this->data[$key] = $value;
+  }
+
+  public function __get($key)
+  {
+    if (array_key_exists($key, $this->data)) {
+      return $this->data[$key];
+    }
+    return NULL;
+  }
+
+
  public function save()
   {
     $connection = new dbconnection() ;
@@ -29,7 +54,7 @@ abstract class basemodel
     $connection->doExec($sql) ;
     $id = $connection->getLastInsertId("fredouil.".get_class($this)) ;
 
-    return $id == false ? NULL : $id ; 
+    return $id == false ? NULL : $id ;
   }
 
 }

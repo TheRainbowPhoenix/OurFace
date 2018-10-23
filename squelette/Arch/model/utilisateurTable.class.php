@@ -28,9 +28,36 @@ class utilisateurTable
 
   public static function getUserById($id)
   {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.utilisateur where id='".$id."'" ;
+    $res = $connection->doQuery( $sql );
+    return ($res==true)?res:NULL;
   }
 
   public static function getUsers()
   {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.utilisateur" ;
+    $res = $connection->doQuery( $sql );
+    if($res === FALSE || is_null($res)) return $res;
+    foreach ($res as $user) {
+      $users[] = new utilisateur($user);
+    }
+    return $users;
+  }
+
+  public static function getUsersCount($cnt)
+  {
+    if (!is_numeric($cnt)) {
+      return NULL;
+    }
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.utilisateur LIMIT "+$cnt+"" ;
+    $res = $connection->doQuery( $sql );
+    if($res === FALSE || is_null($res)) return $res;
+    foreach ($res as $user) {
+      $users[] = new utilisateur($user);
+    }
+    return $users;
   }
 }
