@@ -23,9 +23,9 @@ class messageTable
   public function getMessagesSentTo($id)
   {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.message where id='".$id."'" ;
+    $sql = "select * from fredouil.message where destinataire='".$id."' order by id limit 10" ;
     $res = $connection->doQueryObject( $sql, "message" );
-    return ($res===false)?false:$res;
+    return $res;
   }
 
 }

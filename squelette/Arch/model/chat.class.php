@@ -11,6 +11,10 @@ class chat extends basemodel {
     return (isset($id) && $this->id==$id)?postTable::getPostById($id):false;
   }
 
+/**
+ * get Emetteur
+ * @return int emetteur
+ */
   public function getEmetteur()
   {
     return $this->emetteur;

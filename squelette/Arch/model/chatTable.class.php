@@ -2,6 +2,10 @@
 
 class chatTable
 {
+  /**
+   * get Chats
+   * @return chatTable NYAAAH
+   */
   public function getChats()
   {
     $connection = new dbconnection() ;
@@ -10,6 +14,10 @@ class chatTable
     return ($res==false)?$res:false;
   }
 
+  /**
+   * get Last Chat
+   * @return int last chat
+   */
   public function getLastChat()
   {
     $connection = new dbconnection() ;
