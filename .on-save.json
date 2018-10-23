@@ -1,0 +1,9 @@
+[
+  {
+    "srcDir": "squelette",
+    "destDir": "squelette",
+    "files": "**/*.*",
+    "showOutput": true,
+    "command": "bash perm.sh"
+  }
+]
