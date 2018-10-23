@@ -31,7 +31,7 @@ class utilisateurTable
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.utilisateur where id='".$id."'" ;
     $res = $connection->doQuery( $sql );
-    return ($res==true)?res:NULL;
+    return ($res===false)?false:$res;
   }
 
   public static function getUsers()
@@ -39,7 +39,7 @@ class utilisateurTable
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.utilisateur" ;
     $res = $connection->doQuery( $sql );
-    if($res === FALSE || is_null($res)) return $res;
+    if($res === FALSE || is_null($res)) return false;
     foreach ($res as $user) {
       $users[] = new utilisateur($user);
     }
@@ -49,10 +49,10 @@ class utilisateurTable
   public static function getUsersCount($cnt)
   {
     if (!is_numeric($cnt)) {
-      return NULL;
+      return false;
     }
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.utilisateur LIMIT "+$cnt+"" ;
+    $sql = "select * from fredouil.utilisateur LIMIT ".$cnt."" ;
     $res = $connection->doQuery( $sql );
     if($res === FALSE || is_null($res)) return $res;
     foreach ($res as $user) {
