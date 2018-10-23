@@ -1,13 +1,18 @@
 <?php
 
-class postTable extends basemodel
+class postTable
 {
 
+/**
+ * get Post By Id
+ * @param  id $id id
+ * @return post     post
+ */
   public function getPostById($id)
   {
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.post where id='".$id."'" ;
-    $res = $connection->doQuery( $sql );
+    $res = $connection->doQueryObject( $sql, "post" );
     return ($res==true)?res:NULL;
   }
 

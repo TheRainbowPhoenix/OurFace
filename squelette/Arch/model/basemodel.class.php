@@ -5,20 +5,30 @@ abstract class basemodel
 
   private $data = array();
 
-  public function __construct($tableau)
+  public function __construct($row=NULL)
   {
-    if(isset($tableau) && !is_null($tableau) && is_array($tableau)) {
-      foreach ($tableau as $key => $value) {
+    if(isset($row) && is_array($row)) {
+      foreach ($row as $key => $value) {
         $this->__set($value, $key);
       }
     }
   }
 
+/**
+ * [__set description]
+ * @param [type] $key   [description]
+ * @param [type] $value [description]
+ */
   public function __set($key, $value)
   {
     $this->data[$key] = $value;
   }
 
+/**
+ * [__get description]
+ * @param  [type] $key [description]
+ * @return [type]      [description]
+ */
   public function __get($key)
   {
     if (array_key_exists($key, $this->data)) {
@@ -27,7 +37,10 @@ abstract class basemodel
     return NULL;
   }
 
-
+/**
+ * [save description]
+ * @return [type] [description]
+ */
  public function save()
   {
     $connection = new dbconnection() ;

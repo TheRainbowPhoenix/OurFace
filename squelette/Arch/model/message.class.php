@@ -3,14 +3,9 @@
 class message extends basemodel
 {
 
-  protected $parent;
-  protected $like;
-  protected $emet;
-  protected $dest;
-
   public function getPost($id)
   {
-    return postTable::getPostById($id);
+    return (isset($id) && this->id==$id)?postTable::getPostById($id):false;
   }
 
   public function getParent()

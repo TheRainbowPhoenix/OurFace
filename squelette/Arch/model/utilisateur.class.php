@@ -1,2 +1,4 @@
 <?php
-class utilisateur extends basemodel {}
+class utilisateur extends basemodel {
+  
+}

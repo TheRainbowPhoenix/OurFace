@@ -1,8 +1,12 @@
 <?php
 
-class messageTable extends basemodel
+class messageTable
 {
 
+/**
+ * get Messages
+ * @return messageTable message Table
+ */
   public function getMessages()
   {
     $connection = new dbconnection() ;
@@ -10,6 +14,12 @@ class messageTable extends basemodel
     $res = $connection->doQueryObject( $sql, "messageTable"  );
     return (is_array($res))?res:false;
   }
+
+  /**
+   * get Messages Sent To
+   * @param  id $id id
+   * @return message     message
+   */
   public function getMessagesSentTo($id)
   {
     $connection = new dbconnection() ;

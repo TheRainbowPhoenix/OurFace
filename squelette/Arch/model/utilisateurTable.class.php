@@ -15,6 +15,11 @@ class utilisateurTable
     return $res ;
   }
 
+/**
+ * prepare
+ * @param  param $raw this fish is so raw !
+ * @return fish      cooked fish
+ */
   public static function prepare($raw) {
     if (ctype_digit($raw)){
       $raw = intval($raw);
@@ -26,14 +31,23 @@ class utilisateurTable
     return $raw;
   }
 
+/**
+ * get User By Id
+ * @param  id $id id
+ * @return user     user
+ */
   public static function getUserById($id)
   {
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.utilisateur where id='".$id."'" ;
-    $res = $connection->doQuery( $sql );
+    $res = $connection->doQueryObject( $sql, "utilisateur" );
     return ($res===false)?false:$res;
   }
 
+/**
+ * get Users, yes all
+ * @return array utilisateur
+ */
   public static function getUsers()
   {
     $connection = new dbconnection() ;
@@ -46,9 +60,14 @@ class utilisateurTable
     return $users;
   }
 
+/**
+ * get Users Count
+ * @param  numeric $cnt count
+ * @return array      utilisateur
+ */
   public static function getUsersCount($cnt)
   {
-    if (!is_numeric($cnt)) {
+    if (!is_numeric($cnt) || $cnt<=0) {
       return false;
     }
     $connection = new dbconnection() ;
