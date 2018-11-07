@@ -11,9 +11,16 @@ class messageTable
   {
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.message";
-    $res = $connection->doQueryObject( $sql, "messageTable"  );
+    $res = $connection->doQueryObject( $sql, "message"  );
     return (is_array($res))?$res:false;
   }
+
+  public function getMessagesByPage($debut, $fin, $id) {
+    $connection = new dbconnection() ;
+    $sql = (isset($id) && is_numeric($id))?"select * from fredouil.message where destinataire='".$id."' order by id desc limit '.$fin-$debut. offset ".$debut:"select * from fredouil.message order by id desc limit '.$fin-$debut. offset ".$debut ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+}
 
   /**
    * get Messages Sent To
