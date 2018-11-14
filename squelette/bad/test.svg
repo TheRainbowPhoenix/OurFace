@@ -25,7 +25,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -45,9 +44,9 @@
      inkscape:window-height="1011"
      id="namedview976"
      showgrid="false"
-     inkscape:zoom="0.5"
-     inkscape:cx="747.93247"
-     inkscape:cy="942.11462"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="780.67821"
+     inkscape:cy="1013.4192"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -10816,7 +10815,7 @@ AElFTkSuQmCC
            style="fill:#45324d;fill-opacity:1;" /></flowRegion><flowPara
          id="flowPara1042-9-9"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Raleway;-inkscape-font-specification:Raleway;fill:#45324d;fill-opacity:1">Amis</flowPara></flowRoot>    <rect
-       style="font-variation-settings:normal;opacity:0.5;vector-effect:none;fill:#c6c6d1;fill-opacity:1;stroke:none;stroke-width:2.7878449"
+       style="font-variation-settings:normal;opacity:0.5;vector-effect:none;fill:#000000;fill-opacity:0;stroke:none;stroke-width:2.7878449"
        id="rect1145-7"
        width="1002.208"
        height="935.00287"

@@ -1,3 +1,9 @@
+@font-face {
+	font-family: 'rosettaIconFont';
+	src: url(../fonts/rosetta-icons-Regular.woff);
+	src: url(../fonts/rosetta-icons-Regular.ttf);
+}
+
 html, body {
     font-family: 'Raleway', sans-serif;
     background-color: #d9d8df;
@@ -25,6 +31,40 @@ html, body {
   padding: 8px;
   /*border-radius: 16px;
   background-color: rgba(251, 249, 251, 0.5);*/
+}
+
+.post-image {
+  overflow: hidden;
+  position: relative;
+  vertical-align: top;
+  width: 100%;
+  /* max-width: 312px; */
+  max-height: 384px;
+  /* border: 1px solid rgba(0,0,0,0.1); */
+  opacity: .8;
+}
+
+.post-image-align {
+  padding-top: 75%;
+  display: block;
+}
+
+.post-image-contain {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.post-img {
+  width: 100%;
+  top: -0px;
+  position: relative;
+  display: block;
+  max-width: 100%;
 }
 
 .posts-main {
@@ -59,6 +99,41 @@ html, body {
 .container-fluid {
   padding-top: 80px;
   transition: width .6s ease-in-out;
+}
+
+.post-actions {
+  display: flex;
+}
+.post-action {
+  display: flex;
+  margin-left: 8px;
+  border-radius: 12px;
+  padding-right: 8px;
+  padding-left: 2px;
+  transition: all .2s ease-in-out;
+}
+.post-action:hover {
+  background: rgba(231, 73, 148, .3);
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.post-date {
+  padding-right: 8px;
+}
+
+.count {
+  margin-left: 4px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.icon-like {
+  /*background-image: url(../../images/ico/like.svg);*/
 }
 
 @media (min-width: 576px) {
