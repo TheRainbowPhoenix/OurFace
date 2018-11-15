@@ -101,6 +101,23 @@ html, body {
   transition: width .6s ease-in-out;
 }
 
+.avatar-image {
+  background: #eae9ed;
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.account-small {
+  margin-bottom: 12px;
+  height: 48px;
+}
+
+.name-container {
+  padding-left: 12px;
+}
+
 .post-actions {
   display: flex;
 }
@@ -113,7 +130,7 @@ html, body {
   transition: all .2s ease-in-out;
 }
 .post-action:hover {
-  background: rgba(231, 73, 148, .3);
+  background: #dad6dd;
   cursor: pointer;
   transition: all .2s ease-in-out;
 }
