@@ -1,0 +1,19 @@
+{
+  "logger": {
+    "title": "Remote Sync"
+  },
+  "uploadOnSave": true,
+  "useAtomicWrites": false,
+  "deleteLocal": false,
+  "hostname": "127.0.0.1",
+  "port": "8022",
+  "target": "/home/OurFace",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "u0_a386",
+  "keyfile": "C:\\Users\\HP\\Desktop\\id_rsa",
+  "watch": [],
+  "transport": "scp"
+}
