@@ -19,8 +19,6 @@ class dbconnection
        // cette nouvelle instnace sera assigné à $this->link
     }catch( PDOException $e ){
         $this->error =  $e->getMessage();
-phpinfo();
-        var_dump($e);
     }
   }
 
