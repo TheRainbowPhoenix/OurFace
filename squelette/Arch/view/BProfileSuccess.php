@@ -26,7 +26,7 @@
       <div class="card-body">
         <div class="d-flex account-small">
           <div class="avatar-container">
-            <img class="avatar-image" src="<?php echo genPP($_SESSION['user_var']["avatar"]) //images/ico/def48.png ?>" alt="">
+            <img class="avatar-image" src="<?php echo genPP($_SESSION['user_var']["avatar"], $_SESSION['user_var']['id']) //images/ico/def48.png ?>" alt="">
           </div>
           <div class="name-container flex-grow-1">
             <h5 class="card-title"><?php echo escape($_SESSION['user_var']["nom"])." ".escape($_SESSION['user_var']["prenom"]) ?></h5>
