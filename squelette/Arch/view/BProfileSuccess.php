@@ -22,7 +22,9 @@
 <div class="BProfile">
   <div class="card-deck">
     <div class="card">
-      <div class="SProfileCover card-img-top"></div>
+      <div class="SProfileCover card-img-top" style="<?php
+      echo 'background-image: url('.genPP($_SESSION['user_var']["avatar"], $_SESSION['user_var']['id']).')';
+      ?>"></div>
       <div class="card-body">
         <div class="d-flex account-small">
           <div class="avatar-container">
