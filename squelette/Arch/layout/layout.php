@@ -1,3 +1,21 @@
+<?php
+function escape($text) {
+  $text = trim($text);
+  $text = stripslashes($text);
+  $text = htmlspecialchars($text, ENT_QUOTES);
+  return $text;
+}
+function genPP($text, $id) {
+  if(isset($text) && !is_null($text) && file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
+  $f = 'profile-image/'.$id.'_400x400.jpg';
+  if(file_exists($f)) return $f;
+  else return "images/ico/def48.png";
+}
+function genDate($text) {
+  $date = new DateTime($text);
+  return date_format($date, 'd/m/Y');
+}
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -47,9 +65,34 @@
           <form action="./" method="post">
           <input name="action" value="logout" type="submit" class="a_nav-link a_nav-link-button"></form>
           */
-          echo '<li class="nav-item" id="logout">
+         ?>
+
+        <li class="nav-item" id="pp">
+          <div class="nav-avatar d-flex">
+
+            <div class="dropdown">
+              <a class="dropdown-toggle avatar-dropdown" href="#" role="button" id="profileLinks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="name-container flex-grow-1">
+                  <h5 class="card-title"><?php echo $_SESSION['user_var']['prenom']; ?></h5>
+                </div>
+                <div class="avatar-container">
+                  <img class="avatar-image" src="<?php echo genPP($_SESSION['user_var']['avatar'], $_SESSION['user_var']['id'])?>" alt="">
+                </div>
+              </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileLinks">
+              <a class="dropdown-item" href="?action=BProfile">Profile</a>
+              <a class="dropdown-item" href="?action=logout">Logout</a>
+            </div>
+          </div>
+        </div>
+       </li>
+
+
+         <?php
+        /*  echo '<li class="nav-item" id="logout">
                   <a class="nav-link" href="?action=logout">Logout</a>
-                </li>';
+                </li>';*/
         } else {
           echo '  <li class="nav-item" id="register">
                     <a class="nav-link" href="#">Register</a>

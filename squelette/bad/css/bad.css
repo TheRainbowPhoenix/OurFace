@@ -110,6 +110,51 @@ html, body {
   transition: width .6s ease-in-out;
 }
 
+.nav-avatar {
+	height: 32px;
+	line-height: 48px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	display: flex;
+	line-height: 32px;
+}
+
+.nav-avatar .avatar-image {
+    width: 32px;
+    height: 32px;
+}
+
+.nav-avatar .card-title {
+	line-height: 32px;
+}
+
+.nav-avatar .name-container {
+	padding-right: 12px;
+}
+
+.avatar-dropdown {
+    display: flex;
+    color: inherit;
+    text-decoration: none;
+    height: 32px;
+    transition: all .2s ease-in-out;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0);
+    background-attachment: fixed;
+}
+
+.avatar-dropdown::after {
+    display: none;
+}
+
+.avatar-dropdown:hover {
+    color: inherit;
+    text-decoration: none;
+    background: rgba(0,0,0,.15);
+    border-radius: 16px;
+    transition: all .2s ease-in-out;
+}
+
 .avatar-image {
   background: #eae9ed;
   display: block;
@@ -124,6 +169,8 @@ html, body {
   margin-bottom: 12px;
   height: 48px;
 }
+
+
 
 .name-container {
   padding-left: 12px;
