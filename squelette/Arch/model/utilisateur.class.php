@@ -2,7 +2,7 @@
 class utilisateur extends basemodel implements JsonSerializable {
 
   public function jsonSerialize() {
-    //id"]=> int(1) ["emetteur"]=> int(2) ["destinataire"]=> int(1) ["parent"]=> int(2) ["post"]=> int(1) ["aimer"]=> int(5)
+    //id"]=> int(1) ["emetteur"]=> int(2) ["destinataire"]=> int(1) ["parent"]=> int(2) ["post"]=> int(1) ["aime"]=> int(5)
         return [
             'id' => $this->id,
             'identifiant' => $this->identifiant,

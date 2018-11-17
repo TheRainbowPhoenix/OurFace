@@ -57,7 +57,7 @@ class message extends basemodel implements JsonSerializable
             'destinataire' => $this->destinataire,
             'parent' => $this->parent,
             'post' => $this->post,
-            'aimer' => $this->aimer
+            'aime' => $this->aime
         ];
     }
 

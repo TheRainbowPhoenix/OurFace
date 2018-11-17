@@ -93,7 +93,7 @@
           <div href="#" class="post-action">
             <span class="icon icon-like">
             </span>
-            <span class="count"><?php echo escape($message->first->aimer); ?></span>
+            <span class="count"><?php echo escape($message->first->aime); ?></span>
           </div>
           <div href="#" class="post-action">
             <span class="icon icon-com">
