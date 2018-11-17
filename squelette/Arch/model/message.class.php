@@ -1,6 +1,6 @@
 <?php
 
-class message extends basemodel
+class message extends basemodel implements JsonSerializable
 {
 
   /**
@@ -48,5 +48,17 @@ class message extends basemodel
   {
     return $this->destinataire;
   }
+
+  public function jsonSerialize() {
+    //id"]=> int(1) ["emetteur"]=> int(2) ["destinataire"]=> int(1) ["parent"]=> int(2) ["post"]=> int(1) ["aimer"]=> int(5)
+        return [
+            'id' => $this->id,
+            'emetteur' => $this->emetteur,
+            'destinataire' => $this->destinataire,
+            'parent' => $this->parent,
+            'post' => $this->post,
+            'aimer' => $this->aimer
+        ];
+    }
 
 }

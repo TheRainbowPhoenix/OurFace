@@ -59,6 +59,19 @@ class utilisateurTable
     }
     return $users;
   }
+/**
+ * get Users, yes all
+ * @return array utilisateur
+ */
+  public static function getUsersV2()
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.utilisateur" ;
+    $res = $connection->doQueryObject( $sql, "utilisateur" );
+    if($res === FALSE || is_null($res)) return false;
+
+    return $res;
+  }
 
 /**
  * get Users Count

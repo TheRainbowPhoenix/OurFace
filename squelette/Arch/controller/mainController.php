@@ -12,9 +12,26 @@ class mainController
 		return context::SUCCESS;
 	}
 
+	public static function listUsers($request,$context)
+	{
+		$context->users = utilisateurTable::getUsersV2();
+		return context::SUCCESS;
+	}
+
+	public static function listMessages($request,$context)
+	{
+		if($_SESSION['user_var'] != NULL)  {
+			$context->messages = messageTable::getMessages();
+			return context::SUCCESS;
+		} else {
+			return context::ERROR;
+		}
+	}
+
 	public static function BProfile($request, $context) {
 		if($_SESSION['user_var'] != NULL)  {
 			$context->current_user = $_SESSION['user_var'];
+			$context->raw = true;
 			return context::SUCCESS;
 		} else {
 			return context::ERROR;
@@ -37,7 +54,7 @@ class mainController
 
 	public static function index($request,$context)
 	{
-
+		if(!$_SESSION['logged']) return context::ERROR;
 		return context::SUCCESS;
 	}
 

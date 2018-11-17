@@ -116,6 +116,8 @@ html, body {
   width: 48px;
   height: 48px;
   border-radius: 50%;
+	user-select: none;
+	-webkit-user-drag: none;
 }
 
 .account-small {
@@ -196,7 +198,9 @@ html, body {
 	position: fixed;
 	width: 100%;
 	margin-top: 16px;
-  top: 48px;
+  top: 76px;
+  right: 0;
+	z-index: 99;
 }
 
 .top-15p {
@@ -281,6 +285,9 @@ html, body {
     transition: all .2s ease-in-out;
 	}
 
+		.alter-container {
+		  top: 48px;
+		}
   .container-fluid {
     padding-top: 40px;
   }
