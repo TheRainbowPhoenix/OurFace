@@ -21,7 +21,14 @@ class mainController
 	public static function listMessages($request,$context)
 	{
 		if($_SESSION['user_var'] != NULL)  {
-			$context->messages = messageTable::getMessages();
+			$stack = array();
+			$_msgs = messageTable::getMessages();
+			foreach ($_msgs as $msg) {
+				//var_dump($msg);
+				$tmp = new Compose($msg, postTable::getPostById($msg->id), utilisateurTable::getUserById($msg->emetteur));
+				array_push($stack, $tmp);
+			}
+			$context->messages = $stack;
 			return context::SUCCESS;
 		} else {
 			return context::ERROR;

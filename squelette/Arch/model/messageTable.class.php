@@ -10,7 +10,7 @@ class messageTable
   public function getMessages()
   {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.message";
+    $sql = "select * from fredouil.message order by id desc";
     $res = $connection->doQueryObject( $sql, "message"  );
     return (is_array($res))?$res:false;
   }
