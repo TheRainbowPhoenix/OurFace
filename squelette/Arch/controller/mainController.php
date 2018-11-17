@@ -25,8 +25,12 @@ class mainController
 			$_msgs = messageTable::getMessages();
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
-				$tmp = new Compose($msg, postTable::getPostById($msg->id), utilisateurTable::getUserById($msg->emetteur));
-				array_push($stack, $tmp);
+				$_pst = postTable::getPostById($msg->id);
+				$_emtr = utilisateurTable::getUserById($msg->emetteur);
+				if(isset($_pst) && isset($_emtr)) {
+					$tmp = new Compose($msg, $_pst, $_emtr);
+					array_push($stack, $tmp);
+				}
 			}
 			$context->messages = $stack;
 			return context::SUCCESS;

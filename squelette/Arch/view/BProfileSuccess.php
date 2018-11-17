@@ -8,8 +8,10 @@
     $text = htmlspecialchars($text, ENT_QUOTES);
     return $text;
   }
-  function genPP($text) {
-    if(isset($text) && !is_null($text) && file_exists($text)) return $text;
+  function genPP($text, $id) {
+    if(isset($text) && !is_null($text) && file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
+    $f = 'profile-image/'.$id.'_400x400.jpg';
+    if(file_exists($f)) return $f;
     else return "images/ico/def48.png";
   }
   function genDate($text) {
