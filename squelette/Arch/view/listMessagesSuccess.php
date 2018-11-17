@@ -49,7 +49,7 @@
   }
 
   ?>
-  <div class="col posts-main">
+  <div class="col-md-5 col-centered posts-main">
     <div>
 
   <?php
@@ -60,8 +60,8 @@
     ?>
     <div class="card post">
       <?php
-      $i = getimagesize(genImage($message->first->emetteur, $message->second[0]->image));
-      if($message->second[0]->image != null) { ?>
+      if(isset($message->second[0]) && isset($message->first) && $message->second[0]->image != null) {
+      $i = getimagesize(genImage($message->first->emetteur, $message->second[0]->image)); ?>
         <div class="post-image">
           <div class="post-image-align">
             <div class="post-image-contain">
@@ -79,21 +79,34 @@
       <div class="card-body">
         <div class="d-flex account-small">
           <div class="avatar-container">
-            <img class="avatar-image" src="<?php echo genPP($message->third[0]->avatar, $message->first->emetteur); ?>" alt="">
+	    <img class="avatar-image" src="<?php 
+if(isset($message->third[0])) {     
+	echo genPP($message->third[0]->avatar, $message->first->emetteur);
+} else {
+	echo 'Missingno';
+} ?>" alt="">
           </div>
           <div class="name-container flex-grow-1">
             <h5 class="card-title"><?php echo escape($message->third[0]->prenom).' '.escape($message->third[0]->nom)?></h5>
             <h6 class="card-subtitle mb-2 text-muted">@<?php echo escape($message->third[0]->identifiant)?></h6>
           </div>
-        </div>
+	</div>
+	<?php if (isset($message->second[0])) { ?>
         <p class="card-text"><?php echo escape($message->second[0]->texte); ?></p>
-      </div>
+      	<?php } ?>
+	</div>
       <div class="card-footer">
         <div class="post-actions row">
           <div href="#" class="post-action">
             <span class="icon icon-like">
             </span>
-            <span class="count"><?php echo escape($message->first->aime); ?></span>
+	    <span class="count"><?php
+	if (isset($message->first)) {
+		echo escape($message->first->aime);
+	} else {
+		echo '0';
+	}
+?></span>
           </div>
           <div href="#" class="post-action">
             <span class="icon icon-com">
@@ -103,9 +116,12 @@
 
           <div class="card-link flex-grow-1 post-date">
             <small class="text-muted float-right">Last updated <?php
-
+      if (isset($message->second[0])) {
               echo genTimeDiff($message->second[0]->date);
-             //echo genDate($message->second[0]->date)
+      } else {
+		echo 'times ago';
+	}
+      //echo genDate($message->second[0]->date)
              ?></small>
           </div>
         </div>

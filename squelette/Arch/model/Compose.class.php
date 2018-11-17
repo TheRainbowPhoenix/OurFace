@@ -9,12 +9,12 @@ class Compose implements JsonSerializable {
     }
 
     public function __get($key) {
-      if ($this->$first->$key) {
-         return $this->$first->$key;
-      } elseif ($this->$second[0]->$key) {
-        return $this->$second[0]->$key;
-      } elseif (isset($this->third) && $this->$third[0]->$key) {
-        return $this->$third[0]->$key;
+      if ($this->first->$key) {
+         return $this->first->$key;
+      } elseif ($this->second[0]->$key) {
+        return $this->second[0]->$key;
+      } elseif (isset($this->third) && $this->third[0]->$key) {
+        return $this->third[0]->key;
       }else {
         return NULL;
       }
