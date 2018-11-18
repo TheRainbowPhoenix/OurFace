@@ -9,9 +9,12 @@ session_start();
 $api = wrapper::getInstance();
 $api->db=new dbconnection();
 
-$baseF = explode('/', $_SERVER["REQUEST_URI"])[3];
+$api_call = strstr($_SERVER["REQUEST_URI"], 'api');
+
+$baseF = strstr($api_call, '/');
 $baseF = explode('?', $baseF)[0];
-//echo $baseF;
+$baseF = substr($baseF, 1);
+//echo $baseF.'<br>';
 //var_dump($_SERVER["REQUEST_URI"]);
 //echo explode('.', $_SERVER["REQUEST_URI"])[0];
 $actions = explode('?', $_SERVER["REQUEST_URI"]);
@@ -27,6 +30,8 @@ foreach ($params as $param => $val) {
 //echo json_encode($funcs);
 //$funcs = explode('=', $params);
 //var_dump($functs);
+
+//var_dump($baseF);
 
 if(isset($baseF)) {
 	$reponse=$api->parse($baseF, $funcs);
