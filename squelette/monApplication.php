@@ -24,6 +24,9 @@ $view=$context->executeAction($action, $_REQUEST);
 
 $context->raw = false;
 
+var_dump($_SERVER["REQUEST_URI"]);
+echo explode('.', $_SERVER["REQUEST_URI"])[0];
+
 if($view===false)
 {
 	echo "Une grave erreur s'est produite, il est probable que l'action ".$action." n'existe pas...";
