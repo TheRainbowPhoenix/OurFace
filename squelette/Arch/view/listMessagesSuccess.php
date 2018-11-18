@@ -2,11 +2,11 @@
   if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
     die('Invalid');
   }
-  $imgExt = ['jpg', 'gif', 'png'];
   function genImage($id, $text) {
     if(isset($text) && !is_null($text)) {
       if (file_exists('media/'.$id.'_'.$text)) return 'media/'.$id.'_'.$text;
       else {
+        $imgExt = ['jpg', 'gif', 'png'];
         foreach ($imgExt as $ext) {
           if (file_exists('media/'.$id.'_'.$text.$ext)) return 'media/'.$id.'_'.$text.$ext;
         }
