@@ -23,6 +23,13 @@ function genError($code, $text) {
 	return $err;
 }
 
+function genPP($text, $id) {
+  if(isset($text) && !is_null($text) && file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
+  $f = 'profile-image/'.$id.'_400x400.jpg';
+  if(file_exists($f)) return $f;
+  else return "images/ico/def48.png";
+}
+
 function has_media($id, $text) {
     if(isset($id) && isset($text) && !is_null($text)) {
       if (file_exists('media/'.$id.'_'.$text)) return true;
@@ -46,14 +53,14 @@ function escape($text) {
 
 class parser
 {
-	
+
 	public static function post($params) {
 		$id = is_logged($_SESSION);
 		if($id >=0) {
 			$post = array();
 			$post['id'] = 456;
 			if (has_key('status',$params)) {
-				$status = $params['status']; 
+				$status = $params['status'];
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
 				//if(strlen($status)>254) $status = substr($status, 0, 250).'...';
 				$post['status'] = trim(escape(urldecode($status)));
@@ -62,7 +69,7 @@ class parser
 				$media_id = $params['media_id'];
 				if(!has_media($id, $media_id)) return raiseError(genError(324,'The validation of media ids failed'));
 				$post['media_id'] = $media_id;
-				// media_id = 98a665.... => image name	
+				// media_id = 98a665.... => image name
 			}
 			return json_encode($post);
 		}
@@ -78,7 +85,7 @@ class parser
        		if(is_numeric($params['id'])) {
 					$rtrn = utilisateurTable::getUserById($params['id']);
 					if(has_key(0, $rtrn)) return json_encode($rtrn);
-				}  
+				}
 				return raiseError(genError(50,'User not found'));
 			} elseif(has_key('all', $params) && $params['all'] == '1') {
 				return json_encode(utilisateurTable::getUsersV2());
@@ -101,6 +108,22 @@ class parser
 				}
 			}
 		return json_encode($stack);
+	}
+
+	public static function popup($params)
+	{
+ 		if(has_key('user_id', $params)){
+   		if(is_numeric($params['user_id'])) {
+				$rtrn = utilisateurTable::getUserById($params['user_id']);
+				if(has_key(0, $rtrn)) {
+					$html = '<div class="card"> <div class="SProfileCover card-img-top" style="background-image: url('.genPP($rtrn[0]->avatar,$rtrn[0]->id).')"></div> <div class="card-body"> <p class="card-text">'.$rtrn[0]->statut.'</p> <a href="'.'#" class="btn btn-primary">View profile</a> </div> </div>'; //TODO: add link to profile
+					return $html;
+				}
+			}
+			return raiseError(genError(50,'User not found'));
+		} elseif(has_key('all', $params) && $params['all'] == '1') {
+			return json_encode(utilisateurTable::getUsersV2());
+		} else return raiseError(genError(50,'User not found'));
 	}
 }
 

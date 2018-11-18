@@ -67,7 +67,7 @@
         </div>
      <?php } ?>
       <div class="card-body">
-        <div class="d-flex account-small">
+        <div class="d-flex account-small" data-user-id="<?php echo $message->first->emetteur ?>">
           <div class="avatar-container">
 	    <img class="avatar-image" src="<?php
 if(isset($message->third[0])) {
@@ -80,6 +80,7 @@ if(isset($message->third[0])) {
             <h5 class="card-title"><?php echo escape($message->third[0]->prenom).' '.escape($message->third[0]->nom)?></h5>
             <h6 class="card-subtitle mb-2 text-muted">@<?php echo escape($message->third[0]->identifiant)?></h6>
           </div>
+          <div class="floating-card" style="width: 18rem;"></div>
 	</div>
 	<?php if (isset($message->second[0])) { ?>
         <p class="card-text"><?php echo escape($message->second[0]->texte); ?></p>

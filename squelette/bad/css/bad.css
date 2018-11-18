@@ -340,6 +340,20 @@ html, body {
 	/*transition: all .3s ease-in-out;*/
 }
 
+.floating-card {
+	width: 18rem;
+	position: absolute;
+	z-index: 1000;
+	/* display: none; */
+	float: left;
+	font-size: 1rem;
+	color: #212529;
+	text-align: left;
+	list-style: none;
+	/*top: 80px;*/
+	left: 8px;
+  margin-top: 64px;
+}
 
 .icon {
   width: 24px;

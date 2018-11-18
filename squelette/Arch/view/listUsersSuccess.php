@@ -15,7 +15,7 @@
     echo '<li class="list-group-item card-body">';
     //echo json_encode($user);
     echo '
-<div class="d-flex account-small">
+<div class="d-flex account-small"  data-user-id="'.$user->id.'">
   <div class="avatar-container">
     <img class="avatar-image" src="'.genPP($user->avatar, $user->id).'" alt="">
   </div>
@@ -23,6 +23,7 @@
     <h5 class="card-title">'.escape($user->prenom).' '.escape($user->nom).'</h5>
     <h6 class="card-subtitle mb-2 text-muted">@'.escape($user->identifiant).'</h6>
   </div>
+  <div class="floating-card" style="width: 18rem;"></div>
 </div>
     ';
     echo '</li>';
