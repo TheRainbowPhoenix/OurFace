@@ -2,10 +2,17 @@
   if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
     die('Invalid');
   }
-
+  $imgExt = ['jpg', 'gif', 'png'];
   function genImage($id, $text) {
-    if(isset($text) && !is_null($text) && file_exists('media/'.$id.'_'.$text)) return 'media/'.$id.'_'.$text;
-    else return "images/ico/def96.png";
+    if(isset($text) && !is_null($text)) {
+      if (file_exists('media/'.$id.'_'.$text)) return 'media/'.$id.'_'.$text;
+      else {
+        foreach ($imgExt as $ext) {
+          if (file_exists('media/'.$id.'_'.$text.$ext)) return 'media/'.$id.'_'.$text.$ext;
+        }
+      }
+    }
+    return "images/ico/def96.png";
   }
 
   function genTimeDiff($time) {
@@ -62,8 +69,8 @@
       <div class="card-body">
         <div class="d-flex account-small">
           <div class="avatar-container">
-	    <img class="avatar-image" src="<?php 
-if(isset($message->third[0])) {     
+	    <img class="avatar-image" src="<?php
+if(isset($message->third[0])) {
 	echo genPP($message->third[0]->avatar, $message->first->emetteur);
 } else {
 	echo 'Missingno';
