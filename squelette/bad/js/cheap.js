@@ -8,20 +8,6 @@ $( document ).ready(function() {
     if (!timeoutId) {
         timeoutId = window.setTimeout(function() {
             timeoutId = null;
-
-            var title = "Title";
-          var content = "Lorem ipsum";
-
-/*
-<div class="card">
-  <div class="SProfileCover card-img-top" style="background-image: url(profile-image/2_400x400.jpg)"></div>
-  <div class="card-body">
-    <p class="card-text">The ocular engine.</p>
-    <a href="#" class="btn btn-primary">View profile</a>
-  </div>
-</div>
-
- */
             $(elem).find(".floating-card").empty();
             var id = $(elem).data("user-id");
             $.ajax({
@@ -31,7 +17,6 @@ $( document ).ready(function() {
               dataType: "html"
             }).done(function(data) {
               $(elem).find(".floating-card").html(data);
-              console.log(data);
             });
             /*$.ajax({
               method: "GET",
@@ -42,7 +27,6 @@ $( document ).ready(function() {
                 console.log(data);
             });*/
             //console.log(html);
-            console.log("Hovered");
        }, hoverFetchDelay);
     }
   }, function () {
@@ -50,9 +34,6 @@ $( document ).ready(function() {
       $(elem).find(".floating-card").empty();
       window.clearTimeout(timeoutId);
       timeoutId = null;
-    }
-    else {
-       console.log("Out");
     }
   });
 });
