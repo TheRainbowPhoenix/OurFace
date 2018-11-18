@@ -9,7 +9,7 @@ session_start();
 $api = wrapper::getInstance();
 $api->db=new dbconnection();
 
-$baseF = end(explode('/', $_SERVER["REQUEST_URI"]));
+$baseF = explode('/', $_SERVER["REQUEST_URI"])[3];
 $baseF = explode('?', $baseF)[0];
 //echo $baseF;
 //var_dump($_SERVER["REQUEST_URI"]);

@@ -125,6 +125,7 @@ class mainController
 		unset($_SESSION['user']);
 		unset($_SESSION['name']);
 		unset($_SESSION['surname']);
+		unset($_SESSION['user_var']);
 		$_SESSION['logged'] = false;
 		return context::SUCCESS;
 	}
