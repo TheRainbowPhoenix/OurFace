@@ -7,8 +7,8 @@
       if (file_exists('media/'.$id.'_'.$text)) return 'media/'.$id.'_'.$text;
       else {
         $imgExt = ['jpg', 'gif', 'png'];
-        foreach ($imgExt as $ext) {
-          if (file_exists('media/'.$id.'_'.$text.$ext)) return 'media/'.$id.'_'.$text.$ext;
+	foreach ($imgExt as $k => $ext) {
+          if (file_exists('media/'.$id.'_'.$text.'.'.$ext)) return 'media/'.$id.'_'.$text.'.'.$ext;
         }
       }
     }
