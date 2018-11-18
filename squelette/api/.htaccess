@@ -1,5 +1,9 @@
-Options +MultiViews
+DirectoryIndex ../api.php
+
+DirectorySlash Off
+
+FallbackResource ../api.php
+
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
+RewriteRule ^/api/*$ ../api.php/$1 [L]

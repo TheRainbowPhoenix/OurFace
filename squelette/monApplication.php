@@ -11,7 +11,6 @@ $action =  $_REQUEST['action'];
 
 require_once 'lib/core.php';
 require_once $nameApp.'/controller/mainController.php';
-require_once $nameApp.'/api/profile.php';
 session_start();
 
 $context = context::getInstance();
@@ -23,9 +22,6 @@ $context->db=new dbconnection() ;
 $view=$context->executeAction($action, $_REQUEST);
 
 $context->raw = false;
-
-var_dump($_SERVER["REQUEST_URI"]);
-echo explode('.', $_SERVER["REQUEST_URI"])[0];
 
 if($view===false)
 {

@@ -115,11 +115,9 @@ class mainController
 		return context::SUCCESS;
 	}
 
-
-
 	public static function index($request,$context)
 	{
-		if(!$_SESSION['logged']) return context::ERROR;
+		if(!(array_key_exists('logged', $_SESSION))) return context::ERROR;
 		return context::SUCCESS;
 	}
 
