@@ -85,8 +85,8 @@ function genDate($text) {
           </a>
         </li>
 
-        <li class="nav-item nav-icon" id="chats">
-          <a href="?action=listMessages">
+        <li class="nav-item nav-icon" id="chat">
+          <a>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path class="svg-icon-chats-1" fill="#1e1e1e" d="M5 4a2 2 0 0 0-2 2v7c0 1.1.9 2 2 2h1v2c0 .6.4 1 1 1h1l3-3h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5zm1 2h8c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1h-4l-2 2v-2H6a1 1 0 0 1-1-1V7c0-.6.4-1 1-1z"/>
               <path class="svg-icon-chats-2" fill="#1e1e1e" d="M18 8v5.1c0 1.6-1.3 2.9-2.9 2.9H12l-2.9 2.9.9.1h8a3 3 0 0 0 3-3v-5a3 3 0 0 0-3-3z"/>
