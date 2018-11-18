@@ -132,6 +132,51 @@ html, body {
 	padding-right: 12px;
 }
 
+.nav-icon {
+	width: 36px;
+	height: 36px;
+	line-height: 40px;
+	flex-grow: 1;
+	margin: 0 8px;
+	margin-top: 4px;
+}
+.nav-icon:hover {
+    border-bottom: 4px solid rgba(0, 0, 0, 0.25);
+		cursor: pointer;
+}
+
+.nav-icon svg {
+  vertical-align: unset;
+	width: 32px;
+	height: 32px;
+	margin: 0 auto;
+	display: block;
+}
+
+.svg-icon-home-1, .svg-icon-home-2, .svg-icon-chats-1, .svg-icon-chats-2, .svg-icon-friends-1, .svg-icon-friends-2 {
+	transform-origin: center;
+	transition: all .4s ease-in-out;
+}
+
+.nav-icon:hover .svg-icon-home-2 {
+	transform: translateY(1px);
+	transition: all .2s ease-in-out;
+}
+.nav-icon:hover .svg-icon-chats-1 {
+  transform: translate(-1px, -1px);
+	transition: all .2s ease-in-out;
+}
+.nav-icon:hover .svg-icon-friends-2 {
+	transform: rotate(-5deg);
+	transform-origin: center;
+	transition: all .2s ease-in-out;
+}
+.nav-icon:hover .svg-icon-friends-1 {
+	/*transform: rotate(5deg);*/
+	transform-origin: center;
+	transition: all .2s ease-in-out;
+}
+
 .avatar-dropdown {
     display: flex;
     color: inherit;
@@ -171,6 +216,12 @@ html, body {
 }
 
 
+.dropdown-item.active, .dropdown-item:active {
+	color: #fbf9fb;
+	background-color: #9a92b8;
+	border-color: #9a92b8;
+	transition: all .2s ease-in-out;
+}
 
 .name-container {
   padding-left: 12px;
@@ -317,6 +368,20 @@ html, body {
 .compose {
 	display: none;
 }
+.nav-avatar .name-container {
+	overflow: hidden;
+  text-overflow: ellipsis;
+  width: 0px;
+  padding: 0;
+	transition: all .4s ease-in-out;
+}
+#pp {
+  flex-grow: 1;
+}
+#pp .dropdown {
+	margin: 0 auto;
+}
+
 /* Ends here */
 
 @media (min-width: 576px) {
@@ -324,12 +389,28 @@ html, body {
 		margin-left: 0;
 	}
 	.navbar-right {
-		flex-grow: 0;
+		/*flex-grow: 0;*/
 	}
 	#register, #login {
 		min-width: initial;
 		text-align: initial;
     transition: all .2s ease-in-out;
+	}
+	.nav-avatar .name-container {
+		width: inherit;
+		padding-right: 12px;
+		padding-left: 12px;
+		transition: all .4s ease-in-out;
+	}
+	#pp {
+	  flex-grow: 0;
+		margin-left: auto;
+	}
+	#pp .dropdown {
+		margin: initial;
+	}
+	.nav-icon {
+		flex-grow: 0;
 	}
 
 		.alter-container {

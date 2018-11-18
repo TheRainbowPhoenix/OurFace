@@ -57,7 +57,7 @@ function genDate($text) {
     </script>
     <!-- nav -->
     <nav class="navbar navbar-light fixed-top bg-light flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-1 mr-0 text-center" href="?"><?php echo $nameApp; ?></a>
+      <a class="navbar-brand col-sm-3 col-md-4 mr-0 text-center" href="?"><?php echo $nameApp; ?></a>
       <ul class="nav navbar-right px-3">
         <?php
         if(isset($_SESSION['logged']) && $_SESSION['logged']) {
@@ -66,6 +66,33 @@ function genDate($text) {
           <input name="action" value="logout" type="submit" class="a_nav-link a_nav-link-button"></form>
           */
          ?>
+
+         <li class="nav-item nav-icon">
+           <a href="?action=listMessages">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+               <path class="svg-icon-home-1" fill="#1e1e1e" d="M12 2.5l-8.4 6A2 2 0 0 0 3 10v9c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-9c0-.6-.2-1-.6-1.4zM12 5l6.5 4.6c.3.2.5.5.5.9V18c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1v-7.5c0-.3.2-.6.4-.8z"/>
+               <path class="svg-icon-home-2" fill="#1e1e1e" d="M8 12h8c.6 0 1 .4 1 1v6c0 .6-.4 1-1 1H8a1 1 0 0 1-1-1v-6c0-.6.4-1 1-1z"/>
+             </svg>
+           </a>
+        </li>
+
+        <li class="nav-item nav-icon">
+          <a href="?action=listUsers">
+            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24">
+              <path class="svg-icon-friends-1" fill="#1e1e1e" d="M8 6a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 8 11a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 8 6zm0 6a5 3 0 0 0-5 3v2c0 .6.4 1 1 1h8c.6 0 1-.4 1-1v-2a5 3 0 0 0-5-3zm0 1.7a3 1.8 0 0 1 3 1.8v.5H5v-.5a3 1.8 0 0 1 3-1.8z" color="#000" overflow="visible" style="isolation:auto;mix-blend-mode:normal"/>
+              <path class="svg-icon-friends-2" fill="#1e1e1e" d="M15 6a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm0 6c-.9 0-1.7.1-2.5.4 1 .9 1.5 1.3 1.5 2.6v2c0 .4 0 .7-.3 1H19c.6 0 1-.4 1-1v-2c0-1.7-2.2-3-5-3z" color="#000" overflow="visible" style="isolation:auto;mix-blend-mode:normal"/>
+            </svg>
+          </a>
+        </li>
+
+        <li class="nav-item nav-icon">
+          <a href="?action=listMessages">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path class="svg-icon-chats-1" fill="#1e1e1e" d="M5 4a2 2 0 0 0-2 2v7c0 1.1.9 2 2 2h1v2c0 .6.4 1 1 1h1l3-3h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5zm1 2h8c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1h-4l-2 2v-2H6a1 1 0 0 1-1-1V7c0-.6.4-1 1-1z"/>
+              <path class="svg-icon-chats-2" fill="#1e1e1e" d="M18 8v5.1c0 1.6-1.3 2.9-2.9 2.9H12l-2.9 2.9.9.1h8a3 3 0 0 0 3-3v-5a3 3 0 0 0-3-3z"/>
+            </svg>
+            </a>
+        </li>
 
         <li class="nav-item" id="pp">
           <div class="nav-avatar d-flex">
@@ -81,6 +108,7 @@ function genDate($text) {
               </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileLinks">
+              <a class="dropdown-item" href="?action=listMessages">Messages</a>
               <a class="dropdown-item" href="?action=BProfile">Profile</a>
               <a class="dropdown-item" href="?action=logout">Logout</a>
             </div>
