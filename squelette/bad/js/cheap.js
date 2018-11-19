@@ -16,30 +16,32 @@ $( document ).ready(function() {
   // IF ON PC
   if ($(window).width() > 1100) {
     $('.account-small').hover(function() {
-      if(this != elem) $(elem).find(".floating-card").empty();
-      elem = this;
-      if (!timeoutId) {
-        timeoutId = window.setTimeout(function() {
-          timeoutId = null;
-          $(elem).find(".floating-card").empty();
-          var id = $(elem).data("user-id");
-          $.ajax({
-            method: "GET",
-            url: "api.php/popup",
-            data: {user_id: id},
-            dataType: "html"
-          }).done(function(data) {
-            $(elem).find(".floating-card").html(data);
-          });
-          /*$.ajax({
+      if(this != elem) {
+        $(elem).find(".floating-card").empty();
+        elem = this;
+        if (!timeoutId) {
+          timeoutId = window.setTimeout(function() {
+            timeoutId = null;
+            $(elem).find(".floating-card").empty();
+            var id = $(elem).data("user-id");
+            $.ajax({
               method: "GET",
-              url: "api.php/users",
-              data: {id: 2}
+              url: "api.php/popup",
+              data: {user_id: id},
+              dataType: "html"
             }).done(function(data) {
-            html = data;
-            console.log(data);
-          });*/
-        }, hoverFetchDelay);
+              $(elem).find(".floating-card").html(data);
+            });
+            /*$.ajax({
+                method: "GET",
+                url: "api.php/users",
+                data: {id: 2}
+              }).done(function(data) {
+              html = data;
+              console.log(data);
+            });*/
+          }, hoverFetchDelay);
+        }
       }
     }, function () {
       if (timeoutId) {
