@@ -2,7 +2,7 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T11:52:10+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-19T14:07:40+01:00
+ * @Last modified time: 2018-11-19T14:08:47+01:00
  */
 
 
@@ -26,10 +26,8 @@ $( document ).ready(function() {
   // IF ON PC
   if ($(window).width() > 1100) {
     $('.account-small').hover(function() {
-      console.log("h"+timeoutId);
       if (!timeoutId) {
         if(this != elem) {
-          console.log("e");
           $(elem).find(".floating-card").empty();
           elem = this;
           timeoutId = window.setTimeout(function() {
@@ -65,7 +63,6 @@ $( document ).ready(function() {
         $(elem).find(".floating-card").empty();
         window.clearTimeout(timeoutId);
         timeoutId = null;
-        console.log("o");
       }
     });
   } else if ($(window).width() > 576) {
