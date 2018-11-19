@@ -2,7 +2,7 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T11:52:10+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-19T14:08:47+01:00
+ * @Last modified time: 2018-11-19T14:13:55+01:00
  */
 
 
@@ -12,7 +12,6 @@ function GetAction() {
   var actions = gets.split('&');
   for (var i =0; i< actions.length; i++) {
     var param=actions[i].split('=');
-    console.log(actions[i]);
     if (param[0]=='action') return param[1];
   }
   return false;
@@ -49,7 +48,7 @@ $( document ).ready(function() {
                 data: {id: 2}
               }).done(function(data) {
               html = data;
-              console.log(data);
+              console.log(data); 
             });*/
           }, hoverFetchDelay);
         } else {
@@ -78,7 +77,6 @@ $( document ).ready(function() {
   }
   // Tabs icon
   var a = GetAction();
-  console.log(a);
   switch (a) {
     case "listMessages":
       $('#home').addClass("selected");
