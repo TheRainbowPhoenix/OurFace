@@ -139,10 +139,23 @@ html, body {
 	flex-grow: 1;
 	margin: 0 8px;
 	margin-top: 4px;
+	border-bottom: 0px solid rgba(255, 255, 255, 0);
+	transition: border-bottom .2s ease-in-out;
 }
 .nav-icon:hover {
     border-bottom: 4px solid rgba(0, 0, 0, 0.25);
+		transition: all .2s ease-in-out;
 		cursor: pointer;
+}
+.nav-icon.selected:hover {
+    border-bottom: 4px solid rgba(0, 0, 0, 0.1);
+		transition: all .2s ease-in-out;
+		cursor: pointer;
+}
+
+.nav-icon.selected {
+    border-bottom: 4px solid rgba(0, 0, 0, 0.25);
+		transition: all .2s ease-in-out;
 }
 
 .nav-icon svg {
@@ -391,6 +404,10 @@ html, body {
 }
 #pp {
   flex-grow: 1;
+  margin: 0 8px;
+}
+.nav-avatar {
+	padding: 0 2px;
 }
 #pp .dropdown {
 	margin: 0 auto;
