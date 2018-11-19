@@ -2,7 +2,7 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T11:52:10+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-19T14:13:55+01:00
+ * @Last modified time: 2018-11-19T14:22:59+01:00
  */
 
 
@@ -48,7 +48,7 @@ $( document ).ready(function() {
                 data: {id: 2}
               }).done(function(data) {
               html = data;
-              console.log(data); 
+              console.log(data);
             });*/
           }, hoverFetchDelay);
         } else {
@@ -60,6 +60,7 @@ $( document ).ready(function() {
     }, function () {
       if (timeoutId) {
         $(elem).find(".floating-card").empty();
+        html = null;
         window.clearTimeout(timeoutId);
         timeoutId = null;
       }
