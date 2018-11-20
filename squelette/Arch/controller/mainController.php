@@ -1,7 +1,14 @@
 <?php
+# @Author: uapv1701795
+# @Date:   2018-11-18T21:52:01+01:00
+# @Last modified by:   uapv1701795
+# @Last modified time: 2018-11-20T14:37:25+01:00
+
+
+
 /*
  * Controler
- */ 
+ */
 function goLogin() {
 	$host  = $_SERVER['HTTP_HOST'];
 	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
@@ -13,6 +20,13 @@ function goIndex() {
 	$host  = $_SERVER['HTTP_HOST'];
 	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 	$extra = 'monApplication.php';
+	header("Location: http://$host$uri/$extra");
+}
+
+function goBoard() {
+	$host  = $_SERVER['HTTP_HOST'];
+	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+	$extra = '?action=profile';
 	header("Location: http://$host$uri/$extra");
 }
 
@@ -45,13 +59,13 @@ class mainController
 				$_SESSION['user'] = $context->uname;
 				$_SESSION['user_var'] = $context->_getLP['0'];
 				$_SESSION['logged'] = true;
-				$done = 1;	
+				$done = 1;
 			}
 			unset($context->pwd);
 			unset($context->_session);
 			unset($context->_getLP);
 		}
-		if ($done ==1) goIndex();
+		if ($done ==1) goBoard();
 		/*else {
 			echo $context->uname.' '.$context->pwd;
 		}*/
@@ -74,6 +88,7 @@ class mainController
 	{
 		if(array_key_exists('user_var', $_SESSION))  {
 			$stack = array();
+			$context->current_user = $_SESSION['user_var'];
 			$_msgs = messageTable::getMessages();
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
@@ -85,6 +100,32 @@ class mainController
 				}
 			}
 			$context->messages = $stack;
+			return context::SUCCESS;
+		} else {
+			goLogin();
+			return;
+		}
+	}
+
+	public static function profile($request,$context)
+	{
+		$id = (array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
+		if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($id)) $id = $request['id'];
+
+		if(array_key_exists('user_var', $_SESSION))  {
+			$stack = array();
+			$_msgs = (isset($id))?messageTable::getMessagesFrom($id):messageTable::getMessages();
+			foreach ($_msgs as $msg) {
+				//var_dump($msg);
+				$_pst = postTable::getPostById($msg->id);
+				$_emtr = utilisateurTable::getUserById($msg->emetteur);
+				if(isset($_pst) && isset($_emtr)) {
+					$tmp = new Compose($msg, $_pst, $_emtr);
+					array_push($stack, $tmp);
+				}
+			}
+			$context->messages = $stack;
+			$context->user = utilisateurTable::getUserById($id)[0];
 			return context::SUCCESS;
 		} else {
 			goLogin();

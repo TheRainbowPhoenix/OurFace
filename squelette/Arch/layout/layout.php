@@ -1,4 +1,11 @@
 <?php
+# @Author: uapv1701795
+# @Date:   2018-11-19T00:53:49+01:00
+# @Last modified by:   uapv1701795
+# @Last modified time: 2018-11-20T13:26:10+01:00
+
+
+
 function escape($text) {
   $text = trim($text);
   $text = stripslashes($text);
@@ -6,11 +13,16 @@ function escape($text) {
   return $text;
 }
 function genPP($text, $id) {
-  if(isset($text) && !is_null($text) && file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
-  $f = 'profile-image/'.$id.'_400x400.jpg';
-  if(file_exists($f)) return $f;
-  else return "images/ico/def48.png";
+  if(isset($text) && !is_null($text)) {
+    if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
+    if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
+  } elseif (isset($id)) {
+    $f = 'profile-image/'.$id.'_400x400.jpg';
+    if(file_exists($f)) return $f;
+  }
+  return "images/ico/def48.png";
 }
+
 function genDate($text) {
   $date = new DateTime($text);
   return date_format($date, 'd/m/Y');

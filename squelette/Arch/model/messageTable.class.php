@@ -1,4 +1,11 @@
 <?php
+# @Author: uapv1701795
+# @Date:   2018-11-17T21:25:56+01:00
+# @Last modified by:   uapv1701795
+# @Last modified time: 2018-11-20T14:16:39+01:00
+
+
+
 
 class messageTable
 {
@@ -30,7 +37,15 @@ class messageTable
   public function getMessagesSentTo($id)
   {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.message where destinataire='".$id."' order by id limit 10" ;
+    $sql = "select * from fredouil.message where destinataire='".$id."' order by id" ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
+
+  public function getMessagesfrom($id)
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message where emetteur='".$id."' order by id limit 10" ;
     $res = $connection->doQueryObject( $sql, "message" );
     return $res;
   }
