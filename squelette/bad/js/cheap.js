@@ -76,6 +76,22 @@ $( document ).ready(function() {
     });
     // ON PHONE
   }
+  //Lazy load
+  $('.lazy').Lazy({
+        // your configuration goes here
+        placeholder: 'images/gif/load.gif',
+        scrollDirection: 'vertical',
+        effect: 'fadeIn',
+        visibleOnly: true,
+        onError: function(element) {
+            console.log('error loading ' + element.data('src'));
+        }
+    });
+  //Lightbox
+  $(document).on("click", '[data-toggle="lightbox"]', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox();
+  });
   // Tabs icon
   var a = GetAction();
   switch (a) {

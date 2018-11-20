@@ -23,6 +23,40 @@ foreach ($imgExt as $k => $ext) {
   return "images/ico/def.svg";
 }
 
+function genThumb($id, $text) {
+  if(isset($text) && !is_null($text)) {
+    $filen = explode('.',$text)[0];
+    if (file_exists('media/'.$id.'_'.$filen.'_thumb.jpg')) return 'media/'.$id.'_'.$filen.'_thumb.jpg';
+    else {
+      foreach ($imgExt as $k => $ext) {
+        if (file_exists('media/'.$id.'_'.$text.'_thumb.jpg')) return 'media/'.$id.'_'.$text.'_thumb.jpg';
+      }
+    }
+    if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
+  }
+  return "images/gif/load.gif";
+}
+
+  function genFoot($likes, $com=0, $date)
+  {
+    $r = '<div class="post-actions row">
+      <div class="post-action">
+        <span class="icon icon-like">
+        </span>
+  <span class="count">'.$likes.'</span>
+      </div>
+      <div class="post-action">
+        <span class="icon icon-com">
+        </span>
+        <span class="count">'.$com.'</span>
+      </div>
+      <div class="card-link flex-grow-1 post-date">
+        <small class="text-muted float-right">Last updated '.($date!=0)?genTimeDiff($date):('times ago').'</small>
+      </div>
+    </div>';
+    return $r;
+  }
+
   function genTimeDiff($time) {
     $now = strtotime(date("Y-m-d h:i:sa"));
     $last = strtotime($time);
@@ -162,16 +196,23 @@ foreach ($imgExt as $k => $ext) {
     <div class="card post">
       <?php
       if(isset($message->second[0]) && isset($message->first) && $message->second[0]->image != null) {
-      $i = getimagesize(genImage($message->first->emetteur, $message->second[0]->image)); ?>
+        $img = genImage($message->first->emetteur, $message->second[0]->image);
+        $i = getimagesize($img);
+        $likes = 0;
+        $com = 0;
+        if(isset($message->first) && $message->first->aime != NULL) $likes = $message->first->aime;
+        ?>
         <div class="post-image">
           <div class="post-image-align">
             <div class="post-image-contain">
-              <img class="post-img card-img-top" alt="img" src="<?php echo genImage($message->first->emetteur, $message->second[0]->image) ?>" <?php
-              if($i[1]>260) {
+              <a href="<?php echo $img ?>" data-toggle="lightbox" data-max-width="600" data-likes="<?php echo $likes?>" data-com="<?php echo $com?>" >
+              <img class="post-img card-img-top img-fluid lazy" alt="img" src="<?php echo genThumb($message->first->emetteur, $message->second[0]->image) ?>" data-src="<?php echo $img ?>" <?php
+              /*if($i[1]>260) {
                 $diff = 12800/$i[1]-50;
                 //echo 'style="transform: translateY('.$diff.'%);"';
-              }
+              }*/
               ?>>
+            </a>
             </div>
           </div>
 
@@ -184,7 +225,7 @@ foreach ($imgExt as $k => $ext) {
 if(isset($message->third[0])) {
 	echo genPP($message->third[0]->avatar, $message->first->emetteur);
 } else {
-	echo 'Missingno';
+	echo 'images/ico/def.svg';
 } ?>" alt="">
           </div>
           <div class="name-container flex-grow-1">
@@ -202,19 +243,12 @@ if(isset($message->third[0])) {
           <div href="#" class="post-action">
             <span class="icon icon-like">
             </span>
-	    <span class="count"><?php
-	if (isset($message->first)) {
-    if($message->first->aime==NULL) $message->first->aime = 0;
-		echo escape($message->first->aime);
-	} else {
-		echo '0';
-	}
-?></span>
+	    <span class="count"><?php echo $likes ?></span>
           </div>
           <div href="#" class="post-action">
             <span class="icon icon-com">
             </span>
-            <span class="count">0</span>
+            <span class="count"><?php echo $com?></span>
           </div>
 
           <div class="card-link flex-grow-1 post-date">
@@ -224,7 +258,6 @@ if(isset($message->third[0])) {
       } else {
 		echo 'times ago';
 	}
-      //echo genDate($message->second[0]->date)
              ?></small>
           </div>
         </div>

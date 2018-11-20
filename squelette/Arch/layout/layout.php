@@ -1,10 +1,4 @@
 <?php
-# @Author: uapv1701795
-# @Date:   2018-11-19T00:53:49+01:00
-# @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T14:55:02+01:00
-
-
 
 function escape($text) {
   $text = trim($text);
@@ -16,7 +10,8 @@ function genPP($text, $id) {
   if(isset($text) && !is_null($text)) {
     if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
-  } elseif (isset($id)) {
+  }
+  if (is_numeric($id)) {
     $f = 'profile-image/'.$id.'_400x400.jpg';
     if(file_exists($f)) return $f;
   }
@@ -43,6 +38,7 @@ function genDate($text) {
   <link href="bad/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/icons.css" rel="stylesheet">
   <link href="bad/css/bad.css" rel="stylesheet">
+  <link href="bad/css/ekko-lightbox.css" rel="stylesheet">
   </head>
   <body>
 
@@ -57,6 +53,8 @@ function genDate($text) {
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="bad/js/jquery.lazy.min.js"></script>
+    <script src="bad/js/ekko-lightbox.js"></script>
     <script src="bad/js/cheap.js" type='text/javascript'></script>
 
     <script>
@@ -81,7 +79,7 @@ function genDate($text) {
          ?>
 
          <li class="nav-item nav-icon" id="home">
-           <a href="?action=listMessages">
+           <a href="?action=home">
              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                <path class="svg-icon-home-1" fill="#1e1e1e" d="M12 2.5l-8.4 6A2 2 0 0 0 3 10v9c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-9c0-.6-.2-1-.6-1.4zM12 5l6.5 4.6c.3.2.5.5.5.9V18c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1v-7.5c0-.3.2-.6.4-.8z"/>
                <path class="svg-icon-home-2" fill="#1e1e1e" d="M8 12h8c.6 0 1 .4 1 1v6c0 .6-.4 1-1 1H8a1 1 0 0 1-1-1v-6c0-.6.4-1 1-1z"/>

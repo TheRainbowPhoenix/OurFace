@@ -65,7 +65,7 @@
         <div class="post-image">
           <div class="post-image-align">
             <div class="post-image-contain">
-              <img class="post-img card-img-top" alt="img" src="<?php echo genImage($message->first->emetteur, $message->second[0]->image) ?>" <?php
+              <img class="post-img card-img-top lazy" alt="img" data-src="<?php echo genImage($message->first->emetteur, $message->second[0]->image) ?>" <?php
               if($i[1]>260) {
                 $diff = 12800/$i[1]-50;
                 //echo 'style="transform: translateY('.$diff.'%);"';
