@@ -2,7 +2,7 @@
 # @Author: uapv1701795
 # @Date:   2018-11-20T13:30:40+01:00
 # @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T15:47:35+01:00
+# @Last modified time: 2018-11-20T15:52:46+01:00
 
 
 
@@ -125,6 +125,32 @@ foreach ($imgExt as $k => $ext) {
 
 
   <div class="col posts-main">
+    <div class="compose affix-top">
+
+      <div class="input-group">
+        <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+        <div class="input-group-append">
+          <button type="button" class="btn btn-outline-secondary">Action</button>
+          <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fixed-bottom">
+      <div class="float-right action-button">
+        <span class="icon icon-large icon-edit">
+        </span>
+      </div>
+    </div>
     <div>
 
   <?php

@@ -2,7 +2,7 @@
 # @Author: uapv1701795
 # @Date:   2018-11-19T00:53:49+01:00
 # @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T14:29:43+01:00
+# @Last modified time: 2018-11-20T15:25:50+01:00
 
 
 
@@ -44,7 +44,7 @@ function genPP($text, $id) {
     $f = 'profile-image/'.$id.'_400x400.jpg';
     if(file_exists($f)) return $f;
   }
-  return "images/ico/def48.png";
+  return "images/ico/def.svg";
 }
 
 
@@ -142,6 +142,22 @@ class parser
 		} elseif(has_key('all', $params) && $params['all'] == '1') {
 			return json_encode(utilisateurTable::getUsersV2());
 		} else return raiseError(genError(50,'User not found'));
+	}
+
+	public static function suggestions($params) {
+		$html = '<li class="list-group-item card-body">
+  <div class="d-flex account-small" data-user-id="55">
+    <div class="avatar-container">
+      <img class="avatar-image" src="profile-image/55_400x400.jpg" alt="">
+    </div>
+    <div class="name-container flex-grow-1">
+      <h5 class="card-title">root root</h5>
+      <h6 class="card-subtitle mb-2 text-muted">@root</h6>
+    </div>
+    <div class="floating-card" style="width: 18rem;"></div>
+  </div>
+</li>';
+		return $html;
 	}
 }
 

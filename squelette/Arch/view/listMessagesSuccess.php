@@ -2,7 +2,7 @@
 # @Author: uapv1701795
 # @Date:   2018-11-19T00:53:49+01:00
 # @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T14:10:29+01:00
+# @Last modified time: 2018-11-20T14:54:29+01:00
 
 
 
@@ -20,7 +20,7 @@
       }
       if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
     }
-    return "images/ico/def96.png";
+    return "images/ico/def.svg";
   }
 
   function genTimeDiff($time) {

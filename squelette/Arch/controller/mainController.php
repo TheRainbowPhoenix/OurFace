@@ -2,7 +2,7 @@
 # @Author: uapv1701795
 # @Date:   2018-11-18T21:52:01+01:00
 # @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T14:37:25+01:00
+# @Last modified time: 2018-11-20T15:55:11+01:00
 
 
 
@@ -126,6 +126,31 @@ class mainController
 			}
 			$context->messages = $stack;
 			$context->user = utilisateurTable::getUserById($id)[0];
+			$context->sug = utilisateurTable::getRandomUsers();
+			return context::SUCCESS;
+		} else {
+			goLogin();
+			return;
+		}
+	}
+
+	public static function home($request,$context)
+	{
+		if(array_key_exists('user_var', $_SESSION))  {
+			$stack = array();
+			$_msgs = messageTable::getMessages();
+			foreach ($_msgs as $msg) {
+				//var_dump($msg);
+				$_pst = postTable::getPostById($msg->id);
+				$_emtr = utilisateurTable::getUserById($msg->emetteur);
+				if(isset($_pst) && isset($_emtr)) {
+					$tmp = new Compose($msg, $_pst, $_emtr);
+					array_push($stack, $tmp);
+				}
+			}
+			$context->messages = $stack;
+			$context->user = utilisateurTable::getUserById($_SESSION['user_var']['id'])[0];
+			$context->sug = utilisateurTable::getRandomUsers();
 			return context::SUCCESS;
 		} else {
 			goLogin();

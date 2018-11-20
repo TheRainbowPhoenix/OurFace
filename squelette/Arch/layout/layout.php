@@ -2,7 +2,7 @@
 # @Author: uapv1701795
 # @Date:   2018-11-19T00:53:49+01:00
 # @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T13:26:10+01:00
+# @Last modified time: 2018-11-20T14:55:02+01:00
 
 
 
@@ -20,7 +20,7 @@ function genPP($text, $id) {
     $f = 'profile-image/'.$id.'_400x400.jpg';
     if(file_exists($f)) return $f;
   }
-  return "images/ico/def48.png";
+  return "images/ico/def.svg";
 }
 
 function genDate($text) {
@@ -122,7 +122,7 @@ function genDate($text) {
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileLinks">
               <a class="dropdown-item" href="?action=listMessages">Messages</a>
-              <a class="dropdown-item" href="?action=BProfile">Profile</a>
+              <a class="dropdown-item" href="?action=profile">Profile</a>
               <a class="dropdown-item" href="?action=logout">Logout</a>
             </div>
           </div>

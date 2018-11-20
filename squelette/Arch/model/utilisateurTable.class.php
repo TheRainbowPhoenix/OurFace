@@ -1,4 +1,11 @@
 <?php
+# @Author: uapv1701795
+# @Date:   2018-11-17T21:25:56+01:00
+# @Last modified by:   uapv1701795
+# @Last modified time: 2018-11-20T15:36:26+01:00
+
+
+
 
 class utilisateurTable
 {
@@ -67,6 +74,16 @@ class utilisateurTable
   {
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.utilisateur" ;
+    $res = $connection->doQueryObject( $sql, "utilisateur" );
+    if($res === FALSE || is_null($res)) return false;
+
+    return $res;
+  }
+
+  public static function getRandomUsers()
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.utilisateur ORDER BY RANDOM() LIMIT 3" ;
     $res = $connection->doQueryObject( $sql, "utilisateur" );
     if($res === FALSE || is_null($res)) return false;
 
