@@ -70,7 +70,6 @@ function genThumb($id, $text) {
         echo '</small>
       </div>
     </div>';
-    return $r;
   }
 
   function getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date)
