@@ -42,9 +42,7 @@ function genThumb($id, $text) {
     $filen = explode('.',$text)[0];
     if (file_exists('media/'.$id.'_'.$filen.'_thumb.jpg')) return 'media/'.$id.'_'.$filen.'_thumb.jpg';
     else {
-      foreach ($imgExt as $k => $ext) {
-        if (file_exists('media/'.$id.'_'.$text.'_thumb.jpg')) return 'media/'.$id.'_'.$text.'_thumb.jpg';
-      }
+      if (file_exists('media/'.$id.'_'.$text.'_thumb.jpg')) return 'media/'.$id.'_'.$text.'_thumb.jpg';
     }
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
   }
