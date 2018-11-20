@@ -80,6 +80,16 @@ class utilisateurTable
     return $res;
   }
 
+  public static function getUsersFrom($id)
+  {
+    $connection = new dbconnection() ;
+    if(!is_numeric($id) || $id<0) $id=0;
+    $sql = " select * from fredouil.utilisateur where id between ".$id." and ".($id+18)." order by id" ;
+    $res = $connection->doQueryObject( $sql, "utilisateur" );
+    if($res === FALSE || is_null($res)) return false;
+    return $res;
+  }
+
   public static function getRandomUsers()
   {
     $connection = new dbconnection() ;

@@ -106,6 +106,12 @@ class parser
 				}
 				return raiseError(genError(50,'User not found'));
 			} elseif(has_key('all', $params) && $params['all'] == '1') {
+				if(has_key('from', $params)) {
+					if(is_numeric($params['from'])) {
+						$rtrn = utilisateurTable::getUsersFrom($params['from']);
+						if(has_key(0, $rtrn)) return json_encode($rtrn);
+					} else return raiseError(genError(50,'User not found'));
+				}
 				return json_encode(utilisateurTable::getUsersV2());
 			} else return raiseError(genError(50,'User not found'));
 		} else {
