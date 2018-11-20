@@ -95,7 +95,7 @@ $( document ).ready(function() {
   // Tabs icon
   var a = GetAction();
   switch (a) {
-    case "listMessages":
+    case "home":
       $('#home').addClass("selected");
       break;
     case "listUsers":

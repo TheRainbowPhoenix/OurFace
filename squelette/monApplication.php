@@ -11,6 +11,7 @@ $action =  $_REQUEST['action'];
 
 require_once 'lib/core.php';
 require_once $nameApp.'/controller/mainController.php';
+require_once $nameApp.'/layout/generator.php';
 session_start();
 
 $context = context::getInstance();

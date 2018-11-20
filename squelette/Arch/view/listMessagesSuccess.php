@@ -9,43 +9,6 @@
   if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
     die('Invalid');
   }
-  function genImage($id, $text) {
-    if(isset($text) && !is_null($text)) {
-      if (file_exists('media/'.$id.'_'.$text)) return 'media/'.$id.'_'.$text;
-      else {
-        $imgExt = ['jpg', 'gif', 'png'];
-	foreach ($imgExt as $k => $ext) {
-          if (file_exists('media/'.$id.'_'.$text.'.'.$ext)) return 'media/'.$id.'_'.$text.'.'.$ext;
-        }
-      }
-      if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
-    }
-    return "images/ico/def.svg";
-  }
-
-  function genTimeDiff($time) {
-    $now = strtotime(date("Y-m-d h:i:sa"));
-    $last = strtotime($time);
-    $diffMins = round(($now - $last) / 60);
-    if($diffMins<60) return $diffMins.' minutes ago';
-    else {
-      $diffHours = round(($now - $last) / 3600);
-      if($diffHours<24) return $diffHours.' hours ago';
-      else {
-        $diffDays = round(($now - $last) / 86400);
-        if($diffDays<30) return $diffDays.' days ago';
-        else {
-          $diffMonth = round(($now - $last) / 2628000);
-          if($diffMonth<12) return $diffMonth.' months ago';
-          else {
-            $diffYears = round(($now - $last) / 31536000);
-            return $diffYears.' years ago';
-          }
-        }
-      }
-    }
-  }
-
   ?>
 
 

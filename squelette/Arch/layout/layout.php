@@ -1,27 +1,5 @@
 <?php
 
-function escape($text) {
-  $text = trim($text);
-  $text = stripslashes($text);
-  $text = htmlspecialchars($text, ENT_QUOTES);
-  return $text;
-}
-function genPP($text, $id) {
-  if(isset($text) && !is_null($text)) {
-    if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
-    if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
-  }
-  if (is_numeric($id)) {
-    $f = 'profile-image/'.$id.'_400x400.jpg';
-    if(file_exists($f)) return $f;
-  }
-  return "images/ico/def.svg";
-}
-
-function genDate($text) {
-  $date = new DateTime($text);
-  return date_format($date, 'd/m/Y');
-}
  ?>
 <!DOCTYPE html>
 <html>
