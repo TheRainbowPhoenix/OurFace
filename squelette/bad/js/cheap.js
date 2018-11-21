@@ -22,6 +22,7 @@ function loadMoar(fr, id) {
   if(id<0) {
     $.ajax({
       method: "GET",
+      async: false,
       url: "api.php/messages",
       data: {from: fr, html: '1'},
       dataType: "html"
@@ -128,6 +129,11 @@ $( document ).ready(function() {
       break;
     default:
   }
-
+  //If scrolled to bottom
+  $(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+       loadMoar(10, -1);
+    }
+  });
 
 });
