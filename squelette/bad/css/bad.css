@@ -2,7 +2,7 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T02:00:50+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-21T14:29:19+01:00
+ * @Last modified time: 2018-11-21T14:53:54+01:00
  */
 
 
@@ -415,6 +415,33 @@ html, body {
   /*background-image: url(../../images/ico/like.svg);*/
 }
 
+/* chat rules */
+
+.server-icon {
+	margin: 8px;
+}
+
+.server-list {
+	padding-left: 0;
+	margin: 0 auto;
+	/* text-align: center; */
+	/* justify-content: center; */
+	width: 100%;
+	background-color: rgba(251, 249, 251, 0.5);
+	padding-top: 8px;
+	padding-left: 12px;
+	border-radius: .3em .3em 0 0;
+}
+
+.servers-container {
+	width: 100%;
+	overflow: hidden;
+	margin-top: 16px;
+	/* background: rgba(0,0,0,0.1); */
+}
+
+/* ends here */
+
 /* splash rules */
 
 .bg-dash {
@@ -516,6 +543,10 @@ html, body {
 		margin-left: 0;
 		width: initial;
 		height: initial;
+	}
+	#chats .fixed-chats {
+		position: sticky;
+		top: 36px;
 	}
   .container-fluid {
     width: 85%;
