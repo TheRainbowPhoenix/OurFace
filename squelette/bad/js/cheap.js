@@ -98,7 +98,7 @@ $( document ).ready(function() {
       if(this != elem) $(elem).find(".floating-card").empty();
       elem = this;
       var id = $(elem).data("user-id");
-      $(location).attr('href','?action=BProfile&id='+id);
+      $(location).attr('href','?action=profile&id='+id);
     });
     // ON PHONE
   }
