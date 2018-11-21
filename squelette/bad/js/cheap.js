@@ -97,6 +97,11 @@ $( document ).ready(function () {
       doPost();
     }
   );*/
+  //Lightbox
+  $(document).on("click", '[data-toggle="lightbox"]', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox();
+  });
 });
 
 var timeoutId;
@@ -181,11 +186,6 @@ function a() {
             console.log('error loading ' + element.data('src'));
         }
     });
-  //Lightbox
-  $(document).on("click", '[data-toggle="lightbox"]', function(event) {
-    event.preventDefault();
-    $(this).ekkoLightbox();
-  });
   // Tabs icon
   var a = GetAction();
   switch (a) {
