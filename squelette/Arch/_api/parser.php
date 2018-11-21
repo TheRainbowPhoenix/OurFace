@@ -4,9 +4,6 @@
 # @Last modified by:   uapv1701795
 # @Last modified time: 2018-11-20T15:25:50+01:00
 
-
-
-
 function is_logged($S) {
 	if(array_key_exists('user_var', $S)) return $S['user_var']['id'];
 	else return -1;
@@ -36,7 +33,7 @@ function genError($code, $text) {
   if(file_exists($f)) return $f;
   else return "images/ico/def48.png";
 }*/
-function genPP($text, $id) {
+/*function genPP($text, $id) {
   if(isset($text) && !is_null($text)) {
     if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
@@ -45,7 +42,7 @@ function genPP($text, $id) {
     if(file_exists($f)) return $f;
   }
   return "images/ico/def.svg";
-}
+}*/
 
 
 function has_media($id, $text) {
@@ -59,14 +56,6 @@ function has_media($id, $text) {
       }
     }
     return false;
-}
-
-function escape($text) {
-  $text = trim($text);
-  //$text = strip_tags($text);
-  $text = stripslashes($text);
-  $text = htmlspecialchars($text, ENT_QUOTES);
-  return $text;
 }
 
 class parser
@@ -121,17 +110,54 @@ class parser
 
   public static function messages($params)
 	{
+			$html = (has_key('html', $params))?1:0; //generate html
 			$stack = array();
-			$_msgs = messageTable::getMessages();
+			if(has_key('from', $params)){
+				if(is_numeric($params['from'])) {
+					if(has_key('user_id', $params) && is_numeric($params['user_id'])){
+						$_msgs = messageTable::getMessagesSinceId($params['from'], $params['user_id']);
+					} else {
+						$_msgs = messageTable::getMessagesSinceId($params['from'], -1);
+					}
+				} else {
+					$_msgs = messageTable::getMessages();
+				}
+			} else {
+				$_msgs = messageTable::getMessages();
+			}
 			foreach ($_msgs as $msg) {
 				$_pst = postTable::getPostById($msg->id);
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
 				if(isset($_pst) && isset($_emtr)) {
-					$tmp = new Compose($msg, $_pst, $_emtr);
-					array_push($stack, $tmp);
+					if($html) {
+						$id = $msg->emetteur;
+						if(isset($_pst[0]) && isset($msg) && $_pst[0]->image != null) {
+							$img = genImage($id, $_pst[0]->image);
+							$thumb = genThumb($id,$_pst[0]->image);
+						} else {
+							$img = null;
+							$thumb = null;
+						}
+						$com = 0;
+						$likes = (isset($msg) && $msg->aime != NULL && is_numeric($msg->aime))?$msg->aime:0;
+						$msg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
+						$date = (isset($_pst[0]))?genTimeDiff($_pst[0]->date):'times ago';
+						$usr = $_emtr[0];
+						//var_dump($_emtr);
+						echo getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+						//var_dump($msg);
+						//var_dump($_pst);
+						//var_dump($_emtr);
+						//$tmp = getPost();
+						//$img, $likes, $com, $thumb, $id, $usr, $msg, $date)
+						//array_push($stack, $tmp);
+					} else {
+						$tmp = new Compose($msg, $_pst, $_emtr);
+						array_push($stack, $tmp);
+					}
 				}
 			}
-		return json_encode($stack);
+		return ($html)?'':json_encode($stack);
 	}
 
 	public static function popup($params)

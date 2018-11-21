@@ -98,7 +98,7 @@ function genThumb($id, $text) {
       echo '" alt="">
         </div>
         <div class="name-container flex-grow-1">
-          <h5 class="card-title">'.escape($usr->prenom).' '.escape($usr->nom).'</h5>
+          <h5 class="card-title"><a href="?action=profile&id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a></h5>
           <h6 class="card-subtitle mb-2 text-muted">@'.escape($usr->identifiant).'</h6>
         </div>
         <div class="floating-card" style="width: 18rem;"></div>
@@ -108,6 +108,15 @@ function genThumb($id, $text) {
     <div class="card-footer">';
       echo genFoot($likes, $com, $date);
       echo '</div></div>';
+  }
+
+  function genLoadError() {
+    echo '<div> <div class="card-body">
+    <h5 class="card-title">Oh no !</h5>
+    <p class="card-text">Automatic messages loading seems to be stuck ... Maybe you could try :</p>
+    <a href="javascript:loadMoar();" class="card-link">Reload</a>
+    <a href="#" class="card-link">contact support</a>
+  </div></div>';
   }
 
   function genSuggestions($sug) {

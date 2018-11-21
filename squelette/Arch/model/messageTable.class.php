@@ -42,10 +42,23 @@ class messageTable
     return $res;
   }
 
+  public static function getMessagesSinceId($id, $em)
+  {
+    $connection = new dbconnection() ;
+    if(!is_numeric($id) || $id<0) $id=0;
+    //select * from (select * from fredouil.message where id > 100 order by id limit 10) as x order by id desc;
+    if($em<0) $sql = " select * from (select * from fredouil.message where id > ".$id." order by id limit 10) as x order by id desc" ;
+    else $sql = " select * from (select * from fredouil.message where id > ".$id." and emetteur =".$em." order by id limit 10) as x order by id desc" ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    if($res === FALSE || is_null($res)) return false;
+    return $res;
+  }
+
+
   public function getMessagesfrom($id)
   {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.message where emetteur='".$id."' order by id limit 10" ;
+    $sql = "select * from fredouil.message where emetteur='".$id."' order by id desc limit 10" ;
     $res = $connection->doQueryObject( $sql, "message" );
     return $res;
   }

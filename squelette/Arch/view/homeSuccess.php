@@ -73,7 +73,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
         </span>
       </div>
     </div>
-    <div>
+    <div id="posts">
 
   <?php
   //var_dump($context->messages);
@@ -90,14 +90,24 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
       $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
       $usr = $message->third[0];
       echo getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+    } else {
+      if(isset($message->second[0]) && isset($message->first)) {
+        $id = $message->first->emetteur;
+        $img = null;
+        $thumb = null;
+        $com = 0;
+        $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
+        $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
+        $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
+        $usr = $message->third[0];
+        echo getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+      }
     }
     //var_dump($message);
-    ?>
-
- <?php
   }
 ?>
     </div>
+    <?php genLoadError(); ?>
 </div>
 
 <div class="col-lg-3" id="chats">

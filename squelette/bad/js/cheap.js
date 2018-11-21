@@ -17,6 +17,19 @@ function GetAction() {
   return false;
 }
 
+function loadMoar() {
+  var html;
+  $.ajax({
+    method: "GET",
+    url: "api.php/messages",
+    data: {from: '9', user_id: '2', html: '1'},
+    dataType: "html"
+  }).done(function(data) {
+    html = data;
+    $("#posts").append( data );
+  });
+}
+
 $( document ).ready(function() {
   var timeoutId;
   var hoverFetchDelay= 500;

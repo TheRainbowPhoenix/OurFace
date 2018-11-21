@@ -97,6 +97,7 @@ html, body {
   background-color: rgba(251, 249, 251, 0.5);
   border-radius: 4px;
   min-width: 300px;
+  margin-bottom: 16px;
 }
 
 .SProfileCover {
@@ -142,6 +143,10 @@ html, body {
 
 .nav-avatar .card-title {
 	line-height: 32px;
+}
+
+.card-title a, .card-title a:hover {
+  color: inherit;
 }
 
 .nav-avatar .name-container {
@@ -569,6 +574,13 @@ html, body {
     box-shadow: inset 0 0 0 0.2rem #9a92b8;
     transition: all .2s ease-in-out;
 }
+
+a:hover {
+  	color: #5941b1;
+}
+a {
+   	color: #7669a5;
+ }
 /* Framework redefines */
 .img-fluid {
     border-radius: .1rem;
