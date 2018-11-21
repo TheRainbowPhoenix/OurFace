@@ -82,7 +82,6 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
         $img = null;
         $thumb = null;
       }
-      $i = getimagesize($img);
       $com = 0;
       $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
