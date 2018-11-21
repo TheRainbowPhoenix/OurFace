@@ -49,6 +49,34 @@ function genThumb($id, $text) {
   return "images/gif/load.gif";
 }
 
+function genCompose() {
+  echo '<div class="compose affix-top">
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+          <div class="input-group-append">
+            <button type="button" id="postBtn" class="btn btn-outline-secondary">Action</button>
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div role="separator" class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fixed-bottom">
+        <div class="float-right action-button">
+          <span class="icon icon-large icon-edit">
+          </span>
+        </div>
+      </div>';
+}
+
   function genFoot($likes, $com=0, $date)
   {
     echo '<div class="post-actions row">
@@ -72,9 +100,9 @@ function genThumb($id, $text) {
     </div>';
   }
 
-  function getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date)
+  function getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date)
   {
-    echo '<div class="card post">';
+    echo '<div class="card post" data-id="'.$pid.'">';
     if($img!=null) {
     echo'<div class="post-image">
           <div class="post-image-align">
@@ -114,7 +142,7 @@ function genThumb($id, $text) {
     echo '<div> <div class="card-body">
     <h5 class="card-title">Oh no !</h5>
     <p class="card-text">Automatic messages loading seems to be stuck ... Maybe you could try :</p>
-    <a href="javascript:loadMoar(10, '.$id.');" class="card-link">Reload</a>
+    <a href="javascript:loadMoar(fmin(), '.$id.');" class="card-link">Reload</a>
     <a href="#" class="card-link">contact support</a>
   </div></div>';
   }

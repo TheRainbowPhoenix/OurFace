@@ -5,6 +5,16 @@
  * @Last modified time: 2018-11-21T13:47:14+01:00
  */
 
+function notify(text) {
+  $("#notify").html('<div class="alert alert-dark" role="alert"><span>'+text+'</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+  window.setTimeout(function () {
+      $("#notify>.alert").fadeTo(2000, 500).slideUp(1000, function () {
+          $("#notify>.alert").slideUp(500);
+      });
+  }, 5000);
+  //$("#notify").html('');
+}
+
 function doPost() {
   $("#notify").html('<div class="alert alert-dark" role="alert"><span>Succes  !</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 }
@@ -15,6 +25,15 @@ function GetAction() {
   for (var i =0; i< actions.length; i++) {
     var param=actions[i].split('=');
     if (param[0]=='action') return param[1];
+  }
+  return false;
+}
+function Get(val) {
+  var gets = window.location.search.substring(1);
+  var actions = gets.split('&');
+  for (var i =0; i< actions.length; i++) {
+    var param=actions[i].split('=');
+    if (param[0]==val) return param[1];
   }
   return false;
 }
@@ -35,25 +54,66 @@ function loadMoar(fr, id) {
   } else {
     $.ajax({
       method: "GET",
+      async: false,
       url: "api.php/messages",
       data: {from: fr, user_id: id, html: '1'},
       dataType: "html"
     }).done(function(data) {
       html = data;
-      console.log((html.substring(html.lastIndexOf('<!-- id=')+8, html.lastIndexOf('-->'))));
       $("#posts").append( data );
-      return (html.substring(html.lastIndexOf('<!-- id=')+8, html.lastIndexOf('-->')));
     });
   }
   a();
 }
 
-$( document ).ready(a());
+$( document ).ready(function () {
+  a();
+  var refer = Get('id');
+  //Post Action
+  $("#postBtn").click(function(e) {
+    if($('.form-control').val() != '') {
+      e.preventDefault();
+      $.ajax({
+        type: "GET",
+        url: "api.php/post",
+        data: {
+          status: $('.form-control').val(),
+          refer: refer,
+          access_token: $("#access_token").val()
+        },
+        success: function(result) {
+          console.log(result);
+          notify('Posted !');
+        },
+        error: function(result) {
+          alert('error');
+        }
+      });
+    } else {
+      notify('No text profided');
+    }
+  });
+  /*$("#postBtn").click( function() {
+      doPost();
+    }
+  );*/
+});
 
 var timeoutId;
 var hoverFetchDelay= 500;
 var elem;
 var html;
+
+var min;
+
+function fmin() {
+  var min = $(".post").data("id");
+  $(".post").each(function (i, e) {
+    var id = parseInt($(e).data("id"), 10);
+    if(min>id) min=id;
+  });
+  return min;
+}
 
 function a() {
   // IF ON PC
@@ -137,16 +197,12 @@ function a() {
       break;
     default:
   }
-  //Post Action
-  $("#postBtn").click( function() {
-      doPost();
-    }
-  );
   //If scrolled to bottom
-  $(window).scroll(function() {
+  /*$(window).scroll(function() {
+    //console.log(fmin());
     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-       loadMoar(10, -1);
+       loadMoar(fmin(), -1);
     }
-  });
+  });*/
 
 }

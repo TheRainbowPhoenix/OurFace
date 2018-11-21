@@ -12,7 +12,7 @@
   <div class="card-body">
     <h5 class="card-title">Welcome back '.$text.'</h5>
     <p class="card-text">You have successfuly been logged into Arch.</p>
-    <a href="?" class="btn btn-primary">Go to your deck</a>
+    <a href="monApplication.php?action=home" class="btn btn-primary">Go to your deck</a>
   </div>
     </div></div>';
   }

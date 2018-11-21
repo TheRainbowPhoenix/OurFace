@@ -26,7 +26,7 @@ function goIndex() {
 function goBoard() {
 	$host  = $_SERVER['HTTP_HOST'];
 	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-	$extra = '?action=profile';
+	$extra = 'monApplication.php?action=home';
 	header("Location: http://$host$uri/$extra");
 }
 
@@ -142,7 +142,7 @@ class mainController
 	{
 		if(array_key_exists('user_var', $_SESSION))  {
 			$stack = array();
-			$_msgs = messageTable::getMessages();
+			$_msgs = messageTable::getMessagesLimit();
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
 				$_pst = postTable::getPostById($msg->id);

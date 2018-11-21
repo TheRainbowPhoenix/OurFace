@@ -13,11 +13,10 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
 
   <script type="text/javascript">
   //If scrolled to bottom
-  var last = <?php echo ($context->last_id>0)?$context->last_id:0?>;
   $(window).scroll(function() {
+    if((fmin()-1)==0) return;
     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-       last = loadMoar(last, <?php echo $context->id?>);
-       console.log(last);
+       loadMoar(fmin(), <?php echo $context->id?>);
     }
   });
   </script>
@@ -66,6 +65,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
 
 
   <div class="col posts-main">
+    <?php genCompose(); ?>
     <div id="posts">
 
   <?php
@@ -73,6 +73,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   //echo json_encode($context->messages);
   foreach ($context->messages as $message) {
     if(isset($message->first)) {
+      $pid = $message->first->id;
       $id = $message->first->emetteur;
       if(isset($message->second[0]) && $message->second[0]->image != null) {
         $img = genImage($message->first->emetteur, $message->second[0]->image);
@@ -87,7 +88,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
       $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
       $usr = $message->third[0];
-      echo getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+      echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date);
 
     }
     //var_dump($message);

@@ -44,6 +44,13 @@ function genError($code, $text) {
   return "images/ico/def.svg";
 }*/
 
+function is_user($id) {
+	return (is_numeric($id) && $id>=0 && utilisateurTable::getUserById($id) != false);
+}
+
+function is_post($id) {
+	return (is_numeric($id) && $id>=0 && postTable::getPostById($id) != false);
+}
 
 function has_media($id, $text) {
     if(isset($id) && isset($text) && !is_null($text)) {
@@ -62,10 +69,16 @@ class parser
 {
 
 	public static function post($params) {
+		//INSERT INTO fredouil.message (id, emetteur, destinataire, parent, post, aime) VALUES (13, 2, 1, 2, 13, 1);
+		//INSERT INTO fredouil.post (id, texte, date, image) VALUES (13, '', '2018-11-18 09:25:24.742112', 'dd48d9347cc6');
 		$id = is_logged($_SESSION);
 		if($id >=0) {
 			$post = array();
 			$post['id'] = 456;
+			$post['emetteur']=$id;
+			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:-1; //-1 public ?
+			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:-1;
+			//post = generated id, aime = 0
 			if (has_key('status',$params)) {
 				$status = $params['status'];
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
@@ -130,6 +143,7 @@ class parser
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
 				if(isset($_pst) && isset($_emtr)) {
 					if($html) {
+						$pid = $msg->id;
 						$id = $msg->emetteur;
 						if(isset($_pst[0]) && isset($msg) && $_pst[0]->image != null) {
 							$img = genImage($id, $_pst[0]->image);
@@ -144,8 +158,8 @@ class parser
 						$date = (isset($_pst[0]))?genTimeDiff($_pst[0]->date):'times ago';
 						$usr = $_emtr[0];
 						//var_dump($_emtr);
-						echo getPost($img, $likes, $com, $thumb, $id, $usr, $mesg, $date);
-						echo '<!-- id='.$msg->id.'-->';
+						echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $mesg, $date);
+						//echo '<!-- id='.$msg->id.'-->';
 						//var_dump($msg);
 						//var_dump($_pst);
 						//var_dump($_emtr);

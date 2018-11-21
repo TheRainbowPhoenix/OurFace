@@ -14,7 +14,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   //If scrolled to bottom
   $(window).scroll(function() {
     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-       loadMoar(10, -1);
+       loadMoar(fmin(), -1);
     }
   });
   </script>
@@ -62,32 +62,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
 
 
   <div class="col posts-main">
-    <div class="compose affix-top">
-
-      <div class="input-group">
-        <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-        <div class="input-group-append">
-          <button type="button" id="postBtn" class="btn btn-outline-secondary">Action</button>
-          <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div role="separator" class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="fixed-bottom">
-      <div class="float-right action-button">
-        <span class="icon icon-large icon-edit">
-        </span>
-      </div>
-    </div>
+    <?php genCompose(); ?>
     <div id="posts">
 
   <?php
@@ -95,6 +70,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   //echo json_encode($context->messages);
   foreach ($context->messages as $message) {
     if(isset($message->second[0]) && isset($message->first) && $message->second[0]->image != null) {
+      $pid = $message->first->id;
       $id = $message->first->emetteur;
       $img = genImage($message->first->emetteur, $message->second[0]->image);
       $thumb = genThumb($id, $message->second[0]->image);
@@ -104,9 +80,10 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
       $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
       $usr = $message->third[0];
-      echo getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+      echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date);
     } else {
       if(isset($message->second[0]) && isset($message->first)) {
+        $pid = $message->first->id;
         $id = $message->first->emetteur;
         $img = null;
         $thumb = null;
@@ -115,7 +92,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
         $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
         $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
         $usr = $message->third[0];
-        echo getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+        echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date);
       }
     }
     //var_dump($message);

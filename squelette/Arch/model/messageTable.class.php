@@ -22,6 +22,14 @@ class messageTable
     return (is_array($res))?$res:false;
   }
 
+  public function getMessagesLimit()
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message order by id desc limit 10";
+    $res = $connection->doQueryObject( $sql, "message"  );
+    return (is_array($res))?$res:false;
+  }
+
   public function getMessagesByPage($debut, $fin, $id) {
     $connection = new dbconnection() ;
     $sql = (isset($id) && is_numeric($id))?"select * from fredouil.message where destinataire='".$id."' order by id desc limit '.$fin-$debut. offset ".$debut:"select * from fredouil.message order by id desc limit '.$fin-$debut. offset ".$debut ;
