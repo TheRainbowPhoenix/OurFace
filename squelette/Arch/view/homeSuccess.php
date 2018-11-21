@@ -3,6 +3,14 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   die('Invalid');
 }
 ?>
+  <script type="text/javascript">
+  //If scrolled to bottom
+  $(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+       loadMoar(10, -1);
+    }
+  });
+  </script>
   <nav class="col col-lg-3 sidebar dashboard dashboard-left">
     <div class="BProfile">
       <div class="card-deck">

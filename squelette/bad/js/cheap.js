@@ -17,8 +17,8 @@ function GetAction() {
   return false;
 }
 
+var html;
 function loadMoar(fr, id) {
-  var html;
   if(id<0) {
     $.ajax({
       method: "GET",
@@ -38,16 +38,22 @@ function loadMoar(fr, id) {
       dataType: "html"
     }).done(function(data) {
       html = data;
+      console.log((html.substring(html.lastIndexOf('<!-- id=')+8, html.lastIndexOf('-->'))));
       $("#posts").append( data );
+      return (html.substring(html.lastIndexOf('<!-- id=')+8, html.lastIndexOf('-->')));
     });
   }
+  a();
 }
 
-$( document ).ready(function() {
-  var timeoutId;
-  var hoverFetchDelay= 500;
-  var elem;
-  var html;
+$( document ).ready(a());
+
+var timeoutId;
+var hoverFetchDelay= 500;
+var elem;
+var html;
+
+function a() {
   // IF ON PC
   if ($(window).width() > 1100) {
     $('.account-small').hover(function() {
@@ -129,11 +135,5 @@ $( document ).ready(function() {
       break;
     default:
   }
-  //If scrolled to bottom
-  $(window).scroll(function() {
-    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-       loadMoar(10, -1);
-    }
-  });
 
-});
+}

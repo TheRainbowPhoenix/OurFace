@@ -140,11 +140,12 @@ class parser
 						}
 						$com = 0;
 						$likes = (isset($msg) && $msg->aime != NULL && is_numeric($msg->aime))?$msg->aime:0;
-						$msg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
+						$mesg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
 						$date = (isset($_pst[0]))?genTimeDiff($_pst[0]->date):'times ago';
 						$usr = $_emtr[0];
 						//var_dump($_emtr);
-						echo getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+						echo getPost($img, $likes, $com, $thumb, $id, $usr, $mesg, $date);
+						echo '<!-- id='.$msg->id.'-->';
 						//var_dump($msg);
 						//var_dump($_pst);
 						//var_dump($_emtr);

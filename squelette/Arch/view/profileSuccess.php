@@ -9,9 +9,18 @@
 if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   die('Invalid');
 }
-
   ?>
 
+  <script type="text/javascript">
+  //If scrolled to bottom
+  var last = <?php echo ($context->last_id>0)?$context->last_id:0?>;
+  $(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+       last = loadMoar(last, <?php echo $context->id?>);
+       console.log(last);
+    }
+  });
+  </script>
 
   <nav class="col col-lg-3 sidebar dashboard dashboard-left">
     <div class="BProfile">
@@ -57,16 +66,21 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
 
 
   <div class="col posts-main">
-    <div>
+    <div id="posts">
 
   <?php
   //var_dump($context->messages);
   //echo json_encode($context->messages);
   foreach ($context->messages as $message) {
-    if(isset($message->second[0]) && isset($message->first) && $message->second[0]->image != null) {
+    if(isset($message->first)) {
       $id = $message->first->emetteur;
-      $img = genImage($message->first->emetteur, $message->second[0]->image);
-      $thumb = genThumb($id, $message->second[0]->image);
+      if(isset($message->second[0]) && $message->second[0]->image != null) {
+        $img = genImage($message->first->emetteur, $message->second[0]->image);
+        $thumb = genThumb($id, $message->second[0]->image);
+      } else {
+        $img = null;
+        $thumb = null;
+      }
       $i = getimagesize($img);
       $com = 0;
       $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
@@ -74,6 +88,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
       $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
       $usr = $message->third[0];
       echo getPost($img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+
     }
     //var_dump($message);
   }

@@ -113,11 +113,13 @@ class mainController
 		if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($id)) $id = $request['id'];
 
 		if(array_key_exists('user_var', $_SESSION))  {
+			$cnt = 0;
 			$stack = array();
 			$_msgs = (isset($id))?messageTable::getMessagesFrom($id):messageTable::getMessages();
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
 				$_pst = postTable::getPostById($msg->id);
+				$cnt = $msg->id;
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
 				if(isset($_pst) && isset($_emtr)) {
 					$tmp = new Compose($msg, $_pst, $_emtr);
@@ -127,6 +129,8 @@ class mainController
 			$context->messages = $stack;
 			$context->user = utilisateurTable::getUserById($id)[0];
 			$context->sug = utilisateurTable::getRandomUsers();
+			$context->last_id = $cnt;
+			$context->id = $id;
 			return context::SUCCESS;
 		} else {
 			goLogin();
