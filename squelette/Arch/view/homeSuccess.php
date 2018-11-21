@@ -107,7 +107,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   }
 ?>
     </div>
-    <?php genLoadError(); ?>
+    <?php genLoadError(-1); ?>
 </div>
 
 <div class="col-lg-3" id="chats">

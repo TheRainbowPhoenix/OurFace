@@ -17,17 +17,29 @@ function GetAction() {
   return false;
 }
 
-function loadMoar() {
+function loadMoar(fr, id) {
   var html;
-  $.ajax({
-    method: "GET",
-    url: "api.php/messages",
-    data: {from: '9', user_id: '2', html: '1'},
-    dataType: "html"
-  }).done(function(data) {
-    html = data;
-    $("#posts").append( data );
-  });
+  if(id<0) {
+    $.ajax({
+      method: "GET",
+      url: "api.php/messages",
+      data: {from: fr, html: '1'},
+      dataType: "html"
+    }).done(function(data) {
+      html = data;
+      $("#posts").append( data );
+    });
+  } else {
+    $.ajax({
+      method: "GET",
+      url: "api.php/messages",
+      data: {from: fr, user_id: id, html: '1'},
+      dataType: "html"
+    }).done(function(data) {
+      html = data;
+      $("#posts").append( data );
+    });
+  }
 }
 
 $( document ).ready(function() {

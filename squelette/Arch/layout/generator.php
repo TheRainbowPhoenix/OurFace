@@ -110,11 +110,11 @@ function genThumb($id, $text) {
       echo '</div></div>';
   }
 
-  function genLoadError() {
+  function genLoadError($id) {
     echo '<div> <div class="card-body">
     <h5 class="card-title">Oh no !</h5>
     <p class="card-text">Automatic messages loading seems to be stuck ... Maybe you could try :</p>
-    <a href="javascript:loadMoar();" class="card-link">Reload</a>
+    <a href="javascript:loadMoar(10, '.$id.');" class="card-link">Reload</a>
     <a href="#" class="card-link">contact support</a>
   </div></div>';
   }
