@@ -137,8 +137,6 @@ function a() {
       break;
     default:
   }
-<<<<<<< HEAD
-=======
   //Post Action
   $("#postBtn").click( function() {
       doPost();
@@ -150,6 +148,5 @@ function a() {
        loadMoar(10, -1);
     }
   });
->>>>>>> 4270d028dadfd51708e4e80c2880ac68a113e577
 
 }
