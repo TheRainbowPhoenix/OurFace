@@ -2,7 +2,7 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T02:00:50+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-21T13:49:29+01:00
+ * @Last modified time: 2018-11-21T14:29:19+01:00
  */
 
 
@@ -414,6 +414,19 @@ html, body {
 .icon-like {
   /*background-image: url(../../images/ico/like.svg);*/
 }
+
+/* splash rules */
+
+.bg-dash {
+	background-image: url(../../images/ico/bg.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: bottom;
+	background-repeat-y: no-repeat;
+	background-size: cover;
+}
+
+/* ends here */
 
 /* Hidding rules */
 
