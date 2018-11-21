@@ -74,7 +74,9 @@ class parser
 		$id = is_logged($_SESSION);
 		if($id >=0) {
 			$post = array();
-			$post['id'] = 456;
+			//$post['id'] = 456;
+			$r = postTable::getLastPostId();
+			if($r!=false)$post['id'] = $r[0]['max']+1;
 			$post['emetteur']=$id;
 			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:-1; //-1 public ?
 			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:-1;
@@ -84,6 +86,24 @@ class parser
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
 				//if(strlen($status)>254) $status = substr($status, 0, 250).'...';
 				$post['status'] = trim(escape(urldecode($status)));
+			  $date = date("Y-m-d h:i:s.u");
+				$post['date'] = $date;
+				$media_id= '';
+				$post['image'] = '';
+				if (has_key('media_id',$params)) {
+					$media_id = $params['media_id'];
+					if(has_media($id, $media_id)) $post['image'] = $media_id;
+				}
+				$pst = array('' => 'id' ,$post['status']  => 'texte' ,$post['date']  => 'date' ,$post['image']  => 'image' );
+				$_P = new post($pst);
+				var_dump(postTable::getLastCreatedPostId());
+				//$_P->save();
+				var_dump($_P);
+				$mssg = array('' => 'id',$post['emetteur'] => 'emetteur',$post['destinataire'] => 'destinataire',$post['parent'] => 'parent',$_P->id => 'post',0 => 'aime');
+				$_M = new message($mssg);
+				var_dump($_M);
+				//var_dump($_P);
+				echo $_P->id;
 			} else {
 				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
 				$media_id = $params['media_id'];

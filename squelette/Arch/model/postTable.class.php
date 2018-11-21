@@ -16,4 +16,17 @@ class postTable
     return ($res==false)?false:$res;
   }
 
+  public function getLastPostId() {
+    $connection = new dbconnection() ;
+    $sql = "select MAX(id) from fredouil.post" ;
+    $res = $connection->doQuery( $sql );
+    return ($res==false)?false:$res;
+  }
+  public function getLastCreatedPostId() {
+    $connection = new dbconnection() ;
+    $sql = "select currval('fredouil.post_id_seq')" ;
+    $res = $connection->doQuery( $sql );
+    return ($res==false)?false:$res;
+  }
+
 }
