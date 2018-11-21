@@ -1,4 +1,11 @@
 <?php
+# @Author: uapv1701795
+# @Date:   2018-11-21T02:20:11+01:00
+# @Last modified by:   uapv1701795
+# @Last modified time: 2018-11-21T13:44:02+01:00
+
+
+
 if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   die('Invalid');
 }
@@ -52,7 +59,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
       <div class="input-group">
         <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
         <div class="input-group-append">
-          <button type="button" class="btn btn-outline-secondary">Action</button>
+          <button type="button" id="postBtn" class="btn btn-outline-secondary">Action</button>
           <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
           </button>

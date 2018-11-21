@@ -2,10 +2,12 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T11:52:10+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-19T14:22:59+01:00
+ * @Last modified time: 2018-11-21T13:47:14+01:00
  */
 
-
+function doPost() {
+  $("#notify").html('<div class="alert alert-dark" role="alert"><span>Succes  !</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+}
 
 function GetAction() {
   var gets = window.location.search.substring(1);
@@ -129,6 +131,11 @@ $( document ).ready(function() {
       break;
     default:
   }
+  //Post Action
+  $("#postBtn").click( function() {
+      doPost();
+    }
+  );
   //If scrolled to bottom
   $(window).scroll(function() {
     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {

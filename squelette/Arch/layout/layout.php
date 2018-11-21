@@ -1,4 +1,11 @@
 <?php
+# @Author: uapv1701795
+# @Date:   2018-11-20T23:25:13+01:00
+# @Last modified by:   uapv1701795
+# @Last modified time: 2018-11-21T13:40:47+01:00
+
+
+
 
  ?>
 <!DOCTYPE html>
@@ -132,6 +139,10 @@
         <?php include($template_view); ?>
 
       </div>
+      <div class="notifier-footer" id="notify"><!--div class="alert alert-dark" role="alert">
+  This is a dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div--></div>
+    </div>
     </div>
 
 
