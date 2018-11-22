@@ -107,6 +107,7 @@ class parser
 				//var_dump($lmid);
 				//echo $post['id'];
 				//var_dump($post['destinataire']);
+				$post['id'] = $postid;
 				$mssg = array($post['emetteur'] => 'emetteur',$post['destinataire'] => 'destinataire',$post['parent'] => 'parent',$postid => 'post',0 => 'aime');
 				$_M = new message($mssg);
 				$_M->emetteur = $post['emetteur'];
