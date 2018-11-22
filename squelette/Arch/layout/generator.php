@@ -6,6 +6,12 @@ function escape($text) {
   $text = htmlspecialchars($text, ENT_QUOTES);
   return $text;
 }
+
+function markup($text) {
+  $text = html_entity_decode($text);
+  return $text;
+}
+
 function genPP($text, $id) {
   if(isset($text) && !is_null($text)) {
     if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
@@ -131,7 +137,7 @@ function genCompose() {
         </div>
         <div class="floating-card" style="width: 18rem;"></div>
       </div>
-      <p class="card-text">'.$msg.'</p>
+      <p class="card-text">'.markup($msg).'</p>
     </div>
     <div class="card-footer">';
       echo genFoot($likes, $com, $date);
