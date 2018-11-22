@@ -145,7 +145,7 @@ class mainController
 			$_msgs = messageTable::getMessagesLimit();
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
-				$_pst = postTable::getPostById($msg->id);
+				$_pst = postTable::getPostById($msg->post);
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
 				if(isset($_pst) && isset($_emtr)) {
 					$tmp = new Compose($msg, $_pst, $_emtr);

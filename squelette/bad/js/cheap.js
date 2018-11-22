@@ -83,6 +83,7 @@ $( document ).ready(function () {
         },
         success: function(result) {
           console.log(result);
+          $('.form-control').val('');
           notify('Posted !');
         },
         error: function(result) {

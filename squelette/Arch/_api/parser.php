@@ -78,7 +78,7 @@ class parser
 			$r = postTable::getLastPostId();
 			if($r!=false)$post['id'] = $r[0]['max']+1;
 			$post['emetteur']=$id;
-			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:1; //1 public ?
+			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:-1; //1 public ?
 			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:-1;
 			//post = generated id, aime = 0
 			if (has_key('status',$params)) {
@@ -109,6 +109,8 @@ class parser
 				//var_dump($post['destinataire']);
 				$mssg = array($postid => 'id', $post['emetteur'] => 'emetteur',$post['destinataire'] => 'destinataire',$post['parent'] => 'parent',$post['id'] => 'post',0 => 'aime');
 				$_M = new message($mssg);
+				$_M->emetteur = $post['emetteur'];
+				$_M->destinataire = $post['destinataire'];
 				//var_dump($_M);
 				$_M->save();
 				//var_dump($_P);
