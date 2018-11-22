@@ -160,7 +160,7 @@ class parser
 			if(has_key('from', $params)){
 				if(is_numeric($params['from'])) {
 					if(has_key('user_id', $params) && is_numeric($params['user_id'])){
-						$_msgs = messageTable::getMessagesSinceId($params['from'], $params['user_id']);
+						$_msgs = messageTable::getMessagesOnProfileSinceId($params['from'], $params['user_id']);
 					} else {
 						$_msgs = messageTable::getMessagesSinceId($params['from'], -1);
 					}
@@ -171,11 +171,11 @@ class parser
 				$_msgs = messageTable::getMessages();
 			}
 			foreach ($_msgs as $msg) {
-				$_pst = postTable::getPostById($msg->id);
+				$_pst = postTable::getPostById($msg->post);
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
 				if(isset($_pst) && isset($_emtr)) {
 					if($html) {
-						$pid = $msg->id;
+						$pid = $msg->post;
 						$id = $msg->emetteur;
 						if(isset($_pst[0]) && isset($msg) && $_pst[0]->image != null) {
 							$img = genImage($id, $_pst[0]->image);

@@ -115,10 +115,10 @@ class mainController
 		if(array_key_exists('user_var', $_SESSION))  {
 			$cnt = 0;
 			$stack = array();
-			$_msgs = (isset($id))?messageTable::getMessagesFrom($id):messageTable::getMessages();
+			$_msgs = (isset($id))?messageTable::getMessagesOnProfile($id):messageTable::getMessages();
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
-				$_pst = postTable::getPostById($msg->id);
+				$_pst = postTable::getPostById($msg->post);
 				$cnt = $msg->id;
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
 				if(isset($_pst) && isset($_emtr)) {

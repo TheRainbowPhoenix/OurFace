@@ -5,6 +5,13 @@
  * @Last modified time: 2018-11-21T13:47:14+01:00
  */
 
+(function() {
+ 'use strict';
+ if ('serviceWorker' in navigator) {
+   navigator.serviceWorker.register('./service-worker.js').then(function() { console.log('Service Worker Registered'); });
+ }
+})();
+
 function notify(text) {
   $("#notify").html('<div class="alert alert-dark" role="alert"><span>'+text+'</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
   window.setTimeout(function () {

@@ -50,6 +50,24 @@ class messageTable
     return $res;
   }
 
+  public function getMessagesOnProfile($id)
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message where destinataire='".$id."' or emetteur='".$id."' order by id desc limit 10" ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
+
+  public static function getMessagesOnProfileSinceId($id, $em) {
+    $connection = new dbconnection() ;
+    if(!is_numeric($id) || $id<0) $id=0;
+      if($em<0) $sql = "select * from fredouil.message where id < ".$id." order by id desc limit 10" ;
+      else $sql = "select * from fredouil.message where id < ".$id." and (emetteur=".$em." or destinataire=".$em.") order by id desc limit 10" ;
+      $res = $connection->doQueryObject( $sql, "message" );
+      if($res === FALSE || is_null($res)) return false;
+      return $res;
+  }
+
   public static function getMessagesSinceId($id, $em)
   {
     $connection = new dbconnection() ;

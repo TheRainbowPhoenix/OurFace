@@ -1,0 +1,22 @@
+{
+  "short_name": "OurFace",
+  "name": "OurFace",
+  "background_color": "#D9D8DF",
+  "description": "OurFace is another social network, because why not ?",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/favicon/of-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/favicon/of-192.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "theme_color": "#D9D8DF",
+  "scope": "/squelette/",
+  "start_url": "/squelette/monApplication.php?action=home"
+}

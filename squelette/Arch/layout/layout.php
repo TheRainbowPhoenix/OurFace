@@ -130,7 +130,7 @@
     </nav>
 
     <div class="container-fluid">
-      <div class="row">
+      <div class="row" id="root-row">
 
         <?php if(isset($context->trace) && !is_null($context->trace)) {
           echo $context->trace;
