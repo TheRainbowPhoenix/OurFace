@@ -78,7 +78,7 @@ class parser
 			$r = postTable::getLastPostId();
 			if($r!=false)$post['id'] = $r[0]['max']+1;
 			$post['emetteur']=$id;
-			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:-1; //-1 public ?
+			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:1; //1 public ?
 			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:-1;
 			//post = generated id, aime = 0
 			if (has_key('status',$params)) {
@@ -96,14 +96,23 @@ class parser
 				}
 				$pst = array('' => 'id' ,$post['status']  => 'texte' ,$post['date']  => 'date' ,$post['image']  => 'image' );
 				$_P = new post($pst);
-				var_dump(postTable::getLastCreatedPostId());
-				//$_P->save();
-				var_dump($_P);
-				$mssg = array('' => 'id',$post['emetteur'] => 'emetteur',$post['destinataire'] => 'destinataire',$post['parent'] => 'parent',$_P->id => 'post',0 => 'aime');
-				$_M = new message($mssg);
-				var_dump($_M);
+				$postid = $_P->save();
+				//$lid = postTable::getLastCreatedPostId();
+				//if($lid!=false)$post['id'] = $lid[0]['last_value'];
+				$post['message_id'] = 0;
+				$lmid = messageTable::getLastCreatedMessagesId();
+				if($lmid!=false)$post['message_id'] = $lmid[0]['last_value'];
 				//var_dump($_P);
-				echo $_P->id;
+				//var_dump($lid);
+				//var_dump($lmid);
+				//echo $post['id'];
+				//var_dump($post['destinataire']);
+				$mssg = array($postid => 'id', $post['emetteur'] => 'emetteur',$post['destinataire'] => 'destinataire',$post['parent'] => 'parent',$post['id'] => 'post',0 => 'aime');
+				$_M = new message($mssg);
+				//var_dump($_M);
+				$_M->save();
+				//var_dump($_P);
+				//echo $_P->id;
 			} else {
 				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
 				$media_id = $params['media_id'];

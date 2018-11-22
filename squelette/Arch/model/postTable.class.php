@@ -24,7 +24,7 @@ class postTable
   }
   public function getLastCreatedPostId() {
     $connection = new dbconnection() ;
-    $sql = "select currval('fredouil.post_id_seq')" ;
+    $sql = "select last_value from fredouil.post_id_seq" ;
     $res = $connection->doQuery( $sql );
     return ($res==false)?false:$res;
   }

@@ -62,6 +62,12 @@ class messageTable
     return $res;
   }
 
+  public function getLastCreatedMessagesId() {
+    $connection = new dbconnection() ;
+    $sql = "select last_value from fredouil.message_id_seq" ;
+    $res = $connection->doQuery( $sql );
+    return ($res==false)?false:$res;
+  }
 
   public function getMessagesfrom($id)
   {
