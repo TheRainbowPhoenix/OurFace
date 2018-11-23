@@ -9,6 +9,42 @@ function escape($text) {
 
 function markup($text) {
   $text = html_entity_decode($text);
+
+  //<a href="/hashtag/name" class="hastag"><s>#</s><b>TAG</b></a>
+  $htag_re = '/\B#(\d*[0-9A-Za-z_]+\w*)\b(?!;)/m';
+  preg_match_all($htag_re, $text, $matches, PREG_SET_ORDER, 0);
+  $rep = array();
+  foreach ($matches as $value=>$key) {
+    $rep[$value] = '<a href="?action=hashtag&tag='.$key[1].'" class="hastag"><s>#</s><b>'.$key[1].'</b></a>';
+    $matches[$value] = $key[0];
+  }
+  $text = str_replace($matches, $rep, $text);
+
+  $mention_re = '/\B@(\w+)/m';
+  preg_match_all($mention_re, $text, $matches, PREG_SET_ORDER, 0);
+  $rep = array();
+  foreach ($matches as $value=>$key) {
+    $id = utilisateurTable::userHasName(escape($key[1]));
+    if($id==false) $rep[$value] = '@'.$key[1];
+    else $rep[$value] = '<a href="?action=profile&id='.$id.'" class="atmention"><s>@</s><b>'.$key[1].'</b></a>';
+    $matches[$value] = $key[0];
+  }
+  $text = str_replace($matches, $rep, $text);
+
+  $url_re = '/((http|https|ftp):\/\/\d*[^\s\/$.?#].[^\s]+\w*)/i';
+  preg_match_all($url_re, $text, $matches, PREG_SET_ORDER, 0);
+  $rep = array();
+  foreach ($matches as $value=>$key) {
+    if(filter_var($key[0], FILTER_VALIDATE_URL)) {
+      $rep[$value] = '<a href="'.$key[0].'">'.$key[0].'</a>';
+    } else {
+      $rep[$value] = $key[0];
+    }
+    $matches[$value] = $key[0];
+  }
+  $text = str_replace($matches, $rep, $text);
+
+
   return $text;
 }
 

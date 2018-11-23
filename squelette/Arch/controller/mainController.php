@@ -110,7 +110,7 @@ class mainController
 	public static function profile($request,$context)
 	{
 		$id = (array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
-		if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($id)) $id = $request['id'];
+		if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($request['id'])&&is_numeric($id)) $id = $request['id'];
 
 		if(array_key_exists('user_var', $_SESSION))  {
 			$cnt = 0;

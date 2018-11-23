@@ -90,6 +90,16 @@ class utilisateurTable
     return $res;
   }
 
+  public static function userHasName($name) {
+    $connection = new dbconnection() ;
+    $sql = "select id from fredouil.utilisateur where identifiant like '".$name."'";
+    $res = $connection->doQuery( $sql );
+
+    if($res === false)
+      return -1 ;
+    return $res[0]['id'];
+  }
+
   public static function getRandomUsers()
   {
     $connection = new dbconnection() ;

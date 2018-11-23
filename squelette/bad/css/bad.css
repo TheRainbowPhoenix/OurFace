@@ -415,6 +415,17 @@ html, body {
   /*background-image: url(../../images/ico/like.svg);*/
 }
 
+.hastag:hover, .atmention:hover {
+    background-color: hsla(253, 58%, 65%, 0.1);
+		transition: all .2s ease-in-out;
+		border-radius: .2em;
+}
+.hastag, .atmention {
+    background-color: transparent;
+		transition: all .2s ease-in-out;
+    padding: .2em;
+}
+
 /* chat rules */
 
 .server-icon {
@@ -635,6 +646,15 @@ a:hover {
 a {
    	color: #7669a5;
  }
+
+s {
+	text-decoration: none;
+	color: #7669a5;
+}
+b {
+	font-weight: 500;
+}
+
 /* Framework redefines */
 .img-fluid {
     border-radius: .1rem;
