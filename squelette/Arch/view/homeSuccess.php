@@ -31,7 +31,8 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
                 <img class="avatar-image" src="<?php echo genPP($context->user->avatar, $context->user->id) ?>" alt="">
               </div>
               <div class="name-container flex-grow-1">
-                <h5 class="card-title"><?php echo escape($context->user->nom)." ".escape($context->user->prenom) ?></h5>
+                <h5 class="card-title"><?php
+                echo '<a href="?action=profile&id='.escape($context->user->id).'">'.escape($context->user->prenom).' '.escape($context->user->nom).'</a>'; ?></h5>
                 <h6 class="card-subtitle mb-2 text-muted"><?php echo "@".escape($context->user->identifiant) ?></h6>
               </div>
             </div>

@@ -10,6 +10,8 @@ function escape($text) {
 function markup($text) {
   $text = html_entity_decode($text);
 
+  // [^``` ]+|(```[^`]*```) <- select not in code block
+
   //<a href="/hashtag/name" class="hastag"><s>#</s><b>TAG</b></a>
   $htag_re = '/\B#(\d*[0-9A-Za-z_]+\w*)\b(?!;)/m';
   preg_match_all($htag_re, $text, $matches, PREG_SET_ORDER, 0);
@@ -100,12 +102,14 @@ function genThumb($id, $text) {
   return "images/gif/load.gif";
 }
 
+//254
+// <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
 function genCompose() {
   echo '<div class="compose affix-top">
         <div class="input-group">
-          <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+        <textarea class="form-control" rows="5" maxlength="254" id="comment" aria-label="Clic to compose your message . . ."></textarea>
           <div class="input-group-append">
-            <button type="button" id="postBtn" class="btn btn-outline-secondary">Action</button>
+            <button type="button" id="postBtn" class="btn btn-outline-secondary">Send</button>
             <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="sr-only">Toggle Dropdown</span>
             </button>
@@ -121,11 +125,39 @@ function genCompose() {
       </div>
 
       <div class="fixed-bottom">
-        <div class="float-right action-button">
+        <button type="button" class="float-right action-button" data-toggle="modal" data-target="#composeModal">
           <span class="icon icon-large icon-edit">
           </span>
+        </button>
+      </div>
+
+      <div class="modal fade" id="composeModal" tabindex="-1" role="dialog" aria-labelledby="composeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="composeModalLabel">Compose</h5>
+              <!--button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button-->
+            </div>
+            <div class="modal-body">
+              <div class="container compose-m-body">
+                <div class="row">
+                  <div class="col">
+                    <textarea class="form-control" rows="5" maxlength="254" id="commentm" aria-label="Clic to compose your message . . ."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
         </div>
-      </div>';
+      </div>
+
+      ';
 }
 
   function genFoot($likes, $com=0, $date)
@@ -205,12 +237,13 @@ function genCompose() {
         <img class="avatar-image" src="'.genPP($user->avatar, $user->id).'" alt="">
       </div>
       <div class="name-container flex-grow-1">
-        <h5 class="card-title">'.escape($user->prenom).' '.escape($user->nom).'</h5>
+        <h5 class="card-title"><a href="?action=profile&id='.escape($user->id).'">'.escape($user->prenom).' '.escape($user->nom).'</a></h5>
         <h6 class="card-subtitle mb-2 text-muted">@'.escape($user->identifiant).'</h6>
       </div>
       <div class="floating-card" style="width: 18rem;"></div>
     </div></li>';
     }
+    ////<a href="?action=profile&id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a>
     //var_dump($sug);
   }
 

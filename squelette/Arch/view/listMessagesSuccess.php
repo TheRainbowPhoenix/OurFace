@@ -50,7 +50,9 @@ if(isset($message->third[0])) {
 } ?>" alt="">
           </div>
           <div class="name-container flex-grow-1">
-            <h5 class="card-title"><?php echo escape($message->third[0]->prenom).' '.escape($message->third[0]->nom)?></h5>
+            <h5 class="card-title"><?php
+            echo '<a href="?action=profile&id='.escape($message->first->emetteur).'">'.escape($message->third[0]->prenom).' '.escape($message->third[0]->nom).'</a>';
+            //echo escape($message->third[0]->prenom).' '.escape($message->third[0]->nom)?></h5>
             <h6 class="card-subtitle mb-2 text-muted">@<?php echo escape($message->third[0]->identifiant)?></h6>
           </div>
           <div class="floating-card" style="width: 18rem;"></div>

@@ -20,7 +20,7 @@
     <img class="avatar-image" src="'.genPP($user->avatar, $user->id).'" alt="">
   </div>
   <div class="name-container flex-grow-1">
-    <h5 class="card-title">'.escape($user->prenom).' '.escape($user->nom).'</h5>
+    <h5 class="card-title"><a href="?action=profile&id='.escape($user->id).'">'.escape($user->prenom).' '.escape($user->nom).'</a></h5>
     <h6 class="card-subtitle mb-2 text-muted">@'.escape($user->identifiant).'</h6>
   </div>
   <div class="floating-card" style="width: 18rem;"></div>

@@ -313,6 +313,7 @@ html, body {
   border: 1px solid #d8d8d8;
   box-shadow: 0px 4px 1px rgba(0, 0, 0, .15);
 	transition: all .2s ease-in-out;
+  outline: none;
 }
 
 .action-button:hover {
@@ -324,6 +325,11 @@ html, body {
     background: #bcabc7;
     /* color: #f7f7f7; */
     /* -webkit-text-fill-color: #f7f7f7; */
+    outline: none;
+}
+
+.action-button:focus {
+    outline: none !important; /* Don't piss me off !*/
 }
 
 .navbar-right {
@@ -347,6 +353,14 @@ html, body {
 
 .top-15p {
 	margin-top: 15%;
+}
+
+#composeModal .modal-content {
+  background-color: #EAE9ED;
+}
+
+.compose-m-body {
+  margin-top: 1em 0;
 }
 
 #basic-addon1 {
@@ -413,6 +427,13 @@ html, body {
 
 .icon-like {
   /*background-image: url(../../images/ico/like.svg);*/
+}
+
+#comment {
+	overflow: hidden;
+	min-height: 38px;
+	max-height: 152px;
+  height: 38px;
 }
 
 .hastag:hover, .atmention:hover {
@@ -495,6 +516,7 @@ html, body {
 }
 .action-button {
 	display: block;
+  outline: none;
 }
 .compose {
 	display: none;
@@ -563,6 +585,7 @@ html, body {
 	}
 	.action-button {
 		display: none;
+    outline: none;
 	}
 	.compose {
     display: block;
