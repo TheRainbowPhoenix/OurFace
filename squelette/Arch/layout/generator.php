@@ -44,6 +44,15 @@ function markup($text) {
   }
   $text = str_replace($matches, $rep, $text);
 
+  $code_re = '/```([^`]+)```/i';
+  preg_match_all($code_re, $text, $matches, PREG_SET_ORDER, 0);
+  $rep = array();
+  foreach ($matches as $value=>$key) {
+    $rep[$value] = '<code class="markup">'.$key[1].'</code>';
+    $matches[$value] = $key[0];
+  }
+  $text = str_replace($matches, $rep, $text);
+
 
   return $text;
 }
