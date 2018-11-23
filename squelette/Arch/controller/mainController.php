@@ -107,6 +107,10 @@ class mainController
 		}
 	}
 
+	public static function hashtag($request,$context) {
+		return context::SUCCESS;
+	}
+
 	public static function profile($request,$context)
 	{
 		$id = (array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
