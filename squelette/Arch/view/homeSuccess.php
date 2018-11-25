@@ -18,7 +18,8 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
     }
   });
   </script>
-  <nav class="col col-lg-3 sidebar dashboard dashboard-left">
+  <nav class="col col-lg-3 sidebar dashboard dashboard-left draggable">
+    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
     <div class="BProfile">
       <div class="card-deck">
         <div class="card">
@@ -62,7 +63,8 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   </nav>
 
 
-  <div class="col posts-main">
+  <div class="col posts-main draggable">
+    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
     <?php genCompose(); ?>
     <div id="posts">
 
@@ -103,8 +105,9 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
     <?php genLoadError(-1); ?>
 </div>
 
-<div class="col-lg-3" id="chats">
+<div class="col col-lg-3 draggable" id="chats">
   <div class="row fixed-chats ">
+    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
               <div class="col col-lg-auto servers-container" style="
 "><ul class="list-inline server-list">
         <li class="list-inline-item server-icon"><div class="avatar-container">

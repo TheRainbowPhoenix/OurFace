@@ -38,6 +38,8 @@ html, body {
 
 .BProfile {
   padding: 8px;
+	position: sticky;
+	top: 48px;
   /*border-radius: 16px;
   background-color: rgba(251, 249, 251, 0.5);*/
 }
@@ -153,7 +155,7 @@ html, body {
 
 .card-title {
 	max-height: 28px;
-	overflow: hidden; 
+	overflow: hidden;
 }
 
 .nav-avatar .card-title {
@@ -474,6 +476,48 @@ html, body {
 	margin-bottom: 4px;
 }
 
+/* Draggable rules */
+
+.dashboard-left .ui-resizable-handle {
+    right: 8px;
+}
+
+.posts-main .ui-resizable-handle {
+    right: -15px;
+}
+
+.ui-resizable-handle {
+    position: absolute;
+    font-size: 0.1px;
+    display: flex;
+    touch-action: none;
+    width: 8px;
+}
+
+.ui-resizable-e {
+    cursor: e-resize;
+    width: 7px;
+    top: 0;
+    height: 100%;
+    right: 0px;
+}
+
+.ui-resizable-handle:after {
+    content: "";
+    display: block;
+    position: sticky;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: -10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #b4adb9;
+    box-shadow: 0 10px 0 #b4adb9, 0 20px 0 #b4adb9;
+}
+/* ends here */
+
 /* chat rules */
 
 .server-icon {
@@ -604,10 +648,11 @@ html, body {
 		margin-left: 0;
 		width: initial;
 		height: initial;
+	  background: none;
 	}
 	#chats .fixed-chats {
 		position: sticky;
-		top: 36px;
+    top: 40px;
 	}
   .container-fluid {
     width: 85%;

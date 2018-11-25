@@ -110,6 +110,22 @@ $( document ).ready(function () {
     event.preventDefault();
     $(this).ekkoLightbox();
   });
+  //draggable
+  $("#root-row").sortable({
+   handle: ".ui-resizable-handle",
+   helper: 'clone',
+  appendTo: document.body,
+   cursor: "move",
+   opacity: 0.5,
+   start: function(event, ui) {
+		$(this).css('height', '100vh');
+		$(this).css('position', 'fixed');
+	},
+	stop: function(event, ui) {
+    $(this).css('height', 'auto');
+		$(this).css('position', 'inherit');
+	}
+});
 });
 
 var timeoutId;
