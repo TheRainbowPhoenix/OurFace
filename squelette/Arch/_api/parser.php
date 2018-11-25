@@ -173,6 +173,7 @@ class parser
 			foreach ($_msgs as $msg) {
 				$_pst = postTable::getPostById($msg->post);
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
+				$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
 				if(isset($_pst) && isset($_emtr)) {
 					if($html) {
 						$pid = $msg->post;
@@ -184,8 +185,8 @@ class parser
 							$img = null;
 							$thumb = null;
 						}
-						$com = 0;
-						$rt = 0;
+						$com = count(messageTable::getMessagesReply($msg->post));
+						$rt = count(messageTable::getMessagesRepost($msg->post));
 						$likes = (isset($msg) && $msg->aime != NULL && is_numeric($msg->aime))?$msg->aime:0;
 						$mesg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
 						$date = (isset($_pst[0]))?genTimeDiff($_pst[0]->date):'times ago';
@@ -200,7 +201,7 @@ class parser
 						//$img, $likes, $com, $thumb, $id, $usr, $msg, $date)
 						//array_push($stack, $tmp);
 					} else {
-						$tmp = new Compose($msg, $_pst, $_emtr);
+						$tmp = new Compose($msg, $_pst, $_emtr, $_more);
 						array_push($stack, $tmp);
 					}
 				}

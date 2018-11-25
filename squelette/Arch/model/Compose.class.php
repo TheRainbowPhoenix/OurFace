@@ -43,7 +43,7 @@ class Compose implements JsonSerializable {
       if (isset($this->third)) {
         $jt = json_encode($this->third[0]);
           if (isset($this->fourth)) {
-            $jn = json_encode($this->fourth[0]);
+            $jn = json_encode($this->fourth);
             $r = array_merge((array)json_decode($jn, true, JSON_UNESCAPED_SLASHES),(array)json_decode($jf, true, JSON_UNESCAPED_SLASHES),json_decode($js, true, JSON_UNESCAPED_SLASHES),json_decode($jt, true, JSON_UNESCAPED_SLASHES));
           } else {
             $r = array_merge((array)json_decode($jf, true, JSON_UNESCAPED_SLASHES),json_decode($js, true, JSON_UNESCAPED_SLASHES),json_decode($jt, true, JSON_UNESCAPED_SLASHES));

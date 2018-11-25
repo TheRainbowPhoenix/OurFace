@@ -126,6 +126,7 @@ class mainController
 				$cnt = $msg->id;
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
 				$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
+				//var_dump($_more);
 				if(isset($_pst) && isset($_emtr)) {
 					$tmp = new Compose($msg, $_pst, $_emtr, $_more);
 					array_push($stack, $tmp);
