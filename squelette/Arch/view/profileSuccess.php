@@ -72,6 +72,8 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   //var_dump($context->messages);
   //echo json_encode($context->messages);
   foreach ($context->messages as $message) {
+    $rt = (isset($message->fourth["Repost"]))?(count($message->fourth["Repost"])):(0);
+    $com = (isset($message->fourth["Reply"]))?(count($message->fourth["Reply"])):(0);
     if(isset($message->first)) {
       $pid = $message->first->id;
       $id = $message->first->emetteur;
@@ -82,12 +84,11 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
         $img = null;
         $thumb = null;
       }
-      $com = 0;
       $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
       $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
       $usr = $message->third[0];
-      echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+      echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date);
 
     }
     //var_dump($message);

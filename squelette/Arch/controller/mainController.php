@@ -125,8 +125,9 @@ class mainController
 				$_pst = postTable::getPostById($msg->post);
 				$cnt = $msg->id;
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
+				$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
 				if(isset($_pst) && isset($_emtr)) {
-					$tmp = new Compose($msg, $_pst, $_emtr);
+					$tmp = new Compose($msg, $_pst, $_emtr, $_more);
 					array_push($stack, $tmp);
 				}
 			}
@@ -151,8 +152,9 @@ class mainController
 				//var_dump($msg);
 				$_pst = postTable::getPostById($msg->post);
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
+				$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
 				if(isset($_pst) && isset($_emtr)) {
-					$tmp = new Compose($msg, $_pst, $_emtr);
+					$tmp = new Compose($msg, $_pst, $_emtr, $_more);
 					array_push($stack, $tmp);
 				}
 			}
@@ -201,7 +203,7 @@ class mainController
 
 	public static function index($request,$context)
 	{
-		//if(!(array_key_exists('logged', $_SESSION))) return context::ERROR;
+		if(array_key_exists('logged', $_SESSION)) goBoard();
 		return context::SUCCESS;
 	}
 

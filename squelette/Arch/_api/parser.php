@@ -78,15 +78,15 @@ class parser
 			$r = postTable::getLastPostId();
 			if($r!=false)$post['id'] = $r[0]['max']+1;
 			$post['emetteur']=$id;
-			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:1; //1 public ?
-			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:1;
+			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:0; //1 public ?
+			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:0;
 			//post = generated id, aime = 0
 			if (has_key('status',$params)) {
 				$status = $params['status'];
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
 				//if(strlen($status)>254) $status = substr($status, 0, 250).'...';
 				$post['status'] = trim(escape(urldecode($status)));
-			  $date = date("Y-m-d h:i:s.u");
+			  $date = date("Y-m-d h:i:s");
 				$post['date'] = $date;
 				$media_id= '';
 				$post['image'] = '';
@@ -185,12 +185,13 @@ class parser
 							$thumb = null;
 						}
 						$com = 0;
+						$rt = 0;
 						$likes = (isset($msg) && $msg->aime != NULL && is_numeric($msg->aime))?$msg->aime:0;
 						$mesg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
 						$date = (isset($_pst[0]))?genTimeDiff($_pst[0]->date):'times ago';
 						$usr = $_emtr[0];
 						//var_dump($_emtr);
-						echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $mesg, $date);
+						echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $mesg, $date);
 						//echo '<!-- id='.$msg->id.'-->';
 						//var_dump($msg);
 						//var_dump($_pst);

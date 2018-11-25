@@ -45,7 +45,30 @@ class messageTable
   public function getMessagesSentTo($id)
   {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.message where destinataire='".$id."' order by id" ;
+    $sql = "select * from fredouil.message where destinataire=".$id." order by id" ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
+
+  public function getMessagesReply($id)
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message where parent=".$id." and post !=".$id." order by id" ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
+
+  public function getMessagesChilds($id)
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message where parent=".$id." order by id" ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
+  public function getMessagesRepost($id)
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message where parent=".$id." and post =".$id." order by id" ;
     $res = $connection->doQueryObject( $sql, "message" );
     return $res;
   }

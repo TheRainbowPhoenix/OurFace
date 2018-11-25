@@ -72,13 +72,14 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   //var_dump($context->messages);
   //echo json_encode($context->messages);
   foreach ($context->messages as $message) {
+    $rt = (isset($message->fourth["Repost"]))?(count($message->fourth["Repost"])):(0);
+    $com = (isset($message->fourth["Reply"]))?(count($message->fourth["Reply"])):(0);
     if(isset($message->second[0]) && isset($message->first) && $message->second[0]->image != null) {
       $pid = $message->first->id;
       $id = $message->first->emetteur;
       $img = genImage($message->first->emetteur, $message->second[0]->image);
       $thumb = genThumb($id, $message->second[0]->image);
       $i = getimagesize($img);
-      $com = 0;
       $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
       $date = (isset($message->second[0]))?($message->second[0]->date):'times ago';
@@ -90,12 +91,11 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
         $id = $message->first->emetteur;
         $img = null;
         $thumb = null;
-        $com = 0;
         $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
         $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
         $date = (isset($message->second[0]))?($message->second[0]->date):'times ago';
         $usr = $message->third[0];
-        echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+        echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date);
       }
     }
     //var_dump($message);
