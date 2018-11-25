@@ -81,7 +81,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
       $com = 0;
       $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
-      $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
+      $date = (isset($message->second[0]))?($message->second[0]->date):'times ago';
       $usr = $message->third[0];
       echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date);
     } else {
@@ -93,7 +93,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
         $com = 0;
         $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
         $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
-        $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
+        $date = (isset($message->second[0]))?($message->second[0]->date):'times ago';
         $usr = $message->third[0];
         echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date);
       }

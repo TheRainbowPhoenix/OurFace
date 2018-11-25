@@ -151,7 +151,7 @@ function genCompose() {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" id="sendm" class="btn btn-primary">Send</button>
             </div>
           </div>
         </div>
@@ -248,22 +248,26 @@ function genCompose() {
   }
 
   function genTimeDiff($time) {
-    $now = strtotime(date("Y-m-d h:i:sa"));
-    $last = strtotime($time);
-    $diffMins = round(($now - $last) / 60);
-    if($diffMins<60) return $diffMins.' minutes ago';
+    $now = date("Y-m-d h:i:s");
+    $diff = strtotime(date("Y-m-d h:i:s"))-strtotime($time);
+    if($diff<=0) return 'futures ago';
+    if($diff<60) return $diff.' seconds ago';
     else {
-      $diffHours = round(($now - $last) / 3600);
-      if($diffHours<24) return $diffHours.' hours ago';
+      $diffMins = round($diff / 60);
+      if($diffMins<60) return $diffMins.' minutes ago';
       else {
-        $diffDays = round(($now - $last) / 86400);
-        if($diffDays<30) return $diffDays.' days ago';
+        $diffHours = round($diff / 3600);
+        if($diffHours<24) return $diffHours.' hours ago';
         else {
-          $diffMonth = round(($now - $last) / 2628000);
-          if($diffMonth<12) return $diffMonth.' months ago';
+          $diffDays = round($diff / 86400);
+          if($diffDays<30) return $diffDays.' days ago';
           else {
-            $diffYears = round(($now - $last) / 31536000);
-            return $diffYears.' years ago';
+            $diffMonth = round($diff / 2628000);
+            if($diffMonth<12) return $diffMonth.' months ago';
+            else {
+              $diffYears = round($diff / 31536000);
+              return $diffYears.' years ago';
+            }
           }
         }
       }

@@ -101,6 +101,34 @@ $( document ).ready(function () {
       notify('No text profided');
     }
   });
+
+  // post for mobile
+  $("#sendm").click(function(e) {
+    if($('#commentm').val() != '') {
+      e.preventDefault();
+      $.ajax({
+        type: "GET",
+        url: "api.php/post",
+        data: {
+          status: $('#commentm').val(),
+          refer: refer,
+          access_token: $("#access_token").val()
+        },
+        success: function(result) {
+          console.log(result);
+          $('#commentm').val('');
+          $('#composeModal').modal('hide');
+          notify('Posted !');
+        },
+        error: function(result) {
+          alert('error');
+        }
+      });
+    } else {
+      notify('No text profided');
+    }
+  });
+
   /*$("#postBtn").click( function() {
       doPost();
     }

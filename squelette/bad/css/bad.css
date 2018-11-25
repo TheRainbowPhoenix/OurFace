@@ -132,6 +132,7 @@ html, body {
 .notifier-footer {
 	position: sticky;
 	bottom: 0;
+  z-index: 9999;
 }
 
 .notifier-footer .alert {
@@ -484,6 +485,7 @@ html, body {
 
 .posts-main .ui-resizable-handle {
     right: -15px;
+		display: none;
 }
 
 .ui-resizable-handle {
@@ -643,6 +645,9 @@ html, body {
 
 }
 @media (min-width: 1100px) {
+	.posts-main .ui-resizable-handle {
+		display: flex;
+	}
 	#chats {
 		position: initial;
 		margin-left: 0;
