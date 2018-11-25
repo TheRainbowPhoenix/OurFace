@@ -2,7 +2,7 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T02:00:50+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-21T14:53:54+01:00
+ * @Last modified time: 2018-11-23T16:29:17+01:00
  */
 
 
@@ -149,6 +149,11 @@ html, body {
 .nav-avatar .avatar-image {
     width: 32px;
     height: 32px;
+}
+
+.card-title {
+	max-height: 28px;
+	overflow: hidden; 
 }
 
 .nav-avatar .card-title {
