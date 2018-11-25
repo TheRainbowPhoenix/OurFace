@@ -160,7 +160,7 @@ function genCompose() {
       ';
 }
 
-  function genFoot($likes, $com=0, $rt=0, $date)
+  function genFoot($likes, $com=0, $rt=0, $id=0, $date)
   {
     echo '<div class="post-actions row">
       <div class="post-action">
@@ -174,9 +174,14 @@ function genCompose() {
         <span class="count">'.$com.'</span>
       </div>
       <div class="post-action">
-        <span class="icon icon-com">
+        <span class="icon icon-rt">
         </span>
         <span class="count">'.$rt.'</span>
+      </div>
+      <div class="post-action">
+        <span class="icon icon-share">
+        </span>
+        <span class="count"><a href="?action=share&id='.$id.'">share</a></span>
       </div>
       <div class="card-link flex-grow-1 post-date">
         <small class="text-muted float-right">Last updated ';
@@ -222,7 +227,7 @@ function genCompose() {
       <p class="card-text">'.markup($msg).'</p>
     </div>
     <div class="card-footer">';
-      echo genFoot($likes, $com, $rt, $date);
+      echo genFoot($likes, $com, $rt,$pid, $date);
       echo '</div></div>';
   }
 

@@ -50,3 +50,10 @@
   content: "\e905";
   color: #45324d;
 }
+.icon-rt:before {
+  content: "\e906";
+  color: #45324d;
+}
+.icon-share:before {
+  content: "\e907";
+}

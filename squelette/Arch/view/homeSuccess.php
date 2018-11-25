@@ -84,7 +84,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
       $date = (isset($message->second[0]))?($message->second[0]->date):'times ago';
       $usr = $message->third[0];
-      echo getPost($pid, $img, $likes, $com, $thumb, $id, $usr, $msg, $date);
+      echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date);
     } else {
       if(isset($message->second[0]) && isset($message->first)) {
         $pid = $message->first->id;
