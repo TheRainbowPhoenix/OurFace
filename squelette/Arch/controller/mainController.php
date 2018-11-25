@@ -201,7 +201,7 @@ class mainController
 
 	public static function index($request,$context)
 	{
-		if(!(array_key_exists('logged', $_SESSION))) return context::ERROR;
+		//if(!(array_key_exists('logged', $_SESSION))) return context::ERROR;
 		return context::SUCCESS;
 	}
 

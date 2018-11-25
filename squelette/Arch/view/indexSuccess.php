@@ -26,7 +26,7 @@
               <div class="row">
                 <a class="btn btn-primary btn-landing" href="?action=login" role="button">Login</a>
                 <div class="col"></div>
-                <a class="btn btn-secondary btn-landing" href="../~fredouil/register_fb.php" role="button">Register</a>
+                <a class="btn btn-secondary btn-landing" href="../../~fredouil/register_fb.php" role="button">Register</a>
               </div>
             </div>
           </div>
