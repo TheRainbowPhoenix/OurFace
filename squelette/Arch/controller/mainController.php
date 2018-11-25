@@ -177,6 +177,16 @@ class mainController
 		}
 	}
 
+	public static function messages($request, $context) {
+		if(array_key_exists('user_var', $_SESSION))  {
+			$context->current_user = $_SESSION['user_var'];
+			return context::SUCCESS;
+		} else {
+			goLogin();
+			return ;
+		}
+	}
+
 	public static function superTest($request,$context)
 	{
 		$context->param1=(null !== @$request['param1'])?@$request['param1']:NULL;

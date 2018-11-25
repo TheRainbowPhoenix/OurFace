@@ -73,6 +73,9 @@ function loadMoar(fr, id) {
   a();
 }
 
+var selected;
+var winsz = $(window).width();
+
 $( document ).ready(function () {
   a();
   var refer = Get('id');
@@ -101,7 +104,25 @@ $( document ).ready(function () {
       notify('No text profided');
     }
   });
+  //window refresh
+    $(window).resize(function () {
+      winsz = $(window).width();
+    });
 
+
+  //chats click
+  $("#chat").click(function(e) {
+    if (winsz < 1100 && selected != $("#chat")) {
+      $("#chats").toggleClass("visible");
+      $(".posts-main").toggleClass("nope");
+      selected.toggleClass("selected");
+      $("#chat").toggleClass("selected");
+    } else {
+      document.location = "?action=messages";
+    }
+
+    //$(".navbar-right").find(".selected");
+  });
   // post for mobile
   $("#sendm").click(function(e) {
     if($('#commentm').val() != '') {
@@ -243,9 +264,15 @@ function a() {
   switch (a) {
     case "home":
       $('#home').addClass("selected");
+      selected = $("#home");
       break;
     case "listUsers":
       $('#friends').addClass("selected");
+      selected = $("#friends");
+      break;
+    case "messages":
+      $('#chat').addClass("selected");
+      selected = $("#chat");
       break;
     default:
   }

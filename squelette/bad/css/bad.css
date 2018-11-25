@@ -100,6 +100,7 @@ html, body {
   border-radius: 4px;
   min-width: 300px;
   margin-bottom: 16px;
+	animation: slide-upper 0.4s ease;
 }
 
 .SProfileCover {
@@ -397,13 +398,19 @@ html, body {
 }
 #chats {
 	position: fixed;
-	margin-left: 100%;
+	transform: translateY(64px);
+	opacity: 0;
+	/*margin-left: 100%;*/
 	background: #d9d8df;
 	top: 0;
 	left: 0;
+	width: 0;
 	width: 100vw;
 	height: 100vh;
 	/*transition: all .3s ease-in-out;*/
+}
+#chats .ui-resizable-handle {
+	display: none;
 }
 
 .floating-card {
@@ -477,6 +484,10 @@ html, body {
 	margin-bottom: 4px;
 }
 
+.nope {
+  display: none;
+}
+
 /* Draggable rules */
 
 .dashboard-left .ui-resizable-handle {
@@ -545,6 +556,34 @@ html, body {
 	/* background: rgba(0,0,0,0.1); */
 }
 
+#chats {
+	top: 80px;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: block;
+	max-width: 100%;
+	z-index: 99;
+	transition: none;
+
+}
+
+#chats.visible {
+    transform: translateY(0%);
+		opacity: 1;
+    position: inherit;
+		transition: all .2s ease-in-out;
+    flex-grow: 1;
+    transition-property: opacity, transform;
+}
+
+#chats .fixed-chats {
+    display: block;
+}
+
 /* ends here */
 
 /* splash rules */
@@ -592,12 +631,76 @@ html, body {
 
 /* Ends here */
 
+/* Landing */
+
+section.first {
+	overflow: hidden;
+	z-index: 1;
+	height: 100vh;
+  margin-top: -40px;
+	background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(../../images/ico/bg.svg) repeat-X center center;
+	background-size: cover;
+	opacity: 0;
+	animation: fadeIn 2s ease forwards;
+	animation-delay: .2s;
+}
+
+section.second .moving {
+	opacity: 0;
+	animation: slide-up 0.6s ease forwards;
+	animation-delay: .8s;
+}
+
+.btn-primary.btn-landing {
+	opacity: 0;
+	animation: slide-up 0.6s ease forwards;
+	animation-delay: 1.2s;
+}
+.btn-secondary.btn-landing {
+	opacity: 0;
+	animation: slide-up 0.6s ease forwards;
+	animation-delay: 1s;
+}
+
+section.second {
+  background-color: rgba(251, 249, 251, .5);
+	z-index: 99;
+	overflow: hidden;
+	overflow-y: auto;
+	height: 100vh;
+  margin-top: -40px;
+}
+
+#logo-big {
+	background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(../../images/favicon/of.svg) repeat-X center center;
+	background-size: cover;
+	z-index: 99;
+	width: 25%;
+	height: 25%;
+	border-radius: 50%;
+	opacity: 0;
+	animation: slide-up 0.6s ease forwards;
+	animation-delay: .4s;
+}
+
+.btn-landing {
+    line-height: 40px;
+    width: 128px;
+    border-radius: 32px;
+		font-size: 20px;
+}
+
+/* ends here */
+
 @media (min-width: 576px) {
 	#login {
 		margin-left: 0;
 	}
 	.navbar-right {
 		/*flex-grow: 0;*/
+	}
+	#register {
+    margin-left: auto;
 	}
 	#register, #login {
 		min-width: initial;
@@ -619,6 +722,10 @@ html, body {
 	}
 	.nav-icon {
 		flex-grow: 0;
+	}
+
+	#chats {
+		top: 40px;
 	}
 
 		.alter-container {
@@ -649,6 +756,8 @@ html, body {
 		display: flex;
 	}
 	#chats {
+		transform: translateY(0);
+		opacity: 1;
 		position: initial;
 		margin-left: 0;
 		width: initial;
@@ -658,6 +767,9 @@ html, body {
 	#chats .fixed-chats {
 		position: sticky;
     top: 40px;
+	}
+	#chats .ui-resizable-handle {
+		display: flex;
 	}
   .container-fluid {
     width: 85%;
@@ -776,5 +888,25 @@ b {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes slide-upper {
+    0% {
+        opacity: 0;
+        transform: translateY(64px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
