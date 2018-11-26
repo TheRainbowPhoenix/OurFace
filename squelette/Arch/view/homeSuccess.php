@@ -7,7 +7,7 @@
 
 
 if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
-  die('Invalid');
+  goLogin();
 }
 ?>
   <script type="text/javascript">

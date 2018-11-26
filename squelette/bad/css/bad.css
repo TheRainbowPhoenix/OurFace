@@ -311,9 +311,10 @@ html, body {
 	margin-left: 0px;
 }
 
-.count a, .count a:hover {
+.share-link, .share-link:hover {
   color: inherit;
 	text-decoration: none;
+	display: flex;
 }
 
 
@@ -822,6 +823,7 @@ section.second {
 		width: initial;
 		height: initial;
 	  background: none;
+		display: block;
 	}
 	#chats .fixed-chats {
 		position: sticky;

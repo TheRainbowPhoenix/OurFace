@@ -179,7 +179,7 @@ function genCompose() {
         <span class="count">'.$rt.'</span>
       </div>';
       if($protected==0) echo ' <div class="post-action">
-      <a href="?action=share&id='.$id.'">
+      <a class="share-link" href="?action=share&id='.$id.'">
         <span class="icon icon-share">
         </span>
         <span class="share-text count">share</span></a>
