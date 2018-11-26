@@ -2,7 +2,7 @@
 # @Author: uapv1701795
 # @Date:   2018-11-19T00:53:49+01:00
 # @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T15:25:50+01:00
+# @Last modified time: 2018-11-26T16:12:13+01:00
 
 function is_logged($S) {
 	if(array_key_exists('user_var', $S)) return $S['user_var']['id'];
@@ -129,6 +129,32 @@ class parser
 		//post code
 	}
 
+	public static function repost($params) {
+		$id = is_logged($_SESSION);
+		if($id >=0) {
+			if(has_key('id', $params)){
+				if(is_numeric($params['id'])) {
+					$post = messageTable::getMessagesByID($params['id']);
+					//var_dump($post);
+					if($post != null && !empty($post)) {
+						$mssg = array($id => 'emetteur',$post[0]->destinataire => 'destinataire',$post[0]->post => 'parent',$post[0]->post => 'post',0 => 'aime');
+						$_M = new message($mssg);
+						if(is_null($_M->parent) || $_M->parent == "") $_M->parent = $post[0]->post;
+						$_M->destinataire = (has_key('refer',$params) && is_user($params['refer']))?$params['refer']:(is_null($post[0]->destinataire))?0:$post[0]->destinataire;
+						$_M->emetteur = ($id==0)?1:$id;
+						//$_M->destinataire = $post[0]->destinataire;
+						//var_dump($_M);
+						$_M->save();
+						return json_encode($_M);
+					}
+				}
+				return raiseError(genError(50,'post not found'));
+			} else return raiseError(genError(50,'Post not found'));
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
+	}
+
 	public static function users($params)
 	{
 		$id = is_logged($_SESSION);
@@ -171,12 +197,13 @@ class parser
 				$_msgs = messageTable::getMessages();
 			}
 			foreach ($_msgs as $msg) {
+				//var_dump($msg);
 				$_pst = postTable::getPostById($msg->post);
 				$_emtr = utilisateurTable::getUserById($msg->emetteur);
 				$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
 				if(isset($_pst) && isset($_emtr)) {
 					if($html) {
-						$pid = $msg->post;
+						$pid = $msg->id;
 						$id = $msg->emetteur;
 						if(isset($_pst[0]) && isset($msg) && $_pst[0]->image != null) {
 							$img = genImage($id, $_pst[0]->image);

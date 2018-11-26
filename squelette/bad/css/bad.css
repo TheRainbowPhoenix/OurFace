@@ -2,7 +2,7 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T02:00:50+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-26T13:40:40+01:00
+ * @Last modified time: 2018-11-26T14:23:19+01:00
  */
 
 
@@ -578,7 +578,7 @@ html, body {
 	left: 0;
 	display: block;
 	max-width: 100%;
-	z-index: 99;
+	/*z-index: 99;*/
 	transition: none;
 	display: none;
 }

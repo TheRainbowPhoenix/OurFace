@@ -1,4 +1,11 @@
 <?php
+# @Author: uapv1701795
+# @Date:   2018-11-26T01:49:54+01:00
+# @Last modified by:   uapv1701795
+# @Last modified time: 2018-11-26T16:17:06+01:00
+
+
+
 
 function escape($text) {
   $text = trim($text);
@@ -163,17 +170,17 @@ function genCompose() {
   function genFoot($likes, $com=0, $rt=0, $id=0, $date, $protected=0)
   {
     echo '<div class="post-actions row">
-      <div class="post-action">
+      <div class="post-action action-like">
         <span class="icon icon-like">
         </span>
   <span class="count">'.$likes.'</span>
       </div>
-      <div class="post-action">
+      <div class="post-action action-reply">
         <span class="icon icon-com">
         </span>
         <span class="count">'.$com.'</span>
       </div>
-      <div class="post-action">
+      <div class="post-action action-rt">
         <span class="icon icon-rt">
         </span>
         <span class="count">'.$rt.'</span>

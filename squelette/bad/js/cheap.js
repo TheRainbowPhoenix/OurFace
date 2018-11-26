@@ -2,7 +2,7 @@
  * @Author: uapv1701795
  * @Date:   2018-11-19T11:52:10+01:00
  * @Last modified by:   uapv1701795
- * @Last modified time: 2018-11-21T13:47:14+01:00
+ * @Last modified time: 2018-11-26T16:21:42+01:00
  */
 
 (function() {
@@ -108,7 +108,35 @@ $( document ).ready(function () {
     $(window).resize(function () {
       winsz = $(window).width();
     });
-
+  //rt click
+  $(".action-rt").click(function(e) {
+    var r_id = $(this).parents('.post').attr('data-id');
+    e.preventDefault();
+    $.ajax({
+      type: "GET",
+      url: "api.php/repost",
+      data: {
+        id: r_id
+      },
+      success: function(result) {
+        notify('Reposted !');
+      },
+      error: function(result) {
+        notify('Error');
+      }
+    });
+    //repost?id=35
+  });
+  //rt click
+  $(".action-repost").click(function(e) {
+    var id = $(this).parents('.post').attr('data-id');
+    console.log(id);
+  });
+  //rt click
+  $(".action-like").click(function(e) {
+    var id = $(this).parents('.post').attr('data-id');
+    console.log(id);
+  });
 
   //chats click
   $("#chat").click(function(e) {

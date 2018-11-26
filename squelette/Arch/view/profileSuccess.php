@@ -2,7 +2,7 @@
 # @Author: uapv1701795
 # @Date:   2018-11-20T13:30:40+01:00
 # @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T15:47:35+01:00
+# @Last modified time: 2018-11-26T16:08:04+01:00
 
 
 
@@ -75,6 +75,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
     $rt = (isset($message->fourth["Repost"]))?(count($message->fourth["Repost"])):(0);
     $com = (isset($message->fourth["Reply"]))?(count($message->fourth["Reply"])):(0);
     if(isset($message->first)) {
+      //var_dump($message->first);
       $pid = $message->first->id;
       $id = $message->first->emetteur;
       if(isset($message->second[0]) && $message->second[0]->image != null) {

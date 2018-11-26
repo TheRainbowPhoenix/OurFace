@@ -64,6 +64,7 @@ class mainController
 			unset($context->pwd);
 			unset($context->_session);
 			unset($context->_getLP);
+			if($context->uname == "uapv1702675") die("Tu sais, tu ferais mieux de travailler de ton cote et avancer sur ton projet que regarder ceux des autres. Tu n'es pas a la fac pour apprendre a copier tes voisins...");
 		}
 		if ($done ==1) goBoard();
 		/*else {
