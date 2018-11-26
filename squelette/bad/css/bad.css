@@ -788,6 +788,9 @@ section.second {
 		top: 40px;
 	}
 
+	.embed-card {
+		    width: 500px;
+	}
 		.alter-container {
 		  top: 48px;
 		}
@@ -832,6 +835,11 @@ section.second {
 	#chats .ui-resizable-handle {
 		display: flex;
 	}
+
+	.embed-card {
+		    width: 600px;
+	}
+
   .container-fluid {
     width: 85%;
     margin: 0 auto;
