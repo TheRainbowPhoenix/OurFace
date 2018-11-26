@@ -112,7 +112,7 @@ $( document ).ready(function () {
 
   //chats click
   $("#chat").click(function(e) {
-    if (winsz < 1100 && selected != $("#chat")) {
+    if (winsz < 1100 && selected != $("#chat") && ($("#chats").length > 0)) {
       $("#chats").toggleClass("visible");
       $(".posts-main").toggleClass("nope");
       selected.toggleClass("selected");

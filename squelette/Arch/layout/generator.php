@@ -160,7 +160,7 @@ function genCompose() {
       ';
 }
 
-  function genFoot($likes, $com=0, $rt=0, $id=0, $date)
+  function genFoot($likes, $com=0, $rt=0, $id=0, $date, $protected=0)
   {
     echo '<div class="post-actions row">
       <div class="post-action">
@@ -177,14 +177,15 @@ function genCompose() {
         <span class="icon icon-rt">
         </span>
         <span class="count">'.$rt.'</span>
-      </div>
-      <div class="post-action">
+      </div>';
+      if($protected==0) echo ' <div class="post-action">
+      <a href="?action=share&id='.$id.'">
         <span class="icon icon-share">
         </span>
-        <span class="count"><a href="?action=share&id='.$id.'">share</a></span>
-      </div>
-      <div class="card-link flex-grow-1 post-date">
-        <small class="text-muted float-right">Last updated ';
+        <span class="share-text count">share</span></a>
+      </div>';
+      echo '<div class="card-link flex-grow-1 post-date">
+        <small class="text-muted float-right"> ';
         if ($date!=0) {
           echo genTimeDiff($date);
         } else echo 'times ago';
@@ -193,15 +194,17 @@ function genCompose() {
     </div>';
   }
 
-  function getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date)
+  function getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, $protected=0)
   {
     echo '<div class="card post" data-id="'.$pid.'">';
+    if($protected==1) echo '<div class="mini-logo"></div>';
     if($img!=null) {
     echo'<div class="post-image">
           <div class="post-image-align">
             <div class="post-image-contain">
-              <a href="'.$img.'" data-toggle="lightbox" data-max-width="600" data-likes="'.$likes.'" data-com="'.$com.'">
-                <img class="post-img card-img-top img-fluid lazy" alt="img" src="'.$thumb.'" data-src="'.$img.'">
+              <a href="'.$img.'" data-toggle="lightbox" data-max-width="600" data-likes="'.$likes.'" data-com="'.$com.'">';
+                if($protected==1) echo '<img class="overlay" src="images/ico/bg.svg"/>';
+                echo '<img class="post-img card-img-top img-fluid lazy" alt="img" src="'.$thumb.'" data-src="'.$img.'">
               </a>
             </div>
           </div>
@@ -227,7 +230,7 @@ function genCompose() {
       <p class="card-text">'.markup($msg).'</p>
     </div>
     <div class="card-footer">';
-      echo genFoot($likes, $com, $rt,$pid, $date);
+      echo genFoot($likes, $com, $rt,$pid, $date, $protected);
       echo '</div></div>';
   }
 

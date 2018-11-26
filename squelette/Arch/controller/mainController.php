@@ -111,6 +111,24 @@ class mainController
 		return context::SUCCESS;
 	}
 
+	public static function share($request,$context) {
+		$id = 1;
+		if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($request['id'])) $id = $request['id'];
+		else return context::ERROR;
+		$_msg = messageTable::getMessagesByID($id);
+		if($_msg==false) return context::ERROR;
+		$msg = $_msg[0];
+		$_pst = postTable::getPostById($msg->post);
+		$_emtr = utilisateurTable::getUserById($msg->emetteur);
+		$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
+		if(isset($_pst) && isset($_emtr)) {
+			$context->message = new Compose($msg, $_pst, $_emtr, $_more);
+			return context::SUCCESS;
+		} else {
+			return context::ERROR;
+		}
+	}
+
 	public static function profile($request,$context)
 	{
 		$id = (array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;

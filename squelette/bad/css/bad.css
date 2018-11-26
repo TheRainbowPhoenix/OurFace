@@ -285,7 +285,7 @@ html, body {
 }
 .post-action {
   display: flex;
-  margin-left: 8px;
+  margin-left: 4px;
   border-radius: 12px;
   padding-right: 8px;
   padding-left: 2px;
@@ -296,13 +296,19 @@ html, body {
   cursor: pointer;
   transition: all .2s ease-in-out;
 }
-
 .post-date {
   padding-right: 8px;
 }
 
 .count {
   margin-left: 4px;
+}
+.icon-share {
+	margin-left: 2px;
+}
+.share-text {
+	display: none;
+	margin-left: 0px;
 }
 
 .count a, .count a:hover {
@@ -573,16 +579,18 @@ html, body {
 	max-width: 100%;
 	z-index: 99;
 	transition: none;
-
+	display: none;
 }
 
 #chats.visible {
-    transform: translateY(0%);
-		opacity: 1;
-    position: inherit;
-		transition: all .2s ease-in-out;
-    flex-grow: 1;
-    transition-property: opacity, transform;
+	display: block;
+  transform: translateY(0%);
+	opacity: 1;
+  position: inherit;
+	transition: all .2s ease-in-out;
+  flex-grow: 1;
+  transition-property: opacity, transform;
+	transition-delay: .2	s;
 }
 
 #chats .fixed-chats {
@@ -697,6 +705,41 @@ section.second {
 
 /* ends here */
 
+/* Embed */
+
+.mini-logo {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    background: #aaa;
+    z-index: 9;
+    right: 24px;
+    top: 16px;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(../../images/favicon/of.svg) repeat-X center center;
+    border-radius: 50%;
+}
+
+.embed-card {
+	position: relative;
+	visibility: visible;
+	display: block;
+	max-width: 100%;
+	min-width: 256px;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+.overlay {
+	width: 100%;
+	min-height: 256px;
+	position: absolute;
+	z-index: 99;
+	opacity: .1;
+	user-select: none;
+}
+
+/* ends here */
+
 @media (min-width: 576px) {
 	#login {
 		margin-left: 0;
@@ -727,6 +770,17 @@ section.second {
 	}
 	.nav-icon {
 		flex-grow: 0;
+	}
+	.post-action {
+	  display: flex;
+	  margin-left: 8px;
+	  border-radius: 12px;
+	  padding-right: 8px;
+	  padding-left: 2px;
+	  transition: all .2s ease-in-out;
+	}
+	.share-text {
+		display: flex;
 	}
 
 	#chats {

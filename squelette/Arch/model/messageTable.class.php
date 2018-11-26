@@ -81,6 +81,14 @@ class messageTable
     return $res;
   }
 
+  public function getMessagesByID($id)
+  {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message where id='".$id."'" ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
+
   public static function getMessagesOnProfileSinceId($id, $em) {
     $connection = new dbconnection() ;
     if(!is_numeric($id) || $id<0) $id=0;
