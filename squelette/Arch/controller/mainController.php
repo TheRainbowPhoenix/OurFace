@@ -2,7 +2,7 @@
 # @Author: uapv1701795
 # @Date:   2018-11-18T21:52:01+01:00
 # @Last modified by:   uapv1701795
-# @Last modified time: 2018-11-20T15:55:11+01:00
+# @Last modified time: 2018-11-27T13:46:13+01:00
 
 
 
@@ -75,8 +75,15 @@ class mainController
 
 	public static function helloWorld($request,$context)
 	{
-		$context->mavariable="hello world";
-		return context::SUCCESS;
+		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
+			$context->logged = $_SESSION['logged'];
+			$context->current_user = $_SESSION['user_var'];
+			$context->mavariable="hello world";
+			return context::SUCCESS;
+		} else {
+			goLogin();
+			return;
+		}
 	}
 
 	public static function listUsers($request,$context)
@@ -109,7 +116,14 @@ class mainController
 	}
 
 	public static function hashtag($request,$context) {
-		return context::SUCCESS;
+		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
+			$context->logged = $_SESSION['logged'];
+			$context->current_user = $_SESSION['user_var'];
+			return context::SUCCESS;
+		} else {
+			goLogin();
+			return;
+		}
 	}
 
 	public static function share($request,$context) {
@@ -165,7 +179,7 @@ class mainController
 
 	public static function home($request,$context)
 	{
-		if(array_key_exists('user_var', $_SESSION))  {
+		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
 			$stack = array();
 			$_msgs = messageTable::getMessagesLimit();
 			foreach ($_msgs as $msg) {
@@ -178,6 +192,8 @@ class mainController
 					array_push($stack, $tmp);
 				}
 			}
+			$context->logged = $_SESSION['logged'];
+			$context->current_user = $_SESSION['user_var'];
 			$context->messages = $stack;
 			$context->user = utilisateurTable::getUserById($_SESSION['user_var']['id'])[0];
 			$context->sug = utilisateurTable::getRandomUsers();
@@ -189,7 +205,8 @@ class mainController
 	}
 
 	public static function BProfile($request, $context) {
-		if(array_key_exists('user_var', $_SESSION))  {
+		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
+			$context->logged = $_SESSION['logged'];
 			$context->current_user = $_SESSION['user_var'];
 			$context->raw = true;
 			return context::SUCCESS;
@@ -223,8 +240,16 @@ class mainController
 
 	public static function index($request,$context)
 	{
-		if(array_key_exists('logged', $_SESSION)) goBoard();
-		return context::SUCCESS;
+		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
+			$context->logged = $_SESSION['logged'];
+			$context->current_user = $_SESSION['user_var'];
+			$context->raw = true;
+			if(array_key_exists('logged', $_SESSION)) goBoard();
+			return context::SUCCESS;
+		} else {
+			goLogin();
+			return ;
+		}
 	}
 
 	public static function logout($request,$context) {

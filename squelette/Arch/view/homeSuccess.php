@@ -6,7 +6,7 @@
 
 
 
-if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
+if (!$context->logged) {
   goLogin();
 }
 ?>

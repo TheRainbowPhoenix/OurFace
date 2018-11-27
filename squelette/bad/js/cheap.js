@@ -110,6 +110,7 @@ $( document ).ready(function () {
     });
   //rt click
   $(".action-rt").click(function(e) {
+    if($.isArray($._data($(this), 'events'))) return;
     var r_id = $(this).parents('.post').attr('data-id');
     e.preventDefault();
     $.ajax({
@@ -128,12 +129,14 @@ $( document ).ready(function () {
     //repost?id=35
   });
   //rt click
-  $(".action-repost").click(function(e) {
+  $(".action-reply").click(function(e) {
+    if($.isArray($._data($(this), 'events'))) return;
     var id = $(this).parents('.post').attr('data-id');
     console.log(id);
   });
   //rt click
   $(".action-like").click(function(e) {
+    if($.isArray($._data($(this), 'events'))) return;
     var id = $(this).parents('.post').attr('data-id');
     console.log(id);
   });
@@ -303,6 +306,47 @@ function a() {
       selected = $("#chat");
       break;
     default:
+  }
+  //rt click
+  if($._data($(this)[0], 'events')==null) {
+    //TODO: this big bug that duplicate posts
+    $(".action-rt").click(function(e) {
+      if($._data($(this)[0], 'events')!=null) return;
+      var r_id = $(this).parents('.post').attr('data-id');
+      e.preventDefault();
+      $.ajax({
+        type: "GET",
+        url: "api.php/repost",
+        data: {
+          id: r_id
+        },
+        success: function(result) {
+          notify('Reposted !');
+        },
+        error: function(result) {
+          notify('Error');
+        }
+      });
+      //repost?id=35
+    });
+  }
+  $(".action-reply").each(function (e) {
+  	console.log(e);
+  });
+  ///*
+  //if($._data($(this)[0], 'events')==null) {
+    $(".action-reply").click(function(e) {
+      var id = $(this).parents('.post').attr('data-id');
+      console.log(id);
+    });
+  //}
+  //rt click
+  if($._data($(this)[0], 'events')==null) {
+    $(".action-like").click(function(e) {
+      //if($._data($(this)[0], 'events')!=null) return;
+      var id = $(this).parents('.post').attr('data-id');
+      console.log(id);
+    });
   }
   //If scrolled to bottom
   /*$(window).scroll(function() {

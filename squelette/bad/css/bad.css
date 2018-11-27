@@ -261,6 +261,7 @@ html, body {
   border-radius: 50%;
 	user-select: none;
 	-webkit-user-drag: none;
+  object-fit: cover;
 }
 
 .account-small {

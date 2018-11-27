@@ -1,5 +1,13 @@
 <?php
-  if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
+# @Author: uapv1701795
+# @Date:   2018-11-27T13:32:55+01:00
+# @Last modified by:   uapv1701795
+# @Last modified time: 2018-11-27T13:33:01+01:00
+
+
+
+
+  if (!$context->logged) {
     die('Invalid Session. please <a href="?action=login"> login</a>');
   }
 ?>
