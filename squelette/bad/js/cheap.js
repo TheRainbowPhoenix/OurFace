@@ -109,38 +109,59 @@ $( document ).ready(function () {
       winsz = $(window).width();
     });
   //rt click
-  $(".action-rt").click(function(e) {
-    if($.isArray($._data($(this), 'events'))) return;
-    var r_id = $(this).parents('.post').attr('data-id');
-    e.preventDefault();
-    $.ajax({
-      type: "GET",
-      url: "api.php/repost",
-      data: {
-        id: r_id
-      },
-      success: function(result) {
-        notify('Reposted !');
-      },
-      error: function(result) {
-        notify('Error');
-      }
-    });
-    //repost?id=35
-  });
+  $(".action-rt").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         var r_id = $(e).parents('.post').attr('data-id');
+         i.preventDefault();
+         $.ajax({
+           type: "GET",
+           url: "api.php/repost",
+           data: {
+             id: r_id
+           },
+           success: function(result) {
+             notify('Reposted !');
+           },
+           error: function(result) {
+             notify('Error');
+           }
+         });
+       });
+     }
+   });
   //rt click
-  $(".action-reply").click(function(e) {
-    if($.isArray($._data($(this), 'events'))) return;
-    var id = $(this).parents('.post').attr('data-id');
-    console.log(id);
-  });
+  $(".action-reply").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         var id = $(e).parents('.post').attr('data-id');
+         console.log(id);
+       });
+     }
+   });
   //rt click
-  $(".action-like").click(function(e) {
-    if($.isArray($._data($(this), 'events'))) return;
-    var id = $(this).parents('.post').attr('data-id');
-    console.log(id);
-  });
-
+  $(".action-like").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         var r_id = $(e).parents('.post').attr('data-id');
+         i.preventDefault();
+         $.ajax({
+           type: "GET",
+           url: "api.php/like",
+           data: {
+             id: r_id
+           },
+           success: function(result) {
+             notify('Liked!');
+           },
+           error: function(result) {
+             notify('Error');
+           }
+         });
+         console.log(r_id);
+       });
+     }
+   });
   //chats click
   $("#chat").click(function(e) {
     if (winsz < 1100 && selected != $("#chat") && ($("#chats").length > 0)) {
@@ -330,24 +351,45 @@ function a() {
       //repost?id=35
     });
   }
-  $(".action-reply").each(function (e) {
-  	console.log(e);
-  });
+  $(".action-reply").each(function (i, e) {
+     //console.log($._data($(e)[0], 'events'));
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         var id = $(e).parents('.post').attr('data-id');
+         console.log(id);
+       });
+     }
+   });
   ///*
   //if($._data($(this)[0], 'events')==null) {
-    $(".action-reply").click(function(e) {
+    /*$(".action-reply").click(function(e) {
       var id = $(this).parents('.post').attr('data-id');
       console.log(id);
-    });
+    });*/
   //}
   //rt click
-  if($._data($(this)[0], 'events')==null) {
-    $(".action-like").click(function(e) {
-      //if($._data($(this)[0], 'events')!=null) return;
-      var id = $(this).parents('.post').attr('data-id');
-      console.log(id);
-    });
-  }
+  $(".action-like").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         var r_id = $(e).parents('.post').attr('data-id');
+         i.preventDefault();
+         $.ajax({
+           type: "GET",
+           url: "api.php/like",
+           data: {
+             id: r_id
+           },
+           success: function(result) {
+             notify('Liked!');
+           },
+           error: function(result) {
+             notify('Error');
+           }
+         });
+         console.log(r_id);
+       });
+     }
+   });
   //If scrolled to bottom
   /*$(window).scroll(function() {
     //console.log(fmin());
