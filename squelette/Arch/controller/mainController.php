@@ -153,6 +153,7 @@ class mainController
 			$cnt = 0;
 			$stack = array();
 			$_msgs = (isset($id))?messageTable::getMessagesOnProfile($id):messageTable::getMessages();
+			if(is_null($_msgs) || empty($_msgs)) goIndex();
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
 				$_pst = postTable::getPostById($msg->post);

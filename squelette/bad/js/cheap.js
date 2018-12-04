@@ -337,9 +337,11 @@ function a() {
     });
 
   // chat bottom
-  $('.chat-posts').animate({
-        scrollTop: $('.chat-posts')[0].scrollHeight
+  if ($( 'body' ).has( '.chat-posts' ).length) {
+    $('.chat-posts').animate({
+      scrollTop: $('.chat-posts')[0].scrollHeight
     }, 1000);
+  }
   // Tabs icon
   var a = GetAction();
   switch (a) {
