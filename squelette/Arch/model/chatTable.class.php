@@ -14,6 +14,20 @@ class chatTable
     return ($res==false)?$res:false;
   }
 
+  public function getMostActive() {
+    $connection = new dbconnection() ;
+    $sql = "select emetteur from fredouil.chat group by emetteur order by count(*) desc limit 3";
+    $res = $connection->doQuery( $sql );
+    return ($res);
+  }
+
+  public function getChatLimit() {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.chat order by id desc limit 5";
+    $res = $connection->doQueryObject( $sql, "chat"  );
+    return (is_array($res))?$res:false;
+  }
+
   /**
    * get Last Chat
    * @return int last chat

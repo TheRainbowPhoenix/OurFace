@@ -181,20 +181,42 @@ class mainController
 	{
 		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
 			$stack = array();
+			$cstack = array();
 			$_msgs = messageTable::getMessagesLimit();
-			foreach ($_msgs as $msg) {
-				//var_dump($msg);
-				$_pst = postTable::getPostById($msg->post);
-				$_emtr = utilisateurTable::getUserById($msg->emetteur);
-				$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
+			$_chats = chatTable::getChatLimit();
+			foreach (array_reverse($_chats) as $chat) {
+				$_pst = postTable::getPostById($chat->post);
+				$_emtr = utilisateurTable::getUserById($chat->emetteur);
 				if(isset($_pst) && isset($_emtr)) {
-					$tmp = new Compose($msg, $_pst, $_emtr, $_more);
-					array_push($stack, $tmp);
+					$tmp = new Compose($chat, $_pst, $_emtr);
+					array_push($cstack, $tmp);
 				}
 			}
+			foreach ($_msgs as $msg) {
+				//var_dump($msg);
+				if(!is_null($msg->post)) {
+					$_pst = postTable::getPostById($msg->post);
+					$_emtr = utilisateurTable::getUserById($msg->emetteur);
+					$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
+					if(isset($_pst) && isset($_emtr)) {
+						$tmp = new Compose($msg, $_pst, $_emtr, $_more);
+						array_push($stack, $tmp);
+					}
+				}
+			}
+			$mostac = chatTable::getMostActive();
+			$estack = array();
+			foreach ($mostac as $key => $acc) {
+				$id = $acc["emetteur"];
+				$_emtr = utilisateurTable::getUserById($id);
+				$tmp = array('id' => $id, 'avatar' => $_emtr[0]->emetteur );
+				array_push($estack, $tmp);
+			}
+			$context->mostac = $estack;
 			$context->logged = $_SESSION['logged'];
 			$context->current_user = $_SESSION['user_var'];
 			$context->messages = $stack;
+			$context->chats = $cstack;
 			$context->user = utilisateurTable::getUserById($_SESSION['user_var']['id'])[0];
 			$context->sug = utilisateurTable::getRandomUsers();
 			return context::SUCCESS;
@@ -218,7 +240,30 @@ class mainController
 
 	public static function messages($request, $context) {
 		if(array_key_exists('user_var', $_SESSION))  {
+			$cstack = array();
+			$_chats = chatTable::getChatLimit();
+			foreach (array_reverse($_chats) as $chat) {
+				$_pst = postTable::getPostById($chat->post);
+				$_emtr = utilisateurTable::getUserById($chat->emetteur);
+				if(isset($_pst) && isset($_emtr)) {
+					$tmp = new Compose($chat, $_pst, $_emtr);
+					array_push($cstack, $tmp);
+				}
+			}
+			$mostac = chatTable::getMostActive();
+			$estack = array();
+			foreach ($mostac as $key => $acc) {
+				$id = $acc["emetteur"];
+				$_emtr = utilisateurTable::getUserById($id);
+				$tmp = array('id' => $id, 'avatar' => $_emtr[0]->emetteur );
+				array_push($estack, $tmp);
+			}
+			$context->mostac = $estack;
+			$context->logged = $_SESSION['logged'];
+			$context->chats = $cstack;
 			$context->current_user = $_SESSION['user_var'];
+			$context->user = utilisateurTable::getUserById($_SESSION['user_var']['id'])[0];
+			$context->sug = utilisateurTable::getRandomUsers();
 			return context::SUCCESS;
 		} else {
 			goLogin();

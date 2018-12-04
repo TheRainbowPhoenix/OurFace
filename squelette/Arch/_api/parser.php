@@ -68,25 +68,61 @@ function has_media($id, $text) {
 class parser
 {
 
+	public static function chat($params) {
+		$id = is_logged($_SESSION);
+		if($id >=0) {
+			$chat = array();
+			//id post emetteur
+			$post['emetteur']=$id;
+
+			if (has_key('status',$params)) {
+				$status = $params['status'];
+				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
+				$post['status'] = trim(escape(urldecode($status)));
+				$media_id= '';
+				$post['image'] = '';
+				if (has_key('media_id',$params)) {
+					$media_id = $params['media_id'];
+					if(has_media($id, $media_id)) $post['image'] = $media_id;
+				}
+				$date = date("Y-m-d H:i:s");
+				$post['date'] = $date;
+				$pst = array('' => 'id' ,$post['status']  => 'texte' ,$post['date']  => 'date' ,$post['image']  => 'image' );
+				$_P = new post($pst);
+				$postid = $_P->save();
+				$mssg = array($postid => 'post',$id => 'emetteur');
+				$_C = new chat($mssg);
+				if(is_null($_C->emetteur)) $_C->emetteur = $id;
+				$_C->save();
+				return json_encode($_C);
+				//var_dump($_C);
+			} else {
+				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
+				$media_id = $params['media_id'];
+				if(!has_media($id, $media_id)) return raiseError(genError(324,'The validation of media ids failed'));
+				$post['media_id'] = $media_id;
+				// media_id = 98a665.... => image name
+			}
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
+	}
+
 	public static function post($params) {
-		//INSERT INTO fredouil.message (id, emetteur, destinataire, parent, post, aime) VALUES (13, 2, 1, 2, 13, 1);
-		//INSERT INTO fredouil.post (id, texte, date, image) VALUES (13, '', '2018-11-18 09:25:24.742112', 'dd48d9347cc6');
 		$id = is_logged($_SESSION);
 		if($id >=0) {
 			$post = array();
-			//$post['id'] = 456;
 			$r = postTable::getLastPostId();
 			if($r!=false)$post['id'] = $r[0]['max']+1;
 			$post['emetteur']=$id;
-			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:0; //1 public ?
+			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:1; //1 public ?
 			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:0;
-			//post = generated id, aime = 0
 			if (has_key('status',$params)) {
 				$status = $params['status'];
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
 				//if(strlen($status)>254) $status = substr($status, 0, 250).'...';
 				$post['status'] = trim(escape(urldecode($status)));
-			  $date = date("Y-m-d h:i:s");
+			  $date = date("Y-m-d H:i:s");
 				$post['date'] = $date;
 				$media_id= '';
 				$post['image'] = '';
@@ -97,25 +133,16 @@ class parser
 				$pst = array('' => 'id' ,$post['status']  => 'texte' ,$post['date']  => 'date' ,$post['image']  => 'image' );
 				$_P = new post($pst);
 				$postid = $_P->save();
-				//$lid = postTable::getLastCreatedPostId();
-				//if($lid!=false)$post['id'] = $lid[0]['last_value'];
 				$post['message_id'] = 0;
 				$lmid = messageTable::getLastCreatedMessagesId();
 				if($lmid!=false)$post['message_id'] = $lmid[0]['last_value'];
-				//var_dump($_P);
-				//var_dump($lid);
-				//var_dump($lmid);
-				//echo $post['id'];
-				//var_dump($post['destinataire']);
 				$post['id'] = $postid;
 				$mssg = array($post['emetteur'] => 'emetteur',$post['destinataire'] => 'destinataire',$post['parent'] => 'parent',$postid => 'post',0 => 'aime');
 				$_M = new message($mssg);
 				$_M->emetteur = $post['emetteur'];
 				$_M->destinataire = $post['destinataire'];
-				//var_dump($_M);
 				$_M->save();
-				//var_dump($_P);
-				//echo $_P->id;
+				return json_encode($_M);
 			} else {
 				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
 				$media_id = $params['media_id'];
@@ -198,38 +225,40 @@ class parser
 			}
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
-				$_pst = postTable::getPostById($msg->post);
-				$_emtr = utilisateurTable::getUserById($msg->emetteur);
-				$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
-				if(isset($_pst) && isset($_emtr)) {
-					if($html) {
-						$pid = $msg->id;
-						$id = $msg->emetteur;
-						if(isset($_pst[0]) && isset($msg) && $_pst[0]->image != null) {
-							$img = genImage($id, $_pst[0]->image);
-							$thumb = genThumb($id,$_pst[0]->image);
+				if(!is_null($msg->post)) {
+					$_pst = postTable::getPostById($msg->post);
+					$_emtr = utilisateurTable::getUserById($msg->emetteur);
+					$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
+					if(isset($_pst) && isset($_emtr)) {
+						if($html) {
+							$pid = $msg->id;
+							$id = $msg->emetteur;
+							if(isset($_pst[0]) && isset($msg) && $_pst[0]->image != null) {
+								$img = genImage($id, $_pst[0]->image);
+								$thumb = genThumb($id,$_pst[0]->image);
+							} else {
+								$img = null;
+								$thumb = null;
+							}
+							$com = count(messageTable::getMessagesReply($msg->post));
+							$rt = count(messageTable::getMessagesRepost($msg->post));
+							$likes = (isset($msg) && $msg->aime != NULL && is_numeric($msg->aime))?$msg->aime:0;
+							$mesg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
+							$date = (isset($_pst[0]))?genTimeDiff($_pst[0]->date):'times ago';
+							$usr = $_emtr[0];
+							//var_dump($_emtr);
+							echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $mesg, $date);
+							//echo '<!-- id='.$msg->id.'-->';
+							//var_dump($msg);
+							//var_dump($_pst);
+							//var_dump($_emtr);
+							//$tmp = getPost();
+							//$img, $likes, $com, $thumb, $id, $usr, $msg, $date)
+							//array_push($stack, $tmp);
 						} else {
-							$img = null;
-							$thumb = null;
+							$tmp = new Compose($msg, $_pst, $_emtr, $_more);
+							array_push($stack, $tmp);
 						}
-						$com = count(messageTable::getMessagesReply($msg->post));
-						$rt = count(messageTable::getMessagesRepost($msg->post));
-						$likes = (isset($msg) && $msg->aime != NULL && is_numeric($msg->aime))?$msg->aime:0;
-						$mesg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
-						$date = (isset($_pst[0]))?genTimeDiff($_pst[0]->date):'times ago';
-						$usr = $_emtr[0];
-						//var_dump($_emtr);
-						echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $mesg, $date);
-						//echo '<!-- id='.$msg->id.'-->';
-						//var_dump($msg);
-						//var_dump($_pst);
-						//var_dump($_emtr);
-						//$tmp = getPost();
-						//$img, $likes, $com, $thumb, $id, $usr, $msg, $date)
-						//array_push($stack, $tmp);
-					} else {
-						$tmp = new Compose($msg, $_pst, $_emtr, $_more);
-						array_push($stack, $tmp);
 					}
 				}
 			}

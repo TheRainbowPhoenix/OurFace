@@ -426,6 +426,11 @@ html, body {
 	display: none;
 }
 
+.chat-posts {
+	max-height: 70vh;
+  overflow-y: scroll;
+}
+
 .floating-card {
 	width: 18rem;
 	position: absolute;

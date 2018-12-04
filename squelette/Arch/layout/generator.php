@@ -201,6 +201,37 @@ function genCompose() {
     </div>';
   }
 
+  function getChat($pid, $img, $thumb, $id, $usr, $msg) {
+  echo '<li class="list-group-item card-body">
+         <div class="d-flex" data-user-id="'.$pid.'">
+            <div class="avatar-container">
+               <img class="avatar-image" src="';
+               if (isset($usr)) {
+                 echo genPP($usr->avatar, $id);
+               } else {
+                 echo 'images/ico/def.svg';
+               }
+               echo '" alt="">
+            </div>
+            <div class="name-container flex-grow-1">
+               <h5 class="card-title"><a href="?action=profile&amp;id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a></h5>
+               <p class="card-subtitle mb-2">'.markup($msg).'</p>';
+  if(isset($img)) {
+              echo '<div class="post-image">
+                  <div class="post-image-align">
+                     <div class="post-image-contain">
+                        <a href="images/ico/def.svg" data-toggle="lightbox" data-max-width="600" data-likes="37" data-com="28"><img class="post-img card-img-top img-fluid lazy" alt="img" src="images/ico/def.svg" style="">
+                        </a>
+                     </div>
+                  </div>
+               </div>';
+             }
+  echo '     </div>
+            <div class="floating-card" style="width: 18rem;"></div>
+         </div>
+      </li>';
+  }
+
   function getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, $protected=0)
   {
     echo '<div class="card post" data-id="'.$pid.'">';
@@ -268,8 +299,8 @@ function genCompose() {
   }
 
   function genTimeDiff($time) {
-    $now = date("Y-m-d h:i:s");
-    $diff = strtotime(date("Y-m-d h:i:s"))-strtotime($time);
+    $now = date("Y-m-d H:i:s");
+    $diff = strtotime(date("Y-m-d H:i:s"))-strtotime($time);
     if($diff<=0) return 'futures ago';
     if($diff<60) return $diff.' seconds ago';
     else {

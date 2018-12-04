@@ -104,6 +104,30 @@ $( document ).ready(function () {
       notify('No text profided');
     }
   });
+  //Chat action
+  $("#chatm").click(function(e) {
+    if($('#chat_in').val() != '') {
+      e.preventDefault();
+      $.ajax({
+        type: "GET",
+        url: "api.php/chat",
+        data: {
+          status: $('#chat_in').val(),
+          access_token: $("#access_token").val()
+        },
+        success: function(result) {
+          console.log(result);
+          $('#chat_in').val('');
+          notify('Posted !');
+        },
+        error: function(result) {
+          alert('error');
+        }
+      });
+    } else {
+      notify('No text profided');
+    }
+  });
   //window refresh
     $(window).resize(function () {
       winsz = $(window).width();
@@ -311,6 +335,11 @@ function a() {
             console.log('error loading ' + element.data('src'));
         }
     });
+
+  // chat bottom
+  $('.chat-posts').animate({
+        scrollTop: $('.chat-posts')[0].scrollHeight
+    }, 1000);
   // Tabs icon
   var a = GetAction();
   switch (a) {

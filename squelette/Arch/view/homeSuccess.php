@@ -108,67 +108,58 @@ if (!$context->logged) {
 <div class="col col-lg-3 draggable" id="chats">
   <div class="row fixed-chats ">
     <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
-              <div class="col col-lg-auto servers-container" style="
-"><ul class="list-inline server-list">
-        <li class="list-inline-item server-icon"><div class="avatar-container">
-                    <img class="avatar-image" src="images/ico/def48.png" alt="">
-                  </div></li>
-        <li class="list-inline-item server-icon"><div class="avatar-container">
-                    <img class="avatar-image" src="images/ico/def48.png" alt="">
-                  </div></li>
-        <li class="list-inline-item server-icon"><div class="avatar-container">
-                    <img class="avatar-image" src="images/ico/def48.png" alt="">
-                  </div></li>
-      </ul></div>
+      <div class="col col-lg-auto servers-container">
+        <ul class="list-inline server-list">
+            <?php
+            //var_dump($context->mostac);
+            if(!is_null($context->mostac) && is_array($context->mostac)) {
+              foreach ($context->mostac as $acc) {
+                echo '<li class="list-inline-item server-icon">
+                       <a href="?action=profile&id='.escape($acc['id']).'">
+                         <div class="avatar-container">';
+                echo '<img class="avatar-image" src="'.genPP($acc['avatar'], $acc['id']).'" alt="">';
+                echo ' </a></div>
+                     </li>';
+              }
+            }
+            ?>
+          </ul>
+              </div>
               <div class="col">
                   <div class="card d-flex col-centered">
                     <div class="card-header">Chat 1</div>
-                    <ul class="list-group list-group-flush">
+                    <ul class="list-group list-group-flush chat-posts">
 
-                      <li class="list-group-item card-body">
-                        <div class="d-flex" data-user-id="55">
-                          <div class="avatar-container">
-                            <img class="avatar-image" src="profile-image/55_400x400.jpg" alt="">
-                          </div>
-                          <div class="name-container flex-grow-1">
-                            <h5 class="card-title">root root</h5>
-                            <p class="card-subtitle mb-2">My message 1<br>with lines
-      </p>
-                          </div>
-                          <div class="floating-card" style="width: 18rem;"></div>
-                        </div>
-                      </li>
-                      <li class="list-group-item card-body">
-                        <div class="d-flex" data-user-id="55">
-                          <div class="avatar-container">
-                            <img class="avatar-image" src="profile-image/55_400x400.jpg" alt="">
-                          </div>
-                          <div class="name-container flex-grow-1">
-                            <h5 class="card-title">root root</h5>
-                            <p class="card-subtitle mb-2">My message 1<br>with lines<br> and another
-      </p>
-                          </div>
-                          <div class="floating-card" style="width: 18rem;"></div>
-                        </div>
-                      </li>
-                      <li class="list-group-item card-body">
-                        <div class="d-flex" data-user-id="55">
-                          <div class="avatar-container">
-                            <img class="avatar-image" src="profile-image/55_400x400.jpg" alt="">
-                          </div>
-                          <div class="name-container flex-grow-1">
-                            <h5 class="card-title">root root</h5>
-                            <p class="card-subtitle mb-2">My message 1<br>with lines</p>
-                          </div>
-                          <div class="floating-card" style="width: 18rem;"></div>
-                        </div>
-                      </li>
+                      <?php // foreach
+
+                      foreach ($context->chats as $chat) {
+                        //var_dump($chat);
+                        if(isset($chat->first) && isset($chat->second) && isset($chat->third) && is_array($chat->second) && array_key_exists(0, $chat->second) && array_key_exists(0, $chat->third)) {
+                          $pid = $chat->first->id;
+                          $id = $chat->first->emetteur;
+                          if($chat->second[0]->image != null) {
+                            $img = genImage($chat->first->emetteur, $chat->second[0]->image);
+                            $thumb = genThumb($id, $chat->second[0]->image);
+                          } else {
+                            $img = null;
+                            $thumb = null;
+                          }
+                          $msg = (isset($chat->second[0]))?escape($chat->second[0]->texte):'';
+                          $usr = $chat->third[0];
+                          //var_dump($usr);
+                          getChat($pid, $img, $thumb, $id, $usr, $msg);
+                        }
+                        //var_dump($message);
+                      }
+
+
+                      ?>
                     </ul>
                     <div class="card-body suggestions">
                       <div class="input-group">
-                    <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                    <input type="text" id="chat_in" class="form-control" aria-label="Text input with segmented dropdown button">
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-outline-secondary">Send</button>
+                      <button type="button" id="chatm" class="btn btn-outline-secondary">Send</button>
 
 
                     </div>
@@ -177,5 +168,4 @@ if (!$context->logged) {
                   </div>
               </div>
           </div>
-    chat
 </div>
