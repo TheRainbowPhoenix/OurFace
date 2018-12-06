@@ -8,6 +8,13 @@ function renderPP($text, $id) {
   if(isset($text) && !is_null($text)) {
     if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
+    $imgMimes = ['image/gif', 'image/png', 'image/jpeg', 'image/bmp'];
+    if(file_exists('media/'.$text)) {
+      $mime = mime_content_type('media/'.$text);
+      foreach ($imgMimes as $k => $ext) {
+        if ($ext == $mime) return 'media/'.$text;
+      }
+    }
   }
   if (is_numeric($id)) {
     $f = 'profile-image/'.$id.'_400x400.jpg';
@@ -102,7 +109,7 @@ function renderPP($text, $id) {
 
         <li class="nav-item" id="pp">
           <div class="nav-avatar d-flex">
-
+            
             <div class="dropdown">
               <a class="dropdown-toggle avatar-dropdown" href="#" role="button" id="profileLinks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="name-container flex-grow-1">

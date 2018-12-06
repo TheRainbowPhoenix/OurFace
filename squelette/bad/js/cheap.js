@@ -44,6 +44,29 @@ function Get(val) {
   }
   return false;
 }
+
+function updatePP(data) {
+  $("#profile-picture").find(".avatar-image").attr('src','media/'+data);
+  $('.SProfileCover').css('background-image','url(media/'+data+')');
+}
+
+function setPP(data) {
+  if(data.name != undefined) {
+    var src = data.src;
+    var media_id = data.media_id;
+
+    $.ajax({
+      method: "GET",
+      url: "api.php/setProfile",
+      data: {avatar: media_id},
+      dataType: "html"
+    }).done(function(data) {
+      notify("Succes !");
+      updatePP(data);
+    });
+  }
+}
+
 function addThumbnail(data){
     $(".upload-area").removeClass('dragover');
     var len = $("#uploadfile div.thumbnail").length;
@@ -115,6 +138,7 @@ var winsz = $(window).width();
 $( document ).ready(function () {
   a();
   var refer = Get('id');
+
   //Post Action
   $("#postBtn").click(function(e) {
     if($('.form-control').val() != '') {
@@ -275,6 +299,29 @@ $( document ).ready(function () {
       uploadMedia(fd);
       $(".upload-area").removeClass('dragover');
   });
+  // auto file upload
+  $('#mediaPP').change(function(){
+    //on change event
+    var fd = new FormData();
+    var files = $('#mediaPP')[0].files[0];
+    fd.append('img',files);
+    $.ajax({
+      url: 'up.php',
+      type: 'post',
+      data: fd,
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function(response){
+        console.log(response);
+        setPP(response);
+        //addThumbnail(response);
+      }
+    });
+});
+  $('form').on('submit', function(i, e) {
+    console.log("FILE"+e);
+  });
 
   //upload post
   $("#usendm").click(function(e) {
@@ -358,7 +405,7 @@ $( document ).ready(function () {
 
   //profile edit
   desclck();
-
+  ppclck();
 
 
   /*$("#postBtn").click( function() {
@@ -385,7 +432,7 @@ $( document ).ready(function () {
     $(this).css('height', 'auto');
 		$(this).css('position', 'inherit');
 	}
-});
+  });
 });
 
 var timeoutId;
@@ -409,19 +456,74 @@ function descnrml(text) {
   desclck();
 }
 
+function ppclck() {
+  $("#profile-picture").click(function(e) {
+    //$("#profile-picture").append('<div>edit</div>');
+  });
+}
+
+/*
+<div class="dropdown-menu"><div class="js-first-tabstop" tabindex="0"></div>
+  <div class="dropdown-caret">
+    <span class="caret-outer"></span>
+    <span class="caret-inner"></span>
+  </div>
+  <ul tabindex="-1" role="menu" aria-hidden="false">
+    <li id="photo-choose-existing" class="photo-choose-existing upload-photo" role="presentation">
+      <button type="button" class="dropdown-link" role="menuitem">Envoyer une photo</button>
+      <div class="photo-selector">
+  <button class="btn" type="button">
+      Changer la photo
+    </button>
+  <span class="photo-file-name">Aucun fichier sélectionné</span>
+  <div class="image-selector">
+    <input type="hidden" name="media_file_name" class="file-name">
+    <input type="hidden" name="media_data_empty" class="file-data">
+    <label class="t1-label">
+      <span class="u-hiddenVisually">Ajouter une photo</span>
+      <input type="file" name="media[]" class="file-input js-tooltip" tabindex="-1" accept="image/gif,image/jpeg,image/jpg,image/png" data-original-title="Ajouter une photo">
+    </label>
+  </div>
+</div>
+
+    </li>
+      <li id="photo-choose-webcam" class="u-hidden" role="presentation">
+        <button type="button" class="dropdown-link">Prendre une photo</button>
+      </li>
+    <li id="photo-delete-image" class="" role="presentation">
+      <button type="button" class="dropdown-link" role="menuitem">Supprimer</button>
+    </li>
+      <li class="dropdown-divider" role="presentation"></li>
+      <li class="cancel-options" role="presentation">
+        <button type="button" class="dropdown-link" role="menuitem">Annuler</button>
+      </li>
+  </ul>
+<div class="js-last-tabstop" tabindex="0"></div></div>
+
+ */
+
 function desclck() {
   $("#profile-desc-text").click(function(e) {
     var text = $("#profile-desc-text").html();
     $("#profile-desc").html('');
 
     $("#profile-desc").append('<textarea class="profile-desc-edit" placeholder="Profile description . . .">'+text+'</textarea>');
-    $("#profile-desc").append('<button type="button" id="saveBtn" class="btn btn-outline-secondary float-right">Save</button>');
+    $("#profile-desc").append('<button type="button" id="saveBtn" class="btn btn-primary float-right">Save</button>');
+    $("#profile-desc").append('<button type="button" id="cancelBtn" class="btn btn-secondary float-left" data-text="'+text+'">Cancel</button>');
     edtrfs();
     //$("#profile-desc").append('<p class="card-text">'+text+'</p>');
   });
 }
 
 function edtrfs() {
+  $("#cancelBtn").each(function (i, e) {
+    if($._data($(e)[0], 'events')==null) {
+      $(e).click(function(i) {
+        descnrml($(e).data('text'));
+      });
+    }
+  });
+
   $("#saveBtn").each(function (i, e) {
      if($._data($(e)[0], 'events')==null) {
        $(e).click(function(i) {

@@ -146,24 +146,25 @@ class mainController
 
 	public static function profile($request,$context)
 	{
-		$id = (array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
+		$id = (array_key_exists('user_var',$_SESSION) && array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
 		if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($request['id'])&&is_numeric($id)) $id = $request['id'];
 
-		if(array_key_exists('user_var', $_SESSION))  {
+		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
 			$cnt = 0;
 			$stack = array();
 			$_msgs = (isset($id))?messageTable::getMessagesOnProfile($id):messageTable::getMessages();
-			if(is_null($_msgs) || empty($_msgs)) goIndex();
-			foreach ($_msgs as $msg) {
-				//var_dump($msg);
-				$_pst = postTable::getPostById($msg->post);
-				$cnt = $msg->id;
-				$_emtr = utilisateurTable::getUserById($msg->emetteur);
-				$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
-				//var_dump($_more);
-				if(isset($_pst) && isset($_emtr)) {
-					$tmp = new Compose($msg, $_pst, $_emtr, $_more);
-					array_push($stack, $tmp);
+			if(!is_null($_msgs) && !empty($_msgs)) {
+				foreach ($_msgs as $msg) {
+					//var_dump($msg);
+					$_pst = postTable::getPostById($msg->post);
+					$cnt = $msg->id;
+					$_emtr = utilisateurTable::getUserById($msg->emetteur);
+					$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
+					//var_dump($_more);
+					if(isset($_pst) && isset($_emtr)) {
+						$tmp = new Compose($msg, $_pst, $_emtr, $_more);
+						array_push($stack, $tmp);
+					}
 				}
 			}
 			$context->messages = $stack;

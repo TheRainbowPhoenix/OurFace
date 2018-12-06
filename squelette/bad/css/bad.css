@@ -377,6 +377,19 @@ html, body {
 	margin-top: 15%;
 }
 
+#profile-picture::after {
+	display: none;
+}
+
+.uploadPP-label {
+	display: block;
+	margin-bottom: 0;
+}
+
+.inputPP {
+	display: none;
+}
+
 #profile-desc, #profile-desc:hover{
 	color: inherit;
 	cursor: default;

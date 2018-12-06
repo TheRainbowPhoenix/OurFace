@@ -70,6 +70,13 @@ function genPP($text, $id) {
   if(isset($text) && !is_null($text)) {
     if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
+    $imgMimes = ['image/gif', 'image/png', 'image/jpeg', 'image/bmp'];
+    if(file_exists('media/'.$text)) {
+      $mime = mime_content_type('media/'.$text);
+      foreach ($imgMimes as $k => $ext) {
+        if ($ext == $mime) return 'media/'.$text;
+      }
+    }
   }
   if (is_numeric($id)) {
     $f = 'profile-image/'.$id.'_400x400.jpg';

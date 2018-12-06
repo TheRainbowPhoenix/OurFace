@@ -29,7 +29,20 @@ if (!$context->logged) {
           <div class="card-body">
             <div class="d-flex account-small">
               <div class="avatar-container">
-                <img class="avatar-image" src="<?php echo genPP($context->user->avatar, $context->user->id) ?>" alt="">
+                <a href="#" id="profile-picture" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <img class="avatar-image" src="<?php echo genPP($context->user->avatar, $context->user->id) ?>" alt="">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <div class="dropdown-item image-selector">
+                    <label class="uploadPP-label">
+                      <span class="u-hiddenVisually">Upload image</span>
+                      <input type="file" name="media[]" id="mediaPP" class="file-input inputPP" tabindex="-1" accept="image/gif,image/jpeg,image/jpg,image/png">
+                    </label>
+                  </div>
+                  <button class="dropdown-item" type="button">Add from url</button>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <button class="dropdown-item" type="button">Cancel</button>
+                </div>
               </div>
               <div class="name-container flex-grow-1">
                 <h5 class="card-title"><?php
