@@ -91,6 +91,13 @@ function genImage($id, $text) {
 foreach ($imgExt as $k => $ext) {
         if (file_exists('media/'.$id.'_'.$text.'.'.$ext)) return 'media/'.$id.'_'.$text.'.'.$ext;
       }
+      $imgMimes = ['image/gif', 'image/png', 'image/jpeg', 'image/bmp'];
+      if(file_exists('media/'.$text)) {
+        $mime = mime_content_type('media/'.$text);
+        foreach ($imgMimes as $k => $ext) {
+          if ($ext == $mime) return 'media/'.$text;
+        }
+      }
     }
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
   }
@@ -121,7 +128,7 @@ function genCompose() {
               <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
+              <a id="mediaAdd" class="dropdown-item" href="#">Add media</a>
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
               <div role="separator" class="dropdown-divider"></div>
@@ -159,6 +166,38 @@ function genCompose() {
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" id="sendm" class="btn btn-primary">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadModalLabel">Compose</h5>
+              <!--button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button-->
+            </div>
+            <div class="modal-body">
+              <div class="container compose-m-body">
+                <div class="row">
+                  <div class="col">
+                    <textarea class="form-control" rows="5" maxlength="254" id="uploadM" aria-label="Clic to compose your message . . ."></textarea>
+                    <div class="container upload-handler" >
+                        <input type="file" name="img" id="img" class="hiden">
+                        <div class="upload-area"  id="uploadfile">
+                            <h5 id="dragText">Drop your medias here</h5>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" id="usendm" class="btn btn-primary">Send</button>
             </div>
           </div>
         </div>
@@ -220,7 +259,7 @@ function genCompose() {
               echo '<div class="post-image">
                   <div class="post-image-align">
                      <div class="post-image-contain">
-                        <a href="images/ico/def.svg" data-toggle="lightbox" data-max-width="600" data-likes="37" data-com="28"><img class="post-img card-img-top img-fluid lazy" alt="img" src="images/ico/def.svg" style="">
+                        <a href="images/ico/def.svg" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="37" data-com="28"><img class="post-img card-img-top img-fluid lazy" alt="img" src="images/ico/def.svg" style="">
                         </a>
                      </div>
                   </div>
@@ -240,7 +279,7 @@ function genCompose() {
     echo'<div class="post-image">
           <div class="post-image-align">
             <div class="post-image-contain">
-              <a href="'.$img.'" data-toggle="lightbox" data-max-width="600" data-likes="'.$likes.'" data-com="'.$com.'">';
+              <a href="'.$img.'" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="'.$likes.'" data-com="'.$com.'">';
                 if($protected==1) echo '<img class="overlay" src="images/ico/bg.svg"/>';
                 echo '<img class="post-img card-img-top img-fluid lazy" alt="img" src="'.$thumb.'" data-src="'.$img.'">
               </a>

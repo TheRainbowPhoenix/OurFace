@@ -44,6 +44,42 @@ function Get(val) {
   }
   return false;
 }
+function addThumbnail(data){
+    $(".upload-area").removeClass('dragover');
+    var len = $("#uploadfile div.thumbnail").length;
+    var num = Number(len);
+    num = num + 1;
+    if(data.name != undefined) {
+      $("#dragText").remove();
+      var name = data.name;
+      var src = data.src;
+      var media_id = data.media_id;
+
+      $("#uploadfile").append('<div id="thumbnail_'+num+'" class="thumbnail"></div>');
+      $("#thumbnail_"+num).append('<img class="thumb-media" src="'+src+'" data-media="'+media_id+'" width="100%">');
+      $("#thumbnail_"+num).append('<span class="thumb-remove">×<span>');
+      thmb();
+    }
+}
+
+function uploadMedia(formdata){
+  if($("#thumbnail_1").length == 0) {
+    $.ajax({
+      url: 'up.php',
+      type: 'post',
+      data: formdata,
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function(response){
+        addThumbnail(response);
+      }
+    });
+  } else {
+    notify("Media already added !");
+  }
+}
+
 
 var html;
 function loadMoar(fr, id) {
@@ -199,6 +235,100 @@ $( document ).ready(function () {
 
     //$(".navbar-right").find(".selected");
   });
+  //Drag and drop stuff
+  $("#mediaAdd").click(function(e) {
+    console.log("upload");
+    $('#uploadModal').modal('toggle');
+  });
+  $("html").on("dragover", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $("#dragText").text("Drag here");
+  });
+  $("html").on("drop", function(e) { e.preventDefault(); e.stopPropagation(); });
+  $('.upload-area').on('dragenter', function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+      $(".upload-area").addClass('dragover');
+      $("#dragText").text("Drop");
+  });
+  $('.upload-area').on('dragover', function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+      $("#dragText").text("Drop");
+  });
+  $('.upload-area').on('drop', function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+      $("#dragText").text("Upload");
+      var file = e.originalEvent.dataTransfer.files;
+      var fd = new FormData();
+      fd.append('img', file[0]);
+      uploadMedia(fd);
+      $(".upload-area").removeClass('dragover');
+  });
+  thmb();
+  $("#img").change(function(){
+      var fd = new FormData();
+      var files = $('#img')[0].files[0];
+      fd.append('img',files);
+      uploadMedia(fd);
+      $(".upload-area").removeClass('dragover');
+  });
+
+  //upload post
+  $("#usendm").click(function(e) {
+    var chld = $("#uploadModal").find("#thumbnail_1").length;
+    if($('#uploadM').val() != '' || chld !=0 ) {
+      e.preventDefault();
+      if(chld != 0) {
+        //has media
+        var mediaID = $("#thumbnail_1").children(".thumb-media").data("media");
+        if(mediaID != undefined) {
+          $.ajax({
+            type: "GET",
+            url: "api.php/post",
+            data: {
+              status: $('#uploadM').val(),
+              refer: refer,
+              media_id: mediaID,
+              access_token: $("#access_token").val()
+            },
+            success: function(result) {
+              console.log(result);
+              $('#uploadM').val('');
+              $('#uploadModal').modal('hide');
+              notify('Posted !');
+            },
+            error: function(result) {
+              alert('error');
+            }
+          });
+        }
+      } else {
+        $.ajax({
+          type: "GET",
+          url: "api.php/post",
+          data: {
+            status: $('#uploadM').val(),
+            refer: refer,
+            access_token: $("#access_token").val()
+          },
+          success: function(result) {
+            console.log(result);
+            $('#uploadM').val('');
+            $('#uploadModal').modal('hide');
+            notify('Posted !');
+          },
+          error: function(result) {
+            alert('error');
+          }
+        });
+      }
+    }else {
+      notify('No text profided');
+    }
+  });
   // post for mobile
   $("#sendm").click(function(e) {
     if($('#commentm').val() != '') {
@@ -225,6 +355,11 @@ $( document ).ready(function () {
       notify('No text profided');
     }
   });
+
+  //profile edit
+  desclck();
+
+
 
   /*$("#postBtn").click( function() {
       doPost();
@@ -267,6 +402,75 @@ function fmin() {
     if(min>id) min=id;
   });
   return min;
+}
+
+function descnrml(text) {
+  $("#profile-desc").html('<p class="card-text" id="profile-desc-text">'+text+'</p>');
+  desclck();
+}
+
+function desclck() {
+  $("#profile-desc-text").click(function(e) {
+    var text = $("#profile-desc-text").html();
+    $("#profile-desc").html('');
+
+    $("#profile-desc").append('<textarea class="profile-desc-edit" placeholder="Profile description . . .">'+text+'</textarea>');
+    $("#profile-desc").append('<button type="button" id="saveBtn" class="btn btn-outline-secondary float-right">Save</button>');
+    edtrfs();
+    //$("#profile-desc").append('<p class="card-text">'+text+'</p>');
+  });
+}
+
+function edtrfs() {
+  $("#saveBtn").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         var text = $(".profile-desc-edit").val();
+         if(text != '') {
+           $.ajax({
+             method: "GET",
+             url: "api.php/setProfile",
+             data: {statut: text},
+             dataType: "html"
+           }).done(function(data) {
+             html = data;
+             descnrml(html);
+           });
+         }
+         console.log(text);
+       });
+     }
+   });
+}
+
+function drgopn() {
+  $("#dragText").each(function (i, e) {
+     //console.log($._data($(e)[0], 'events'));
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         if($("#thumbnail_1").length == 0) {
+           $("#img").click();
+         }
+         console.log("add");
+       });
+     }
+   });
+}
+
+function thmb() {
+  $(".thumb-remove").each(function (i, e) {
+     //console.log($._data($(e)[0], 'events'));
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         if($("#thumbnail_1").length != 0) {
+           $("#thumbnail_1").remove();
+           $("#uploadfile").append('<h5 id="dragText">Drop your medias here</h5>');
+           drgopn();
+           console.log("remove");
+         }
+       });
+     }
+   });
 }
 
 function a() {

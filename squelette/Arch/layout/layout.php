@@ -4,8 +4,17 @@
 # @Last modified by:   uapv1701795
 # @Last modified time: 2018-11-21T13:40:47+01:00
 
-
-
+function renderPP($text, $id) {
+  if(isset($text) && !is_null($text)) {
+    if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
+    if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
+  }
+  if (is_numeric($id)) {
+    $f = 'profile-image/'.$id.'_400x400.jpg';
+    if(file_exists($f)) return $f;
+  }
+  return "images/ico/def.svg";
+}
 
  ?>
 <!DOCTYPE html>
@@ -39,7 +48,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="bad/js/jquery.lazy.min.js"></script>
-    <script type="text/javascript" src="bad/js/jquery-ui.min.js"></script> 
+    <script type="text/javascript" src="bad/js/jquery-ui.min.js"></script>
     <script src="bad/js/ekko-lightbox.js"></script>
     <script src="bad/js/cheap.js" type='text/javascript'></script>
 

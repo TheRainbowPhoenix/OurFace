@@ -51,6 +51,14 @@ class utilisateurTable
     return ($res===false)?false:$res;
   }
 
+  public static function alter($type, $id, $img) {
+    if(!is_numeric($id) || $id<=0) return false;
+    $connection = new dbconnection();
+    $sql = "UPDATE fredouil.utilisateur set ".$type."='".$img."' where id='".$id."'";
+    $res = $connection->doQuery($sql);
+    return $res;
+  }
+
 /**
  * get Users, yes all
  * @return array utilisateur

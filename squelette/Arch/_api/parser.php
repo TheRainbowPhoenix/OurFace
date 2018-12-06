@@ -60,6 +60,14 @@ function has_media($id, $text) {
 	foreach ($imgExt as $k => $ext) {
           if (file_exists('media/'.$id.'_'.$text.'.'.$ext)) return true;
         }
+				$imgMimes = ['image/gif', 'image/png', 'image/jpeg', 'image/bmp'];
+				if(file_exists('media/'.$text)) {
+					$mime = mime_content_type('media/'.$text);
+					foreach ($imgMimes as $k => $ext) {
+	          if ($ext == $mime) return true;
+	        }
+				}
+				if (filter_var($text, FILTER_VALIDATE_URL) !== false) return true;
       }
     }
     return false;
@@ -122,6 +130,14 @@ class parser
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
 				//if(strlen($status)>254) $status = substr($status, 0, 250).'...';
 				$post['status'] = trim(escape(urldecode($status)));
+			} else {
+				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
+				$media_id = $params['media_id'];
+				if(!has_media($id, $media_id)) return raiseError(genError(324,'The validation of media ids failed'));
+				$post['media_id'] = $media_id;
+				$post['status'] = '';
+				// media_id = 98a665.... => image name
+			}
 			  $date = date("Y-m-d H:i:s");
 				$post['date'] = $date;
 				$media_id= '';
@@ -130,7 +146,7 @@ class parser
 					$media_id = $params['media_id'];
 					if(has_media($id, $media_id)) $post['image'] = $media_id;
 				}
-				$pst = array('' => 'id' ,$post['status']  => 'texte' ,$post['date']  => 'date' ,$post['image']  => 'image' );
+				$pst = array($post['status']  => 'texte' ,$post['date']  => 'date' ,$post['image']  => 'image' );
 				$_P = new post($pst);
 				$postid = $_P->save();
 				$post['message_id'] = 0;
@@ -143,13 +159,6 @@ class parser
 				$_M->destinataire = $post['destinataire'];
 				$_M->save();
 				return json_encode($_M);
-			} else {
-				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
-				$media_id = $params['media_id'];
-				if(!has_media($id, $media_id)) return raiseError(genError(324,'The validation of media ids failed'));
-				$post['media_id'] = $media_id;
-				// media_id = 98a665.... => image name
-			}
 			return json_encode($post);
 		}
 		else return raiseError(genError(215,'Bad Authentication data.'));
@@ -263,6 +272,24 @@ class parser
 				}
 			}
 		return ($html)?'':json_encode($stack);
+	}
+
+	public static function setProfile($params) {
+		$id = is_logged($_SESSION);
+		if($id >=0) {
+			if(has_key('statut', $params)) {
+				$rtrn = utilisateurTable::alter('statut', $id, urldecode($params['statut']));
+				if(has_key(0, $rtrn)) return urldecode($params['statut']);
+			}
+			if(has_key('avatar', $params)){
+				$rtrn = utilisateurTable::alter('avatar', $id, $params['avatar']);
+				if(has_key(0, $rtrn)) return urldecode($params['avatar']);
+			} else {
+				return raiseError(genError(400,'Invalid avatar'));
+			}
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
 	}
 
 	public static function popup($params)

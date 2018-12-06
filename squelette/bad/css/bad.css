@@ -377,6 +377,95 @@ html, body {
 	margin-top: 15%;
 }
 
+#profile-desc, #profile-desc:hover{
+	color: inherit;
+	cursor: default;
+	text-decoration: none;
+}
+
+.profile-desc-edit {
+	width: 100%;
+  padding: 8px;
+  border-radius: 0.5rem;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  min-height: 64px;
+  max-height: 256px;
+	background: rgba(0,0,0,.03);
+  border: 2px solid;
+	border-color: #9a92b8;
+	height: auto;
+}
+
+#img{
+	display: none;
+}
+
+.upload-area {
+  height: 100%;
+	display: flex;
+}
+
+.thumb-media {
+	max-height: 128px;
+	background: #eae9ed;
+	display: block;
+	user-select: none;
+	-webkit-user-drag: none;
+	object-fit: cover;
+	max-width: 128px;
+	border-radius: .5rem;
+	border: 2px solid #6c757d;
+	margin: 8px;
+}
+
+.upload-handler {
+	padding: .375rem .75rem;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  border-radius: 0 0 .25rem .25rem;
+  border-top: none;
+	background-color: rgba(0,0,0,.03);
+}
+
+.upload-area.dragover {
+	border: 2px dashed rgb(153, 146, 184);
+	min-height: 48px;
+	line-height: 48px;
+}
+
+.thumb-remove {
+	width: 24px;
+  height: 24px;
+  background: #6c757d;
+  display: block;
+  position: absolute;
+  margin-top: -24px;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 22px;
+  text-align: center;
+  color: #ced4da;
+  user-select: none;
+  transition: .2s all ease-in-out;
+}
+
+.thumb-remove:hover {
+    color: #fff;
+    background: #9992b8;
+    box-shadow: 0 0 0 2px #6c757d;
+    transition: .2s all ease-in-out;
+    cursor: pointer;
+}
+
+.upload-area h5 {
+    text-align: center;
+    color: #6c757d!important;
+    line-height: 40px;
+		margin: 0 auto;
+}
+
 #composeModal .modal-content {
   background-color: #EAE9ED;
 }

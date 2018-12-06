@@ -37,7 +37,7 @@ if (!$context->logged) {
                 <h6 class="card-subtitle mb-2 text-muted"><?php echo "@".escape($context->user->identifiant) ?></h6>
               </div>
             </div>
-            <p class="card-text"><?php echo escape($context->user->statut) ?></p>
+            <a href="#" id="profile-desc"><p class="card-text" id="profile-desc-text"><?php echo escape($context->user->statut) ?></p></a>
           </div>
           <div class="card-footer">
             <small class="text-muted">Born the <?php echo genDate(escape($context->user->date_de_naissance)) ?></small>
