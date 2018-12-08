@@ -494,12 +494,24 @@ html, body {
 		margin: 0 auto;
 }
 
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+	border-top: none;
+}
+
 #composeModal .modal-content {
   background-color: #EAE9ED;
 }
 
 .compose-m-body {
   margin-top: 1em 0;
+}
+
+.compose-m-body textarea {
+  border-radius: .25rem .25rem 0 0;
 }
 
 #basic-addon1 {
