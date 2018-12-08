@@ -1,7 +1,5 @@
 <?php
 
-
-
 class emojiTable extends basemodel {
   public function getProviders()
   {
@@ -9,6 +7,8 @@ class emojiTable extends basemodel {
     $provider = array('dir' => 'images/emojis','name' => 'Arch' );
     array_push($list, $provider);
     $provider = array('dir' => 'images/default','name' => 'Default' );
+    array_push($list, $provider);
+    $provider = array('dir' => 'images/emojiOne2_1','name' => 'emojiOne 2.1' );
     array_push($list, $provider);
     return $list;
   }
@@ -21,7 +21,6 @@ class emojiTable extends basemodel {
         $dir = $provider["dir"];
         $imgExt = ['jpg', 'gif', 'png'];
         foreach ($imgExt as $k => $ext) {
-          //echo 'images/'.$pid.'.'.$ext;
           if (file_exists($dir.'/'.$pid.'.'.$ext)) {
             if($html) {
               return '<img class="emoji inline" src="'.$dir.'/'.$pid.'.'.$ext.'" alt="'.$pid.'" draggable="false">';
