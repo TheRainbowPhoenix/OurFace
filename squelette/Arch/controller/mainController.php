@@ -148,8 +148,10 @@ class mainController
 	{
 		$id = (array_key_exists('user_var',$_SESSION) && array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
 		if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($request['id'])&&is_numeric($id)) $id = $request['id'];
+		$usr = utilisateurTable::getUserById($id);
 
 		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
+			if($usr == false) goIndex();
 			$cnt = 0;
 			$stack = array();
 			$_msgs = (isset($id))?messageTable::getMessagesOnProfile($id):messageTable::getMessages();

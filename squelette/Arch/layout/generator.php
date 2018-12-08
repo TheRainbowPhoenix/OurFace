@@ -55,7 +55,7 @@ function markup($text) {
   }
   $text = str_replace($matches, $rep, $text);
 
-  $url_re = '/((http|https|ftp):\/\/\d*[^\s\/$.?#].[^\s&">]+\w*)/i';
+  $url_re = '/((http|https|ftp):\/\/\d*[^\s\/$.?#].[^\s&">)]+\w*)/i';
   preg_match_all($url_re, $text, $matches, PREG_SET_ORDER, 0);
   $rep = array();
   foreach ($matches as $value=>$key) {
