@@ -967,12 +967,12 @@ section.second {
 }
 
 .emoji {
-	width: 28px;
-	height: 28px;
+	width: 32px;
+	height: 32px;
 	display: inline-block;
 	margin: 0;
-	padding: 0;
-  user-select: none;
+	user-select: none;
+	padding: 2px;
 }
 
 .emoji:hover {
@@ -987,7 +987,6 @@ section.second {
   display: inline-block;
   height: 28px;
   line-height: 28px;
-  margin: 2px 0 2px 4px;
   text-align: center;
   width: 28px;
   overflow: hidden;

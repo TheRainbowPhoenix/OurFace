@@ -693,7 +693,6 @@ function addEmojis(data) {
        $(e).click(function(i) {
          var id = $(e).attr('data-emoji');
          $('#chat_in').val($('#chat_in').val()+" :"+id+": ");
-         console.log(id);
        });
      }
    });
