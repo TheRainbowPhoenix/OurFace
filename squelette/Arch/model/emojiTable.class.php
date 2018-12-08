@@ -1,6 +1,14 @@
 <?php
 
 class emojiTable extends basemodel {
+  public function getProviders()
+  {
+    $provider = array('dir' => 'images/emojis','name' => 'Arch' );
+    $provider = array('dir' => 'images/default','name' => 'Default' );
+    $list = array(0 => $provider);
+    return $list;
+  }
+
   public function getEmoji($pid, $html=false)
   {
     if(is_numeric($pid)) {

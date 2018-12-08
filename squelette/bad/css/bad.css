@@ -983,6 +983,10 @@ section.second {
 	padding: 2px;
 }
 
+.emojis-provider {
+    padding-left: 4px;
+}
+
 .emoji:hover {
     background: rgba(0,0,0,0.125);
     border-radius: .125rem;

@@ -466,27 +466,32 @@ class parser
 			}
 			if(has_key('all', $params)){
 				if(!$html) header('Content-Type: application/json');
+				$providers = emojiTable::getProviders();
 				$result = array();
-				$dir = 'images/emojis';
-				$cdir = scandir($dir);
-				if($html) echo '<div class="row emoji-list">';
-				foreach ($cdir as $key => $file)
-				{
-				  if (!in_array($file,array(".",".."))) {
-				    if (is_dir($dir . DIRECTORY_SEPARATOR . $file)) {
-				      $result[$file] = dirToArray($dir . DIRECTORY_SEPARATOR . $file);
-				    } else {
-				      $p = explode('.', $file);
-				      if(!$html) $result[$p[0]] = 'images/emojis/'.$file;
-							else {
-								echo '<div class="col emoji emojisel" data-emoji='.$p[0].'><div class="emoji-image" style="background-image: url('.'images/emojis/'.$file.');"></div></div>';
-							}
-				    }
-				  }
-				}
-				if(!$html) return json_encode($result);
-				else {
-					echo '</div>';
+				foreach ($providers as $key => $provider) {
+					$dir = $provider["dir"];
+					$name = $provider["name"];
+					$cdir = scandir($dir);
+					if($html) echo '<div class="row emoji-list">';
+					if($html) echo '<div class="emojis-provider text-muted">'.$name.'</div>';
+					foreach ($cdir as $key => $file) {
+					  if (!in_array($file,array(".",".."))) {
+					    if (is_dir($dir . DIRECTORY_SEPARATOR . $file)) {
+					      $result[$file] = dirToArray($dir . DIRECTORY_SEPARATOR . $file);
+					    } else {
+					      $p = explode('.', $file);
+					      if(!$html) $result[$p[0]] = $dir.'/'.$file;
+								else {
+									echo '<div class="col emoji emojisel" data-emoji='.$p[0].'><div class="emoji-image" style="background-image: url('.$dir.'/'.$file.');"></div></div>';
+								}
+					    }
+					  }
+					}
+					if(!$html) return json_encode($result);
+					else {
+						echo '</div>';
+					}
+					//var_dump($provider);
 				}
 			} else {
 				return raiseError(genError(400,'Invalid avatar'));
