@@ -8,8 +8,10 @@
 function replaceAll($text) {
   $text = str_replace('<','&lt;', $text);
   $text = str_replace('>','&gt;', $text);
-  $text = str_replace('&amp;#039;', '&#039;', $text);
-  $text = str_replace('&amp;amp;hearts;','&hearts;', $text);
+  //$text = str_replace('&amp;#039;', '&#039;', $text);
+  $text = str_replace('&amp;hearts;','&hearts;', $text);
+  //$text = str_replace('&amp;eacute;','&eacute;', $text);
+  //$text = str_replace('&amp;euml;','&euml;', $text);
   //$text = str_replace('&amp;', '&', $text);
   //echo $text;
   return $text;
@@ -22,8 +24,8 @@ function escape($text) {
  // echo $text;
   $text = htmlentities($text, ENT_QUOTES);
   $text = htmlspecialchars($text, ENT_HTML5);
+  $text = html_entity_decode($text,ENT_QUOTES | ENT_HTML5);
   $text = replaceAll($text);
-  //$text = html_entity_decode($text,ENT_QUOTES | ENT_HTML5);
   return $text;
 }
 

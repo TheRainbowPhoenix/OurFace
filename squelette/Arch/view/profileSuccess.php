@@ -14,8 +14,8 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   <script type="text/javascript">
   $( document ).ready(function () {
     //refresh posts
-    chkpst = setInterval(checkAl, 45000);
-  }
+    chkpst = setInterval(checkAll, 45000);
+  });
   //check new posts
   function checkAll() {
     loadChat(cmax());
