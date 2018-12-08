@@ -685,8 +685,22 @@ function chatMedia(data) {
   }
 }
 
+function addEmojis(data) {
+  $(".emoji-block").html(data);
+}
+
 function chatStuff() {
   //Chat hide and show
+  if($(".emoji-block").find(".emoji-list").length ==0) {
+    $.ajax({
+      method: "GET",
+      url: "api.php/emojis",
+      data: {all: 1, html: true},
+      dataType: "html"
+    }).done(function(data) {
+      addEmojis(data);
+    });
+  }
   $(".chat-container").each(function (i, e) {
      if($._data($(e)[0], 'events')==null) {
        $(e).click(function(i) {

@@ -951,6 +951,16 @@ section.second {
 
 /* Emojis */
 
+.emoji-block {
+	max-height: 256px;
+	overflow-y: auto;
+	min-width: 258px;
+	width: 100%;
+	padding-top: 0px;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
 .emoji-list {
 	flex-wrap: inherit;
 	display: block;

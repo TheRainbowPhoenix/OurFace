@@ -201,6 +201,9 @@ function genChatCompose() {
           <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu" x-placement="bottom-start">
+        <div class="px-4 emoji-block">
+        <span id="replaceme-emoji"> Loading . . .</span>
+        </div>
           <div class="dropdown-item image-selector">
             <label class="uploadChat-label">
               <span class="u-hiddenVisually">Add media</span>
@@ -208,7 +211,6 @@ function genChatCompose() {
             </label>
           </div>
           <a id="linkChatAdd" class="dropdown-item" href="#">Embed link</a>
-          <a id="emojiChatAdd" class="dropdown-item" href="#">add emoji</a>
           <div role="separator" class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Cancel</a>
         </div>
