@@ -479,7 +479,7 @@ class parser
 				      $p = explode('.', $file);
 				      if(!$html) $result[$p[0]] = 'images/emojis/'.$file;
 							else {
-								echo '<div class="col emoji emoji-select" data-emoji='.$p[0].'><div class="emoji-image" style="background-image: url('.'images/emojis/'.$file.');"></div></div>';
+								echo '<div class="col emoji emojisel" data-emoji='.$p[0].'><div class="emoji-image" style="background-image: url('.'images/emojis/'.$file.');"></div></div>';
 							}
 				    }
 				  }

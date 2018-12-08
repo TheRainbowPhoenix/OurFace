@@ -9,7 +9,7 @@ class emojiTable extends basemodel {
         //echo 'images/'.$pid.'.'.$ext;
         if (file_exists('images/emojis/'.$pid.'.'.$ext)) {
           if($html) {
-            return '<img class="emoji inline" src="'.'images/emojis/'.$pid.'.'.$ext.'" alt=":'.$pid.':" draggable="false">';
+            return '<img class="emoji inline" src="'.'images/emojis/'.$pid.'.'.$ext.'" alt="'.$pid.'" draggable="false">';
           } else {
             $rtrn = array('id' => $pid, 'src' => 'images/emojis/'.$pid.'.'.$ext);
             return json_encode($rtrn);
