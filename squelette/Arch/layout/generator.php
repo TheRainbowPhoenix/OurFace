@@ -52,8 +52,10 @@ function markup($text) {
     //var_dump($key);
     if($emoji != false) {
       $rep[$value] = $emoji;
+    } else {
+      $rep[$value] = $key[1];
     }
-    $matches[$value] = $key[1];
+    $matches[$value] = $key[0];
   }
   $text = str_replace($matches, $rep, $text);
 
