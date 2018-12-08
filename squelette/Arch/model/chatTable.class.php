@@ -23,7 +23,7 @@ class chatTable
 
   public function getChatLimit() {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.chat order by id desc limit 5";
+    $sql = "select * from fredouil.chat order by id desc limit 10";
     $res = $connection->doQueryObject( $sql, "chat"  );
     return (is_array($res))?$res:false;
   }
