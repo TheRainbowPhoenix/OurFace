@@ -687,7 +687,7 @@ function chatMedia(data) {
 
 function addEmojis(data) {
   $(".emoji-block").html(data);
-  $(".emoji").each(function (i, e) {
+  $(".emoji.emoji-select").each(function (i, e) {
      //console.log($._data($(e)[0], 'events'));
      if($._data($(e)[0], 'events')==null) {
        $(e).click(function(i) {
