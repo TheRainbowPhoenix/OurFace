@@ -687,6 +687,16 @@ function chatMedia(data) {
 
 function addEmojis(data) {
   $(".emoji-block").html(data);
+  $(".emoji").each(function (i, e) {
+     //console.log($._data($(e)[0], 'events'));
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         var id = $(e).attr('data-emoji');
+         $('#chat_in').val($('#chat_in').val()+" :"+id+": ");
+         console.log(id);
+       });
+     }
+   });
 }
 
 function chatStuff() {

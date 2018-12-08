@@ -975,6 +975,10 @@ section.second {
   user-select: none;
 }
 
+.emoji:hover {
+    background: rgba(0,0,0,0.125);
+    border-radius: .125rem;
+}
 .emoji-image {
   background-position: 50%;
   background-repeat: no-repeat;
