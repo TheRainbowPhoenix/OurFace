@@ -44,7 +44,7 @@ function markup($text) {
   }
   $text = str_replace($matches, $rep, $text);
 
-  $emoji_re = '/\B:(\d+):/m';
+  $emoji_re = '/\B:(\w+):/m';
   preg_match_all($emoji_re, $text, $matches, PREG_SET_ORDER, 0);
   $rep = array();
   foreach ($matches as $value=>$key) {

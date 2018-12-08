@@ -1,26 +1,34 @@
 <?php
 
+
+
 class emojiTable extends basemodel {
   public function getProviders()
   {
+    $list = array();
     $provider = array('dir' => 'images/emojis','name' => 'Arch' );
+    array_push($list, $provider);
     $provider = array('dir' => 'images/default','name' => 'Default' );
-    $list = array(0 => $provider);
+    array_push($list, $provider);
     return $list;
   }
 
   public function getEmoji($pid, $html=false)
   {
-    if(is_numeric($pid)) {
-      $imgExt = ['jpg', 'gif', 'png'];
-      foreach ($imgExt as $k => $ext) {
-        //echo 'images/'.$pid.'.'.$ext;
-        if (file_exists('images/emojis/'.$pid.'.'.$ext)) {
-          if($html) {
-            return '<img class="emoji inline" src="'.'images/emojis/'.$pid.'.'.$ext.'" alt="'.$pid.'" draggable="false">';
-          } else {
-            $rtrn = array('id' => $pid, 'src' => 'images/emojis/'.$pid.'.'.$ext);
-            return json_encode($rtrn);
+    if(isset($pid)) {
+      $providers = emojiTable::getProviders();
+      foreach ($providers as $key => $provider) {
+        $dir = $provider["dir"];
+        $imgExt = ['jpg', 'gif', 'png'];
+        foreach ($imgExt as $k => $ext) {
+          //echo 'images/'.$pid.'.'.$ext;
+          if (file_exists($dir.'/'.$pid.'.'.$ext)) {
+            if($html) {
+              return '<img class="emoji inline" src="'.$dir.'/'.$pid.'.'.$ext.'" alt="'.$pid.'" draggable="false">';
+            } else {
+              $rtrn = array('id' => $pid, 'src' => $dir.'/'.$pid.'.'.$ext);
+              return json_encode($rtrn);
+            }
           }
         }
       }

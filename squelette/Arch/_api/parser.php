@@ -468,6 +468,7 @@ class parser
 				if(!$html) header('Content-Type: application/json');
 				$providers = emojiTable::getProviders();
 				$result = array();
+				//var_dump($providers);
 				foreach ($providers as $key => $provider) {
 					$dir = $provider["dir"];
 					$name = $provider["name"];
