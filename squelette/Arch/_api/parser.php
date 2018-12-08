@@ -78,40 +78,117 @@ class parser
 
 	public static function chat($params) {
 		$id = is_logged($_SESSION);
+		$new = (has_key('new_items', $params) && $params['new_items']==true)?true:false;
+		$html = (has_key('html', $params))?1:0; //generate html
 		if($id >=0) {
 			$chat = array();
 			//id post emetteur
 			$post['emetteur']=$id;
 
+			if(has_key('gen',$params)) {
+				echo maker::chat($params);
+				return;
+			}
+			if(has_key('from', $params)) {
+				if($html) {
+					if(is_numeric($params['from'])) {
+						$_chats = chatTable::getNewChatMessage($params['from']);
+						$cstack = array();
+						foreach (array_reverse($_chats) as $chat) {
+							$_pst = postTable::getPostById($chat->post);
+				      $_emtr = utilisateurTable::getUserById($chat->emetteur);
+							if(isset($_pst) && isset($_emtr)) {
+				        $pid = $chat->id;
+				        $id = $chat->emetteur;
+				        if($_pst[0]->image != null) {
+				          $img = genImage($chat->emetteur, $_pst[0]->image);
+				          $thumb = genThumb($id, $_pst[0]->image);
+				        } else {
+				          $img = null;
+				          $thumb = null;
+				        }
+				        $msg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
+				        $usr = $_emtr[0];
+				        getChat($pid, $img, $thumb, $id, $usr, $msg);
+				        /*$tmp = new Compose($chat, $_pst, $_emtr);
+				        array_push($cstack, $tmp);*/
+				      }
+						}
+						return;
+					} else {
+						return '';
+					}
+				} else {
+					if(is_numeric($params['from'])) {
+						$_chats = chatTable::getNewChatMessage($params['from']);
+						$cstack = array();
+						foreach (array_reverse($_chats) as $chat) {
+							$_pst = postTable::getPostById($chat->post);
+				      $_emtr = utilisateurTable::getUserById($chat->emetteur);
+							if(isset($_pst) && isset($_emtr)) {
+				        $pid = $chat->id;
+				        $id = $chat->emetteur;
+				        if($_pst[0]->image != null) {
+				          $img = genImage($chat->emetteur, $_pst[0]->image);
+				          $thumb = genThumb($id, $_pst[0]->image);
+				        } else {
+				          $img = null;
+				          $thumb = null;
+				        }
+				        $msg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
+				        $usr = $_emtr[0];
+				        //getChat($pid, $img, $thumb, $id, $usr, $msg);
+				        $tmp = new Compose($chat, $_pst, $_emtr);
+				        array_push($cstack, $tmp);
+				      }
+						}
+						return json_encode($cstack);
+					} else return raiseError(genError(400,'Invalid id'));
+				}
+			}
 			if (has_key('status',$params)) {
 				$status = $params['status'];
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
 				$post['status'] = trim(escape(urldecode($status)));
 				$media_id= '';
 				$post['image'] = '';
-				if (has_key('media_id',$params)) {
-					$media_id = $params['media_id'];
-					if(has_media($id, $media_id)) $post['image'] = $media_id;
-				}
-				$date = date("Y-m-d H:i:s");
-				$post['date'] = $date;
-				$pst = array('' => 'id' ,$post['status']  => 'texte' ,$post['date']  => 'date' ,$post['image']  => 'image' );
-				$_P = new post($pst);
-				$postid = $_P->save();
-				$mssg = array($postid => 'post',$id => 'emetteur');
-				$_C = new chat($mssg);
-				if(is_null($_C->emetteur)) $_C->emetteur = $id;
-				$_C->save();
-				return json_encode($_C);
-				//var_dump($_C);
 			} else {
 				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
 				$media_id = $params['media_id'];
 				if(!has_media($id, $media_id)) return raiseError(genError(324,'The validation of media ids failed'));
 				$post['media_id'] = $media_id;
+				$post['status'] = '';
 				// media_id = 98a665.... => image name
 			}
-		} else {
+			if (has_key('media_id',$params)) {
+				$media_id = $params['media_id'];
+				if(has_media($id, $media_id)) $post['image'] = $media_id;
+			}
+			$date = date("Y-m-d H:i:s");
+			$post['date'] = $date;
+			$pst = array($post['status']  => 'texte' ,$post['date']  => 'date' ,$post['image']  => 'image' );
+			$_P = new post($pst);
+			$postid = $_P->save();
+			$mssg = array($postid => 'post',$id => 'emetteur');
+			$_C = new chat($mssg);
+			if(is_null($_C->emetteur)) $_C->emetteur = $id;
+			$pid = $_C->save();
+			if($html) {
+				if($post['image'] != '') {
+					$img = genImage($id, $_P->image);
+					$thumb = genThumb($id, $_P->image);
+				} else {
+					$img= null;
+					$thumb = null;
+				}
+				$usr = utilisateurTable::getUserById($_C->emetteur)[0];
+				$msg = $post['status'];
+				getChat($pid, $img, $thumb, $_C->emetteur, $usr, $msg);
+			} else {
+				return json_encode($_C);
+			}
+				//var_dump($_C);
+			} else {
 			return raiseError(genError(215,'Bad Authentication data.'));
 		}
 	}
@@ -214,23 +291,71 @@ class parser
 			return raiseError(genError(215,'Bad Authentication data.'));
 		}
 	}
+ //https://twitter.com/i/timeline?composed_count=0
+ // &include_available_features=1
+ // &include_entities=1
+ // &include_new_items_bar=true
+ // &interval=10000
+ // &latent_count=3
+ // &min_position=1071072220498280448
+	public static function timeline($params) {
+		$id = is_logged($_SESSION);
+		$html = (has_key('html', $params))?1:0;
+		if($id >=0) {
+			if(has_key('min_position', $params)){ //id
+				if(is_numeric($params['min_position']) && $params['min_position']>=0) {
+					$rtrn = messageTable::getNewMessagesFrom($params['min_position']);
+					if(has_key(0, $rtrn)) return json_encode($rtrn);
+				}
+			}
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
+	}
+
+	public static function hasNew($params) {
+		$id = is_logged($_SESSION);
+		if($id >=0) {
+			if(has_key('id', $params)){
+				if(is_numeric($params['id']) && $params['id']>=0) {
+					$rtrn = messageTable::getNewMessagesFrom($params['id']);
+					if(has_key(0, $rtrn)) return json_encode($rtrn);
+				}
+			}
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
+	}
 
   public static function messages($params)
 	{
 			$html = (has_key('html', $params))?1:0; //generate html
+			$new = (has_key('new_items', $params) && $params['new_items']==true)?true:false;
 			$stack = array();
 			if(has_key('from', $params)){
 				if(is_numeric($params['from'])) {
 					if(has_key('user_id', $params) && is_numeric($params['user_id'])){
-						$_msgs = messageTable::getMessagesOnProfileSinceId($params['from'], $params['user_id']);
+						$_msgs = messageTable::getMessagesOnProfileSinceId($params['from'], $params['user_id'], $new);
 					} else {
-						$_msgs = messageTable::getMessagesSinceId($params['from'], -1);
+						$_msgs = messageTable::getMessagesSinceId($params['from'], -1, $new);
+					}
+				} else {
+					if($new){ //id
+						$_msgs = null;
+					} else {
+						$_msgs = messageTable::getMessages();
+					}
+				}
+			} else {
+				if(has_key('min_position', $params)){ //id
+					if($new && is_numeric($params['min_position']) && $params['min_position']>=0) {
+						$_msgs = messageTable::getNewMessagesFrom($params['min_position']);
+					} else {
+						$_msgs = null;
 					}
 				} else {
 					$_msgs = messageTable::getMessages();
 				}
-			} else {
-				$_msgs = messageTable::getMessages();
 			}
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);

@@ -14,7 +14,7 @@ class messageTable
  * get Messages
  * @return messageTable message Table
  */
-  public function getMessages()
+  public function getMessages($new=false)
   {
     $connection = new dbconnection() ;
     $sql = "select * from fredouil.message order by id desc";
@@ -89,23 +89,31 @@ class messageTable
     return $res;
   }
 
-  public static function getMessagesOnProfileSinceId($id, $em) {
+  public function getNewMessagesFrom($id) {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message where id>'".$id."'" ;
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
+
+  public static function getMessagesOnProfileSinceId($id, $em, $new=false) {
     $connection = new dbconnection() ;
     if(!is_numeric($id) || $id<0) $id=0;
-      if($em<0) $sql = "select * from fredouil.message where id < ".$id." order by id desc limit 10" ;
-      else $sql = "select * from fredouil.message where id < ".$id." and (emetteur=".$em." or destinataire=".$em.") order by id desc limit 10" ;
+      if($em<0) $sql = "select * from fredouil.message where id ".(($new)?">":"<")." ".$id." order by id desc limit 10" ;
+      else $sql = "select * from fredouil.message where id ".(($new)?">":"<")." ".$id." and (emetteur=".$em." or destinataire=".$em.") order by id desc limit 10" ;
       $res = $connection->doQueryObject( $sql, "message" );
       if($res === FALSE || is_null($res)) return false;
       return $res;
   }
 
-  public static function getMessagesSinceId($id, $em)
+  public static function getMessagesSinceId($id, $em, $new=false)
   {
     $connection = new dbconnection() ;
     if(!is_numeric($id) || $id<0) $id=0;
     //select * from (select * from fredouil.message where id > 100 order by id limit 10) as x order by id desc;
-    if($em<0) $sql = " select * from fredouil.message where id < ".$id." order by id desc limit 10" ;
-    else $sql = " select * from fredouil.message where id < ".$id." and emetteur =".$em." order by id desc limit 10" ;
+    // TODO: >= to > (>= is for tests)
+    if($em<0) $sql = " select * from fredouil.message where id ".(($new)?">":"<")." ".$id." order by id desc limit 10" ;
+    else $sql = " select * from fredouil.message where id ".(($new)?">":"<")." ".$id." and emetteur =".$em." order by id desc limit 10" ;
     $res = $connection->doQueryObject( $sql, "message" );
     if($res === FALSE || is_null($res)) return false;
     return $res;

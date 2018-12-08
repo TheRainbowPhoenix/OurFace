@@ -5,6 +5,7 @@ header('Content-Type: application/json;charset=utf-8');
 
 require_once 'lib/core.php';
 require_once $nameApp.'/layout/generator.php';
+require_once $nameApp.'/_api/maker.php';
 require_once $nameApp.'/_api/parser.php';
 require_once $nameApp.'/_api/wrapper.php';
 session_start();

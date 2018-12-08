@@ -406,7 +406,7 @@ var Lightbox = (function ($) {
 					this._$modalFooter.css('display', '').html(caption);
 				} else this._$modalFooter.css('display', 'none');
 
-				if (likes) {
+				if (likes >=0) {
 					this._footerIsShown = true;
 					this._$modalFooter.css('display', '').html('<div class="post-actions row"> <div class="post-action"> <span class="icon icon-like"> </span> <span class="count">'+likes+'</span> </div><div href="#" class="post-action"> <span class="icon icon-com"> </span> <span class="count">'+com+'</span> </div></div>');
 				}

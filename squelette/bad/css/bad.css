@@ -36,6 +36,10 @@ html, body {
   min-width: 300px;
 }
 
+.dashboard-left.mob-hidden {
+	display: none;
+}
+
 .BProfile {
   padding: 8px;
 	position: sticky;
@@ -44,11 +48,20 @@ html, body {
   background-color: rgba(251, 249, 251, 0.5);*/
 }
 .BSug {
-  padding-top: 8px;
+	display: none;
+	padding-top: 0px;
+}
+
+.BSug .list-group .list-group-item {
+	animation: fadeIn 0.6s ease forwards;
 }
 
 .suggestions {
   padding: .5rem 1rem;
+}
+
+.ekko-lightbox {
+  overflow: hidden !important;
 }
 
 .post-image {
@@ -95,7 +108,7 @@ html, body {
 }
 
 .posts-main {
-  margin-top: 8px;
+  margin-top: 16px;
   background-color: rgba(251, 249, 251, 0.5);
   border-radius: 4px;
   min-width: 300px;
@@ -381,12 +394,13 @@ html, body {
 	display: none;
 }
 
-.uploadPP-label {
+.uploadPP-label, .uploadChat-label {
 	display: block;
 	margin-bottom: 0;
+	cursor: pointer;
 }
 
-.inputPP {
+.inputPP, .inputChat {
 	display: none;
 }
 
@@ -532,6 +546,34 @@ html, body {
 	max-height: 70vh;
   overflow-y: scroll;
 }
+#chat-toggle {
+	cursor: pointer;
+	user-select: none;
+}
+.chat-container {
+	height: inherit;
+	display: block;
+	transition: .2s all ease-in-out;
+}
+.chat-container .post-image {
+	max-width: 256px;
+	border: 1px solid;
+	border-color: rgba(0,0,0,0.125);
+	border-radius: .25em;
+}
+.chat-container .chat-posts .list-group-item .d-flex {
+	animation: slide-down 0.6s ease forwards;
+}
+
+.chat-container .chat-posts .list-group-item {
+	animation: fadeIn 0.6s ease forwards;
+	border: none;
+}
+.chat-container.hidden {
+	height: 0px !important;
+	display: none;
+	transition: .2s all ease-in-out;
+}
 
 .floating-card {
 	width: 18rem;
@@ -667,13 +709,21 @@ html, body {
 	padding-top: 8px;
 	padding-left: 12px;
 	border-radius: .3em .3em 0 0;
+  margin-top: 16px;
 }
 
 .servers-container {
 	width: 100%;
 	overflow: hidden;
-	margin-top: 16px;
+	/*margin-top: 16px;*/
 	/* background: rgba(0,0,0,0.1); */
+	display: none;
+}
+.chat-block {
+	padding: 0;
+}
+#_genchat {
+	padding: 0;
 }
 
 #chats {
@@ -724,7 +774,9 @@ html, body {
 /* Hidding rules */
 
 .dashboard-left {
-	display: none;
+	margin: 0;
+	padding: 0;
+	/*display: none;*/
 }
 .action-button {
 	display: block;
@@ -816,6 +868,86 @@ section.second {
 
 /* ends here */
 
+/* Notification stuff */
+.new-posts {
+  color: inherit;
+  text-align: center;
+  font-size: 18px;
+  font-weight: normal;
+  padding: 12px 8px;
+  width: 100%;
+  z-index: 2;
+  margin: 0;
+  cursor: pointer;
+  transition: .2s all ease-in-out;
+}
+
+#home.unread::after, #chat.unread::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #9a92b8;
+    z-index: 2;
+    display: block;
+    margin-top: -31px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.new-chat {
+	width: 16px;
+	height: 16px;
+	background: #9a92b8;
+	position: absolute;
+	line-height: 24px;
+	margin-top: 4px;
+	border-radius: 50%;
+	margin-left: 12px;
+	margin-right: 0;
+	right: 16px;
+}
+
+.new-posts:hover {
+  background-color: #f7f7f7;
+  border-radius: inherit;
+  transition: .2s all ease-in-out;
+}
+
+.ripple {
+	width: 256px;
+	height: 256px;
+	border-radius: 50%;
+	background: rgba(154, 146, 184, .4);
+	transform: scale(0);
+	position: absolute;
+	opacity: 1;
+	overflow: hidden;
+	top: -96px;
+}
+.rippleEffect {
+	animation: rippleDrop;
+  animation-duration: 15s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes rippleDrop {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+  10% {
+    transform: scale(2);
+    opacity: 0;
+  }
+	10.1% {
+		transform: scale(0);
+		opacity: 1;
+	}
+}
+
+
+/* ends here */
+
 /* Embed */
 
 .mini-logo {
@@ -897,7 +1029,17 @@ section.second {
 	#chats {
 		top: 40px;
 	}
-
+	.servers-container {
+		display: block;
+	}
+	.chat-block {
+		padding: inherit;
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+	#_genchat {
+		padding: inherit;
+	}
 	.embed-card {
 		    width: 500px;
 	}
@@ -911,7 +1053,17 @@ section.second {
     background-size: cover;
     transition: background-size .6s ease-in-out;
   }
+	.BProfile {
+		margin-right: 12px;
+	}
+	.BSug {
+		display: block;
+		padding-top: 8px;
+	}
 	.dashboard-left {
+		display: block;
+	}
+	.dashboard-left.mob-hidden {
 		display: block;
 	}
 	.action-button {
@@ -937,6 +1089,7 @@ section.second {
 		height: initial;
 	  background: none;
 		display: block;
+    max-width: 33%;
 	}
 	#chats .fixed-chats {
 		position: sticky;
@@ -1063,6 +1216,16 @@ b {
     0% {
         opacity: 0;
         transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes slide-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
     }
     100% {
         opacity: 1;

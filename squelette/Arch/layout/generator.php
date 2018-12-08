@@ -102,7 +102,9 @@ foreach ($imgExt as $k => $ext) {
       if(file_exists('media/'.$text)) {
         $mime = mime_content_type('media/'.$text);
         foreach ($imgMimes as $k => $ext) {
-          if ($ext == $mime) return 'media/'.$text;
+          if ($ext == $mime) {
+            return 'media/'.$text;
+          }
         }
       }
     }
@@ -117,10 +119,76 @@ function genThumb($id, $text) {
     if (file_exists('media/'.$id.'_'.$filen.'_thumb.jpg')) return 'media/'.$id.'_'.$filen.'_thumb.jpg';
     else {
       if (file_exists('media/'.$id.'_'.$text.'_thumb.jpg')) return 'media/'.$id.'_'.$text.'_thumb.jpg';
+      if (file_exists('media/'.$text.'_thumb.jpg')) return 'media/'.$text.'_thumb.jpg';
+      if (file_exists('media/'.$text.'_thumb')) return 'media/'.$text.'_thumb';
     }
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
   }
   return "images/gif/load.gif";
+}
+
+function genProfile($user, $editable=false) { //$pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, $protected=0
+  if(isset($user) && !empty($user) && is_numeric($user->id) && $user->id>=0) {
+    echo'<div class="SProfileCover card-img-top" style="background-image: url('.genPP($user->avatar, $user->id).')"></div>';
+    echo '<div class="card-body">
+      <div class="d-flex account-small">
+        <div class="avatar-container">';
+        if($editable) echo '<a href="#" id="profile-picture" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">';
+          echo '<img class="avatar-image" src="'.genPP($user->avatar, $user->id) .'" alt="">';
+          if($editable) echo '</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <div class="dropdown-item image-selector">
+              <label class="uploadPP-label">
+                <span class="u-hiddenVisually">Upload image</span>
+                <input type="file" name="media[]" id="mediaPP" class="file-input inputPP" tabindex="-1" accept="image/gif,image/jpeg,image/jpg,image/png">
+              </label>
+            </div>
+            <button class="dropdown-item" type="button">Add from url</button>
+            <div role="separator" class="dropdown-divider"></div>
+            <button class="dropdown-item" type="button">Cancel</button>
+          </div>';
+
+        echo '</div>
+        <div class="name-container flex-grow-1">
+          <h5 class="card-title"><a href="?action=profile&id='.escape($user->id).'">'.escape($user->prenom).' '.escape($user->nom).'</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">@'.escape($user->identifiant).'</h6>
+        </div>
+      </div>';
+      if($editable) echo '<a href="#" id="profile-desc">';
+      echo '<p class="card-text" id="profile-desc-text">'.escape($user->statut).'</p>';
+      if($editable) echo '</a>';
+      echo '</div>
+    <div class="card-footer">
+      <small class="text-muted">Born the '.genDate(escape($user->date_de_naissance)).'</small>
+    </div>';
+  }
+}
+
+function genChatCompose() {
+  echo '<div class="card-body suggestions">
+    <div class="input-group">
+      <div class="input-group-prepend dropup">
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <div class="dropdown-menu" x-placement="bottom-start">
+          <div class="dropdown-item image-selector">
+            <label class="uploadChat-label">
+              <span class="u-hiddenVisually">Add media</span>
+              <input type="file" name="media[]" id="mediaChat" class="file-input inputChat" tabindex="-1" accept="image/gif,image/jpeg,image/jpg,image/png">
+            </label>
+          </div>
+          <a id="linkChatAdd" class="dropdown-item" href="#">Embed link</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Cancel</a>
+        </div>
+      </div>
+      <input type="text" id="chat_in" class="form-control" aria-label="Enter your message">
+      <div class="input-group-append">
+        <button type="button" id="chatm" class="btn btn-outline-secondary">Send</button>
+      </div>
+    </div>
+  </div>';
 }
 
 //254
@@ -248,8 +316,9 @@ function genCompose() {
   }
 
   function getChat($pid, $img, $thumb, $id, $usr, $msg) {
+    //var_dump($usr);
   echo '<li class="list-group-item card-body">
-         <div class="d-flex" data-user-id="'.$pid.'">
+         <div class="d-flex chat" data-user-id="'.$id.'" data-id="'.$pid.'">
             <div class="avatar-container">
                <img class="avatar-image" src="';
                if (isset($usr)) {
@@ -262,11 +331,11 @@ function genCompose() {
             <div class="name-container flex-grow-1">
                <h5 class="card-title"><a href="?action=profile&amp;id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a></h5>
                <p class="card-subtitle mb-2">'.markup($msg).'</p>';
-  if(isset($img)) {
+  if(isset($img) && ($img!='')) {
               echo '<div class="post-image">
                   <div class="post-image-align">
                      <div class="post-image-contain">
-                        <a href="images/ico/def.svg" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="37" data-com="28"><img class="post-img card-img-top img-fluid lazy" alt="img" src="images/ico/def.svg" style="">
+                        <a href="'.$img.'" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="-1" data-com="-1"><img class="post-img card-img-top img-fluid lazy" alt="img" src="'.$img.'">
                         </a>
                      </div>
                   </div>

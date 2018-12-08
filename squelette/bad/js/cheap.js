@@ -88,7 +88,7 @@ function addThumbnail(data){
 function uploadMedia(formdata){
   if($("#thumbnail_1").length == 0) {
     $.ajax({
-      url: 'up.php',
+      url: 'api/upload.php',
       type: 'post',
       data: formdata,
       contentType: false,
@@ -103,8 +103,83 @@ function uploadMedia(formdata){
   }
 }
 
+function newChatNotif(data) {
+  if($("#chat-toggle").find(".new-chat").length == 0) {
+    $(".chat-posts").append(data);
+    $("#chat-toggle").append('<span class="new-chat"></span>')
+    $("#chat-toggle").prepend("<span class='ripple'></span>");
+  }
+  $("#chat").addClass("unread");
+  $(".ripple").addClass("rippleEffect");
+  //console.log(newhtml);
+}
+
+function newNotif() {
+  if($("#posts").find("#new-post").length == 0) {
+    var html = '<div class="card" data-count="1" id="new-post"><h5 class="new-posts">View new posts</h5></div>';
+    $("#posts").prepend(html);
+  }
+  $("#home").addClass("unread");
+  //console.log(newhtml);
+}
 
 var html;
+var newhtml;
+function loadChat(fr) {
+  $.ajax({
+    method: "GET",
+    async: false,
+    url: "api.php/chat",
+    data: {from: fr, html: '1', new_items: true},
+    dataType: "html"
+  }).done(function(data) {
+    if(data != '') {
+      newChatNotif(data);
+      chatStuff();
+      //console.log(data);
+
+    }
+    //console.log("EMPTYYY");
+    //$("#posts").append( data );
+  });
+}
+function loadNew(fr, id) {
+  if(id<0) {
+    $.ajax({
+      method: "GET",
+      async: false,
+      url: "api.php/messages",
+      data: {from: fr, html: '1', new_items: true},
+      dataType: "html"
+    }).done(function(data) {
+      if(data != '') {
+        newhtml = data;
+        newNotif();
+        //console.log(data);
+      }
+      //$("#posts").append( data );
+    });
+  } else {
+    $.ajax({
+      method: "GET",
+      async: false,
+      url: "api.php/messages",
+      data: {from: fr, user_id: id, html: '1', new_items: true},
+      dataType: "html"
+    }).done(function(data) {
+      if(data != '') {
+        newhtml = data;
+        newNotif();
+        //console.log(data);
+
+      }
+      //console.log("EMPTYYY");
+      //$("#posts").append( data );
+    });
+  }
+  a();
+}
+
 function loadMoar(fr, id) {
   if(id<0) {
     $.ajax({
@@ -135,9 +210,27 @@ function loadMoar(fr, id) {
 var selected;
 var winsz = $(window).width();
 
+var chkpst;
+
 $( document ).ready(function () {
   a();
   var refer = Get('id');
+  //make chat
+  $.ajax({
+    type: "GET",
+    url: "api.php/chat",
+    data: {
+      gen: true
+    },
+    dataType: "html",
+    success: function(result) {
+      $("#_genchat").html(result);
+      chatStuff();
+    },
+    error: function(result) {
+      alert('error');
+    }
+  });
 
   //Post Action
   $("#postBtn").click(function(e) {
@@ -152,32 +245,8 @@ $( document ).ready(function () {
           access_token: $("#access_token").val()
         },
         success: function(result) {
-          console.log(result);
+          //console.log(result);
           $('.form-control').val('');
-          notify('Posted !');
-        },
-        error: function(result) {
-          alert('error');
-        }
-      });
-    } else {
-      notify('No text profided');
-    }
-  });
-  //Chat action
-  $("#chatm").click(function(e) {
-    if($('#chat_in').val() != '') {
-      e.preventDefault();
-      $.ajax({
-        type: "GET",
-        url: "api.php/chat",
-        data: {
-          status: $('#chat_in').val(),
-          access_token: $("#access_token").val()
-        },
-        success: function(result) {
-          console.log(result);
-          $('#chat_in').val('');
           notify('Posted !');
         },
         error: function(result) {
@@ -219,7 +288,7 @@ $( document ).ready(function () {
      if($._data($(e)[0], 'events')==null) {
        $(e).click(function(i) {
          var id = $(e).parents('.post').attr('data-id');
-         console.log(id);
+         //console.log(id);
        });
      }
    });
@@ -248,7 +317,7 @@ $( document ).ready(function () {
    });
   //chats click
   $("#chat").click(function(e) {
-    if (winsz < 1100 && selected != $("#chat") && ($("#chats").length > 0)) {
+    if (winsz < 1100 && selected != $("#chat") && ($("#chats").length > 0) && 0) { //DISABLED ATM
       $("#chats").toggleClass("visible");
       $(".posts-main").toggleClass("nope");
       selected.toggleClass("selected");
@@ -261,7 +330,7 @@ $( document ).ready(function () {
   });
   //Drag and drop stuff
   $("#mediaAdd").click(function(e) {
-    console.log("upload");
+    //console.log("upload");
     $('#uploadModal').modal('toggle');
   });
   $("html").on("dragover", function(e) {
@@ -306,21 +375,21 @@ $( document ).ready(function () {
     var files = $('#mediaPP')[0].files[0];
     fd.append('img',files);
     $.ajax({
-      url: 'up.php',
+      url: 'api/upload.php',
       type: 'post',
       data: fd,
       contentType: false,
       processData: false,
       dataType: 'json',
       success: function(response){
-        console.log(response);
+        //console.log(response);
         setPP(response);
         //addThumbnail(response);
       }
     });
-});
+  });
   $('form').on('submit', function(i, e) {
-    console.log("FILE"+e);
+    //console.log("FILE"+e);
   });
 
   //upload post
@@ -342,7 +411,7 @@ $( document ).ready(function () {
               access_token: $("#access_token").val()
             },
             success: function(result) {
-              console.log(result);
+              //console.log(result);
               $('#uploadM').val('');
               $('#uploadModal').modal('hide');
               notify('Posted !');
@@ -362,7 +431,7 @@ $( document ).ready(function () {
             access_token: $("#access_token").val()
           },
           success: function(result) {
-            console.log(result);
+            //console.log(result);
             $('#uploadM').val('');
             $('#uploadModal').modal('hide');
             notify('Posted !');
@@ -389,7 +458,7 @@ $( document ).ready(function () {
           access_token: $("#access_token").val()
         },
         success: function(result) {
-          console.log(result);
+          //console.log(result);
           $('#commentm').val('');
           $('#composeModal').modal('hide');
           notify('Posted !');
@@ -441,6 +510,7 @@ var elem;
 var html;
 
 var min;
+var max;
 
 function fmin() {
   var min = $(".post").data("id");
@@ -449,6 +519,24 @@ function fmin() {
     if(min>id) min=id;
   });
   return min;
+}
+
+function fmax() {
+  var max = $(".post").data("id");
+  $(".post").each(function (i, e) {
+    var id = parseInt($(e).data("id"), 10);
+    if(max<id) max=id;
+  });
+  return max;
+}
+
+function cmax() {
+  var max = $(".chat").data("id");
+  $(".chat").each(function (i, e) {
+    var id = parseInt($(e).data("id"), 10);
+    if(max<id) max=id;
+  });
+  return max;
 }
 
 function descnrml(text) {
@@ -539,7 +627,7 @@ function edtrfs() {
              descnrml(html);
            });
          }
-         console.log(text);
+         //console.log(text);
        });
      }
    });
@@ -553,7 +641,7 @@ function drgopn() {
          if($("#thumbnail_1").length == 0) {
            $("#img").click();
          }
-         console.log("add");
+         //console.log("add");
        });
      }
    });
@@ -568,11 +656,152 @@ function thmb() {
            $("#thumbnail_1").remove();
            $("#uploadfile").append('<h5 id="dragText">Drop your medias here</h5>');
            drgopn();
-           console.log("remove");
+           //console.log("remove");
          }
        });
      }
    });
+}
+
+function updateChat(data) {
+  $(".chat-posts").append( data );
+  chatStuff();
+}
+
+function chatMedia(data) {
+  if(data.name != undefined) {
+    var src = data.src;
+    var mediaID = data.media_id;
+
+    $.ajax({
+      method: "GET",
+      url: "api.php/chat",
+      data: {media_id: mediaID, html: true, access_token: $("#access_token").val()},
+      dataType: "html"
+    }).done(function(data) {
+      notify("Succes !");
+      updateChat(data);
+    });
+  }
+}
+
+function chatStuff() {
+  //Chat hide and show
+  $(".chat-container").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         $(".ripple").removeClass("rippleEffect");
+         $("#chat").removeClass("unread");
+         $(".new-chat").remove();
+       });
+     }
+   });
+  $("#chat-toggle").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         $(".chat-container").toggleClass("hidden");
+         $(".ripple").removeClass("rippleEffect");
+         $("#chat").removeClass("unread");
+         $(".new-chat").remove();
+       });
+     }
+   });
+  // chat bottom
+  if ($( 'body' ).has( '.chat-posts' ).length) {
+    $('.chat-posts').animate({
+      scrollTop: $('.chat-posts')[0].scrollHeight*2
+    }, 1000);
+  }
+  //chat upload
+  $("#mediaChat").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).change(function(){
+         var fd = new FormData();
+         var files = $('#mediaChat')[0].files[0];
+         fd.append('img',files);
+         $.ajax({
+           url: 'api/upload.php',
+           type: 'post',
+           data: fd,
+           contentType: false,
+           processData: false,
+           dataType: 'json',
+           success: function(response){
+             //console.log(response);
+             chatMedia(response);
+             //setPP(response);
+             //addThumbnail(response);
+           }
+         });
+       });
+     }
+   });
+    //Chat action
+    $('#chat_in').each(function (i, e) {
+      if($._data($(e)[0], 'events')==null) {
+        $(e).keypress(function(i) {
+          if (i.which == '13') {
+            if($('#chat_in').val() != '') {
+              $.ajax({
+                type: "GET",
+                url: "api.php/chat",
+                data: {
+                  status: $('#chat_in').val(),
+                  html: true,
+                  access_token: $("#access_token").val()
+                },
+                dataType: "html",
+                success: function(result) {
+                  //console.log(result);
+                  $('#chat_in').val('');
+                  updateChat(result);
+                  //notify('Posted !');
+                },
+                error: function(result) {
+                  alert('error');
+                }
+              });
+            } else {
+              notify('No text profided');
+            }
+            }
+          });
+        }
+      });
+    $("#chatm").each(function (i, e) {
+       //console.log($._data($(e)[0], 'events'));
+       if($._data($(e)[0], 'events')==null) {
+         $(e).click(function(i) {
+           if($('#chat_in').val() != '') {
+             $.ajax({
+               type: "GET",
+               url: "api.php/chat",
+               data: {
+                 status: $('#chat_in').val(),
+                 html: true,
+                 access_token: $("#access_token").val()
+               },
+               dataType: "html",
+               success: function(result) {
+                 //console.log(result);
+                 $('#chat_in').val('');
+                 updateChat(result);
+                 //notify('Posted !');
+               },
+               error: function(result) {
+                 alert('error');
+               }
+             });
+           } else {
+             notify('No text profided');
+           }
+         });
+       }
+     });
+}
+
+function refreshPosts() {
+  a();
 }
 
 function a() {
@@ -642,12 +871,6 @@ function a() {
         }
     });
 
-  // chat bottom
-  if ($( 'body' ).has( '.chat-posts' ).length) {
-    $('.chat-posts').animate({
-      scrollTop: $('.chat-posts')[0].scrollHeight
-    }, 1000);
-  }
   // Tabs icon
   var a = GetAction();
   switch (a) {
@@ -693,7 +916,7 @@ function a() {
      if($._data($(e)[0], 'events')==null) {
        $(e).click(function(i) {
          var id = $(e).parents('.post').attr('data-id');
-         console.log(id);
+         //console.log(id);
        });
      }
    });
@@ -724,6 +947,18 @@ function a() {
            }
          });
          console.log(r_id);
+       });
+     }
+   });
+   // New post click
+  $("#new-post").each(function (i, e) {
+     //console.log($._data($(e)[0], 'events'));
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         $("#new-post").remove();
+         $("#home").removeClass("unread");
+         $("#posts").prepend(newhtml);
+         refreshPosts();
        });
      }
    });

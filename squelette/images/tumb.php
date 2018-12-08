@@ -12,7 +12,7 @@ function genBlanc($im) {
 function LoadGif($img)
 {
 	$im = @imagecreatefromgif($img);
-	if(!$im) return genBlanc($im);	
+	if(!$im) return genBlanc($im);
 	$sx = imagesx($im);
 	$sy = imagesy($im);
 	$dg = ($sx/$sy)*256;
@@ -20,6 +20,18 @@ function LoadGif($img)
 	imagecopyresized($i, $im, 0, 0, 0, 0, $dg, 256, $sx, $sy);
 	return $im;
 }
+
+function LoadPng($img) {
+	$im = @imagecreatefrompng($img);
+	if(!$im) return genBlanc($im);
+	$sx = imagesx($im);
+	$sy = imagesy($im);
+	$dg = ($sx/$sy)*256;
+	$i = imagecreatetruecolor($dg, 256);
+	imagecopyresized($i, $im, 0, 0, 0, 0, $dg, 256, $sx, $sy);
+	return $i;
+}
+
 
 function LoadJpg($img) {
 	$im = @imagecreatefromjpeg($img);
@@ -36,6 +48,7 @@ $id = '2';
 $name = '5ec6d5605d0c';
 $ext = 'gif';
 //header('Content-Type: image/gif');
+$imgMimes = ['image/gif', 'image/png', 'image/jpeg', 'image/bmp'];
 
 if(1) {
 
@@ -54,6 +67,25 @@ if(1) {
 				$img = LoadJpg('../media/'.$p[0].'.'.$p[1]);
 				imagejpeg($img, '../media/'.$p[0].'_thumb.jpg');
 			}
+			if(is_array($p) && !array_key_exists(1, $p)) {
+				$mime = mime_content_type('../media/'.$p[0]);
+				foreach ($imgMimes as $k => $ext) {
+					if ($ext == $mime) {
+						if($ext == 'image/jpeg') {
+							$img = LoadJpg('../media/'.$p[0]);
+							imagejpeg($img, '../media/'.$p[0].'_thumb.jpg');
+						}
+						if($ext == 'image/gif') {
+							$img = LoadGif('../media/'.$p[0]);
+							imagejpeg($img, '../media/'.$p[0].'_thumb.jpg');
+						}
+						if($ext == 'image/png') {
+							$img = LoadPng('../media/'.$p[0]);
+							imagejpeg($img, '../media/'.$p[0].'_thumb.jpg');
+						}
+					}
+				}
+			}
 		}
 		//$img = LoadGif('../media/'.$id.'_'.$name.'.'.$ext);
 
@@ -61,5 +93,3 @@ if(1) {
 		//imagedestroy($img);
 	}
 }
-
-

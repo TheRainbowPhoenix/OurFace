@@ -4,7 +4,18 @@
   }
 ?>
 
-<nav class="col col-lg-3 sidebar dashboard dashboard-left ">
+<script type="text/javascript">
+  $( document ).ready(function () {
+    //refresh posts
+    chkpst = setInterval(checkAll, 30000);
+  });
+  //check new posts
+  function checkAll() {
+    loadChat(cmax());
+  }
+</script>
+
+<nav class="col col-lg-3 sidebar dashboard dashboard-left mob-hidden">
   <div class="BProfile">
     <div class="card-deck">
       <div class="card">
@@ -47,53 +58,6 @@
   </div>
 </nav>
 
-<div class="col posts-main" id="chats">
-  <div class="col col-lg-auto servers-container">
-     <ul class="list-inline server-list">
-       <?php
-       //var_dump($context->mostac);
-       if(!is_null($context->mostac) && is_array($context->mostac)) {
-         foreach ($context->mostac as $acc) {
-           echo '<li class="list-inline-item server-icon">
-                  <a href="?action=profile&id='.escape($acc['id']).'">
-                    <div class="avatar-container">';
-           echo '<img class="avatar-image" src="'.genPP($acc['avatar'], $acc['id']).'" alt="">';
-           echo ' </a></div>
-                </li>';
-         }
-       }
-       ?>
-     </ul>
-  </div>
-  <div class="col">
-     <div class="card d-flex col-centered">
-        <div class="card-header">Chat 1</div>
-        <ul class="list-group list-group-flush chat-posts">
-           <?php foreach ($context->chats as $chat) {
-              if(isset($chat->first) && isset($chat->second) && isset($chat->third) && is_array($chat->second) && array_key_exists(0, $chat->second) && array_key_exists(0, $chat->third)) {
-                $pid = $chat->first->id;
-                $id = $chat->first->emetteur;
-                if($chat->second[0]->image != null) {
-                  $img = genImage($chat->first->emetteur, $chat->second[0]->image);
-                  $thumb = genThumb($id, $chat->second[0]->image);
-                } else {
-                  $img = null;
-                  $thumb = null;
-                }
-                $msg = (isset($chat->second[0]))?escape($chat->second[0]->texte):'';
-                $usr = $chat->third[0];
-                getChat($pid, $img, $thumb, $id, $usr, $msg);
-              }
-              } ?>
-        </ul>
-        <div class="card-body suggestions">
-           <div class="input-group">
-              <input type="text" id="chat_in" class="form-control" aria-label="Text input with segmented dropdown button">
-              <div class="input-group-append">
-                 <button type="button" id="chatm" class="btn btn-outline-secondary">Send</button>
-              </div>
-           </div>
-        </div>
-     </div>
-  </div>
+<div class="col" id="_genchat">
+    <h5>Chat loading . . .</h5>
 </div>
