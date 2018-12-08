@@ -44,6 +44,19 @@ function markup($text) {
   }
   $text = str_replace($matches, $rep, $text);
 
+  $emoji_re = '/\B:(\d+):/m';
+  preg_match_all($emoji_re, $text, $matches, PREG_SET_ORDER, 0);
+  $rep = array();
+  foreach ($matches as $value=>$key) {
+    $emoji = emojiTable::getEmoji($key[1], true);
+    //var_dump($key);
+    if($emoji != false) {
+      $rep[$value] = $emoji;
+    }
+    $matches[$value] = $key[0];
+  }
+  $text = str_replace($matches, $rep, $text);
+
   $mention_re = '/\B@(\w+)/m';
   preg_match_all($mention_re, $text, $matches, PREG_SET_ORDER, 0);
   $rep = array();
@@ -195,6 +208,7 @@ function genChatCompose() {
             </label>
           </div>
           <a id="linkChatAdd" class="dropdown-item" href="#">Embed link</a>
+          <a id="emojiChatAdd" class="dropdown-item" href="#">add emoji</a>
           <div role="separator" class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Cancel</a>
         </div>

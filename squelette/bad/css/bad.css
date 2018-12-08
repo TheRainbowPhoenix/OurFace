@@ -949,6 +949,38 @@ section.second {
 
 /* ends here */
 
+/* Emojis */
+
+.emoji-list {
+	flex-wrap: inherit;
+	display: block;
+}
+
+.emoji {
+	width: 28px;
+	height: 28px;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+  user-select: none;
+}
+
+.emoji-image {
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  margin: 2px 0 2px 4px;
+  text-align: center;
+  width: 28px;
+  overflow: hidden;
+}
+
+/* ends here */
+
 /* Embed */
 
 .mini-logo {

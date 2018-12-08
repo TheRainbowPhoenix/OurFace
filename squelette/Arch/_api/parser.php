@@ -454,6 +454,48 @@ class parser
 		} else return raiseError(genError(50,'User not found'));
 	}
 
+	public static function emojis($params) {
+		$id = is_logged($_SESSION);
+		$html = (has_key('html', $params))?1:0; //generate html
+		if($id >=0) {
+			if(has_key('id', $params)) {
+				$pid = $params['id'];
+				if($html)	$emoji = emojiTable::getEmoji($pid, true);
+				else $emoji = emojiTable::getEmoji($pid);
+				if($emoji != false) return $emoji;
+			}
+			if(has_key('all', $params)){
+				if(!$html) header('Content-Type: application/json');
+				$result = array();
+				$dir = 'images/emojis';
+				$cdir = scandir($dir);
+				if($html) echo '<div class="row emoji-list">';
+				foreach ($cdir as $key => $file)
+				{
+				  if (!in_array($file,array(".",".."))) {
+				    if (is_dir($dir . DIRECTORY_SEPARATOR . $file)) {
+				      $result[$file] = dirToArray($dir . DIRECTORY_SEPARATOR . $file);
+				    } else {
+				      $p = explode('.', $file);
+				      if(!$html) $result[$p[0]] = 'images/emojis/'.$file;
+							else {
+								echo '<div class="col emoji" data-emoji='.$p[0].'><div class="emoji-image" style="background-image: url('.'images/emojis/'.$file.');"></div></div>';
+							}
+				    }
+				  }
+				}
+				if(!$html) return json_encode($result);
+				else {
+					echo '</div>';
+				}
+			} else {
+				return raiseError(genError(400,'Invalid avatar'));
+			}
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
+	}
+
 	public static function suggestions($params) {
 		$html = '<li class="list-group-item card-body">
   <div class="d-flex account-small" data-user-id="55">
