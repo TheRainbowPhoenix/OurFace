@@ -967,6 +967,14 @@ section.second {
 }
 
 .emoji {
+	width: 28px;
+	height: 28px;
+	display: inline-block;
+	margin: 0;
+	user-select: none;
+}
+
+.emoji-list .emoji {
 	width: 32px;
 	height: 32px;
 	display: inline-block;
