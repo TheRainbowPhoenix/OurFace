@@ -53,7 +53,7 @@ function markup($text) {
     if($emoji != false) {
       $rep[$value] = $emoji;
     }
-    $matches[$value] = $key[0];
+    $matches[$value] = $key[1];
   }
   $text = str_replace($matches, $rep, $text);
 
