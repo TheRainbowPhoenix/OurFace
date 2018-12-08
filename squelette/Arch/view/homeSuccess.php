@@ -70,7 +70,7 @@ if (!$context->logged) {
       $id = $message->first->emetteur;
       $img = genImage($message->first->emetteur, $message->second[0]->image);
       $thumb = genThumb($id, $message->second[0]->image);
-      $i = getimagesize($img);
+      //$i = getimagesize($img);
       $likes = (isset($message->first) && $message->first->aime != NULL && is_numeric($message->first->aime))?$message->first->aime:0;
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
       $date = (isset($message->second[0]))?($message->second[0]->date):'times ago';

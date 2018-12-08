@@ -5,18 +5,31 @@
 # @Last modified time: 2018-11-26T16:17:06+01:00
 
 
+function replaceAll($text) {
+  $text = str_replace('<','&lt;', $text);
+  $text = str_replace('>','&gt;', $text);
+  $text = str_replace('&amp;#039;', '&#039;', $text);
+  $text = str_replace('&amp;amp;hearts;','&hearts;', $text);
+  //$text = str_replace('&amp;', '&', $text);
+  //echo $text;
+  return $text;
+}
 
 
 function escape($text) {
   $text = trim($text);
   $text = stripslashes($text);
-  $text = htmlspecialchars($text, ENT_QUOTES);
+ // echo $text;
+  $text = htmlentities($text, ENT_QUOTES);
+  $text = htmlspecialchars($text, ENT_HTML5);
+  $text = replaceAll($text);
+  //$text = html_entity_decode($text,ENT_QUOTES | ENT_HTML5);
   return $text;
 }
 
 function markup($text) {
   $text = html_entity_decode($text);
-
+  $text = replaceAll($text);
   // [^``` ]+|(```[^`]*```) <- select not in code block
 
   //<a href="/hashtag/name" class="hastag"><s>#</s><b>TAG</b></a>
@@ -40,7 +53,7 @@ function markup($text) {
   }
   $text = str_replace($matches, $rep, $text);
 
-  $url_re = '/((http|https|ftp):\/\/\d*[^\s\/$.?#].[^\s]+\w*)/i';
+  $url_re = '/((http|https|ftp):\/\/\d*[^\s\/$.?#].[^\s&">]+\w*)/i';
   preg_match_all($url_re, $text, $matches, PREG_SET_ORDER, 0);
   $rep = array();
   foreach ($matches as $value=>$key) {
@@ -109,6 +122,7 @@ foreach ($imgExt as $k => $ext) {
       }
     }
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
+    if (file_exists('/nfs/nas02a_etudiants/inf/uapv1701704/public_html/'.$text)) return '../../~uapv1701704/'.$text;
   }
   return "images/ico/def.svg";
 }
