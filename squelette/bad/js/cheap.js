@@ -940,6 +940,8 @@ function a() {
              id: r_id
            },
            success: function(result) {
+             var likes = result.likes;
+             $(e).find(".count").html(likes);
              notify('Liked!');
            },
            error: function(result) {

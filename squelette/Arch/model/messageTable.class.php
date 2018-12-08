@@ -134,4 +134,12 @@ class messageTable
     return $res;
   }
 
+  public function likeMessage($id, $likes)
+  {
+    $connection = new dbconnection() ;
+    $sql = "UPDATE fredouil.message set aime=".$likes." where id='".$id."'";
+    $res = $connection->doQuery( $sql );
+    return $res;
+  }
+
 }

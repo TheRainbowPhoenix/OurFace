@@ -268,6 +268,27 @@ class parser
 		}
 	}
 
+	public static function like($params) {
+		$id = is_logged($_SESSION);
+		if($id >=0) {
+			if(has_key('id', $params)){
+				if(is_numeric($params['id'])) {
+					$post = messageTable::getMessagesByID($params['id']);
+					//var_dump($post);
+					if($post != null && !empty($post) && array_key_exists('0', $post)) {
+						$likes = $post[0]->aime + 1;
+						$r = messageTable::likeMessage($params['id'], $likes);
+						$rtrn = array('likes' => $likes);
+						return json_encode($rtrn);
+					}
+				}
+				return raiseError(genError(50,'post not found'));
+			} else return raiseError(genError(50,'Post not found'));
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
+	}
+
 	public static function users($params)
 	{
 		$id = is_logged($_SESSION);
