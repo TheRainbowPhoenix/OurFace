@@ -889,28 +889,29 @@ function a() {
     default:
   }
   //rt click
-  if($._data($(this)[0], 'events')==null) {
-    //TODO: this big bug that duplicate posts
-    $(".action-rt").click(function(e) {
-      if($._data($(this)[0], 'events')!=null) return;
-      var r_id = $(this).parents('.post').attr('data-id');
-      e.preventDefault();
-      $.ajax({
-        type: "GET",
-        url: "api.php/repost",
-        data: {
-          id: r_id
-        },
-        success: function(result) {
-          notify('Reposted !');
-        },
-        error: function(result) {
-          notify('Error');
-        }
-      });
-      //repost?id=35
-    });
-  }
+  $(".action-rt").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         var r_id = $(e).parents('.post').attr('data-id');
+         i.preventDefault();
+         $.ajax({
+           type: "GET",
+           url: "api.php/repost",
+           data: {
+             id: r_id
+           },
+           success: function(result) {
+             $(e).find(".count").html(parseInt($(e).find(".count").html())+1);
+             notify('Reposted !');
+           },
+           error: function(result) {
+             notify('Error');
+           }
+         });
+       });
+     }
+   });
+   //reply
   $(".action-reply").each(function (i, e) {
      //console.log($._data($(e)[0], 'events'));
      if($._data($(e)[0], 'events')==null) {
