@@ -216,21 +216,23 @@ $( document ).ready(function () {
   a();
   var refer = Get('id');
   //make chat
-  $.ajax({
-    type: "GET",
-    url: "api.php/chat",
-    data: {
-      gen: true
-    },
-    dataType: "html",
-    success: function(result) {
-      $("#_genchat").html(result);
-      chatStuff();
-    },
-    error: function(result) {
-      alert('error');
-    }
-  });
+  if($("#_genchat").length != 0) {
+    $.ajax({
+      type: "GET",
+      url: "api.php/chat",
+      data: {
+        gen: true
+      },
+      dataType: "html",
+      success: function(result) {
+        $("#_genchat").html(result);
+        chatStuff();
+      },
+      error: function(result) {
+        alert('error');
+      }
+    });
+  }
 
   //Post Action
   $("#postBtn").click(function(e) {
