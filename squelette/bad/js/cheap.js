@@ -820,6 +820,7 @@ function chatStuff() {
                  success: function(result) {
                    $('#chat_in').val('');
                    $("#media_chat_link").val('');
+                   $("#media-chat-link").addClass('hidden');
                    updateChat(result);
                  },
                  error: function(result) {
@@ -862,6 +863,7 @@ function chatStuff() {
                  success: function(result) {
                    $('#chat_in').val('');
                    $("#media_chat_link").val('');
+                   $("#media-chat-link").addClass('hidden');
                    updateChat(result);
                  },
                  error: function(result) {
