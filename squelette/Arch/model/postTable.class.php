@@ -28,5 +28,11 @@ class postTable
     $res = $connection->doQuery( $sql );
     return ($res==false)?false:$res;
   }
+  public function getHashTag($tag) {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.post where texte like '%#".$tag."%'";
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
 
 }

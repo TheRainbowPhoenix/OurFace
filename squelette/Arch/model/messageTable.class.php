@@ -35,7 +35,13 @@ class messageTable
     $sql = (isset($id) && is_numeric($id))?"select * from fredouil.message where destinataire='".$id."' order by id desc limit '.$fin-$debut. offset ".$debut:"select * from fredouil.message order by id desc limit '.$fin-$debut. offset ".$debut ;
     $res = $connection->doQueryObject( $sql, "message" );
     return $res;
-}
+  }
+  public function getMessageWherePostID($id) {
+    $connection = new dbconnection() ;
+    $sql = "select * from fredouil.message where post='".$id."' order by id desc";
+    $res = $connection->doQueryObject( $sql, "message" );
+    return $res;
+  }
 
   /**
    * get Messages Sent To

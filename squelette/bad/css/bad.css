@@ -714,6 +714,47 @@ html, body {
 }
 /* ends here */
 
+/* Hashtag rules */
+
+.tag-banner {
+  background-color: #9a92b8 !important;
+  backface-visibility: hidden;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 40px;
+  z-index: 999;
+}
+
+.tag-wrapper {
+  margin: 0 auto;
+  padding: 16px 0;
+	max-width: 80%;
+}
+
+.tag-title {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 32px;
+  overflow: hidden;
+  padding-left: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.news-feed {
+  padding: 80px 0 16px;
+  width: 100%;
+}
+.news-feed .posts-main {
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+
+/* ends here */
+
 /* chat rules */
 
 .server-icon {

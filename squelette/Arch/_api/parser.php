@@ -374,6 +374,15 @@ class parser
 					} else {
 						$_msgs = null;
 					}
+				} elseif (has_key('tag', $params)) {
+					$p = postTable::getHashTag($params['tag']);
+					$_msgs = array();
+					foreach ($p as $key => $post) {
+						$m = messageTable::getMessageWherePostID($post->id);
+						foreach ($m as $key => $msg) {
+							array_push($_msgs, $msg);
+						}
+					}
 				} else {
 					$_msgs = messageTable::getMessages();
 				}

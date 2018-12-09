@@ -137,8 +137,11 @@ class mainController
 
 	public static function hashtag($request,$context) {
 		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
+			if(!array_key_exists('tag', $request) || empty($request['tag']) || $request['tag']=='') goIndex();
+			$context->tag = $request['tag'];
 			$context->logged = $_SESSION['logged'];
 			$context->current_user = $_SESSION['user_var'];
+			$context->sug = utilisateurTable::getRandomUsers();
 			return context::SUCCESS;
 		} else {
 			goLogin();
