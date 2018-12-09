@@ -67,7 +67,7 @@ function has_media($id, $text) {
 	          if ($ext == $mime) return true;
 	        }
 				}
-				if (filter_var($text, FILTER_VALIDATE_URL) !== false) return true;
+				if (filter_var(urldecode($text), FILTER_VALIDATE_URL) !== false) return true;
       }
     }
     return false;
@@ -154,14 +154,14 @@ class parser
 				$post['image'] = '';
 			} else {
 				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
-				$media_id = $params['media_id'];
+				$media_id = urldecode($params['media_id']);
 				if(!has_media($id, $media_id)) return raiseError(genError(324,'The validation of media ids failed'));
 				$post['media_id'] = $media_id;
 				$post['status'] = '';
 				// media_id = 98a665.... => image name
 			}
 			if (has_key('media_id',$params)) {
-				$media_id = $params['media_id'];
+				$media_id = urldecode($params['media_id']);
 				if(has_media($id, $media_id)) $post['image'] = $media_id;
 			}
 			$date = date("Y-m-d H:i:s");

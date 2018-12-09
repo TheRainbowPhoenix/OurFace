@@ -721,6 +721,13 @@ function chatStuff() {
        });
      }
    });
+  $("#linkChatAdd").each(function (i, e) {
+     if($._data($(e)[0], 'events')==null) {
+       $(e).click(function(i) {
+         $(".media-chat-link").toggleClass("hidden");
+       });
+     }
+   });
   $("#chat-toggle").each(function (i, e) {
      if($._data($(e)[0], 'events')==null) {
        $(e).click(function(i) {
@@ -798,27 +805,72 @@ function chatStuff() {
        if($._data($(e)[0], 'events')==null) {
          $(e).click(function(i) {
            if($('#chat_in').val() != '') {
-             $.ajax({
-               type: "GET",
-               url: "api.php/chat",
-               data: {
-                 status: $('#chat_in').val(),
-                 html: true,
-                 access_token: $("#access_token").val()
-               },
-               dataType: "html",
-               success: function(result) {
-                 //console.log(result);
-                 $('#chat_in').val('');
-                 updateChat(result);
-                 //notify('Posted !');
-               },
-               error: function(result) {
-                 alert('error');
-               }
-             });
+             if($("#media_chat_link").val() != '') {
+               var mediaID = $("#media_chat_link").val();
+               $.ajax({
+                 type: "GET",
+                 url: "api.php/chat",
+                 data: {
+                   status: $('#chat_in').val(),
+                   media_id: mediaID,
+                   html: true,
+                   access_token: $("#access_token").val()
+                 },
+                 dataType: "html",
+                 success: function(result) {
+                   $('#chat_in').val('');
+                   $("#media_chat_link").val('');
+                   updateChat(result);
+                 },
+                 error: function(result) {
+                   alert('error');
+                 }
+               });
+             } else {
+               $.ajax({
+                 type: "GET",
+                 url: "api.php/chat",
+                 data: {
+                   status: $('#chat_in').val(),
+                   html: true,
+                   access_token: $("#access_token").val()
+                 },
+                 dataType: "html",
+                 success: function(result) {
+                   //console.log(result);
+                   $('#chat_in').val('');
+                   updateChat(result);
+                   //notify('Posted !');
+                 },
+                 error: function(result) {
+                   alert('error');
+                 }
+               });
+             }
            } else {
-             notify('No text profided');
+             if($("#media_chat_link").val() != '') {
+               var mediaID = $("#media_chat_link").val();
+               $.ajax({
+                 type: "GET",
+                 url: "api.php/chat",
+                 data: {
+                   media_id: mediaID,
+                   html: true,
+                   access_token: $("#access_token").val()
+                 },
+                 dataType: "html",
+                 success: function(result) {
+                   $('#chat_in').val('');
+                   $("#media_chat_link").val('');
+                   updateChat(result);
+                 },
+                 error: function(result) {
+                   alert('error');
+                 }
+               });
+             } else {
+               notify('No text profided');
+             }
            }
          });
        }
