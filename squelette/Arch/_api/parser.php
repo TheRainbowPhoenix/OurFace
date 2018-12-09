@@ -201,7 +201,7 @@ class parser
 			if($r!=false)$post['id'] = $r[0]['max']+1;
 			$post['emetteur']=$id;
 			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:1; //1 public ?
-			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:0;
+			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:-1;
 			if (has_key('status',$params)) {
 				$status = $params['status'];
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));
