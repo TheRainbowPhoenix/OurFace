@@ -86,6 +86,26 @@ class mainController
 		}
 	}
 
+	public static function users($request, $context) {
+		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
+			$id = (array_key_exists('user_var',$_SESSION) && array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
+			if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($request['id'])&&is_numeric($id)) $id = $request['id'];
+			$usr = utilisateurTable::getUserById($id);
+
+			if($usr == false) goIndex();
+			$context->users = utilisateurTable::getUsersV2();
+			$context->logged = $_SESSION['logged'];
+			$context->c_id = $_SESSION['user_var']['id'];
+			$context->id = $id;
+			$context->user = $usr[0];
+			$context->sug = utilisateurTable::getRandomUsers();
+			return context::SUCCESS;
+		} else {
+			goLogin();
+			return;
+		}
+	}
+
 	public static function listUsers($request,$context)
 	{
 		$context->users = utilisateurTable::getUsersV2();
@@ -146,11 +166,11 @@ class mainController
 
 	public static function profile($request,$context)
 	{
-		$id = (array_key_exists('user_var',$_SESSION) && array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
-		if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($request['id'])&&is_numeric($id)) $id = $request['id'];
-		$usr = utilisateurTable::getUserById($id);
-
 		if(array_key_exists('user_var', $_SESSION) && array_key_exists('logged', $_SESSION))  {
+			$id = (array_key_exists('user_var',$_SESSION) && array_key_exists('id',$_SESSION['user_var']))?($_SESSION['user_var']['id']):null;
+			if(array_key_exists('id', $request)&&isset($request['id'])&&is_numeric($request['id'])&&is_numeric($id)) $id = $request['id'];
+			$usr = utilisateurTable::getUserById($id);
+
 			if($usr == false) goIndex();
 			$cnt = 0;
 			$stack = array();

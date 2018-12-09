@@ -129,6 +129,14 @@ html, body {
   transition: background-size .6s ease-in-out;
 }
 
+.profiles .card-deck .card {
+  margin: 16px 8px 0px 8px;
+}
+.profiles {
+  margin: 0 -9px;
+	margin-bottom: 16px;
+}
+
 .compose {
   margin-top: 8px;
 }

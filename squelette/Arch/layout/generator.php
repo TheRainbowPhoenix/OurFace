@@ -158,7 +158,7 @@ function genThumb($id, $text) {
   return "images/gif/load.gif";
 }
 
-function genProfile($user, $editable=false) { //$pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, $protected=0
+function genProfile($user, $editable=false, $small=false) { //$pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, $protected=0
   if(isset($user) && !empty($user) && is_numeric($user->id) && $user->id>=0) {
     echo'<div class="SProfileCover card-img-top" style="background-image: url('.genPP($user->avatar, $user->id).')"></div>';
     echo '<div class="card-body">
@@ -188,10 +188,13 @@ function genProfile($user, $editable=false) { //$pid, $img, $likes, $com, $rt, $
       if($editable) echo '<a href="#" id="profile-desc">';
       echo '<p class="card-text" id="profile-desc-text">'.escape($user->statut).'</p>';
       if($editable) echo '</a>';
-      echo '</div>
-    <div class="card-footer">
-      <small class="text-muted">Born the '.genDate(escape($user->date_de_naissance)).'</small>
-    </div>';
+      echo '</div>';
+      if(!$small) {
+        echo '<div class="card-footer">
+        <small class="text-muted">Born the '.genDate(escape($user->date_de_naissance)).'</small>
+        </div>';
+
+      }
   }
 }
 

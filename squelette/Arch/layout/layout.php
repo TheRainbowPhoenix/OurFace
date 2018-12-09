@@ -90,7 +90,7 @@ function renderPP($text, $id) {
         </li>
 
         <li class="nav-item nav-icon" id="friends">
-          <a href="?action=listUsers">
+          <a href="?action=users">
             <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24">
               <path class="svg-icon-friends-1" fill="#1e1e1e" d="M8 6a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 8 11a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 8 6zm0 6a5 3 0 0 0-5 3v2c0 .6.4 1 1 1h8c.6 0 1-.4 1-1v-2a5 3 0 0 0-5-3zm0 1.7a3 1.8 0 0 1 3 1.8v.5H5v-.5a3 1.8 0 0 1 3-1.8z" color="#000" overflow="visible" style="isolation:auto;mix-blend-mode:normal"/>
               <path class="svg-icon-friends-2" fill="#1e1e1e" d="M15 6a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm0 6c-.9 0-1.7.1-2.5.4 1 .9 1.5 1.3 1.5 2.6v2c0 .4 0 .7-.3 1H19c.6 0 1-.4 1-1v-2c0-1.7-2.2-3-5-3z" color="#000" overflow="visible" style="isolation:auto;mix-blend-mode:normal"/>
@@ -109,7 +109,7 @@ function renderPP($text, $id) {
 
         <li class="nav-item" id="pp">
           <div class="nav-avatar d-flex">
-            
+
             <div class="dropdown">
               <a class="dropdown-toggle avatar-dropdown" href="#" role="button" id="profileLinks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="name-container flex-grow-1">
