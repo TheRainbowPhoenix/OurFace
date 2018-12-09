@@ -735,7 +735,7 @@ html, body {
   left: 0;
   position: fixed;
   right: 0;
-  top: 40px;
+  top: 80px;
   z-index: 999;
 }
 
@@ -1118,6 +1118,9 @@ section.second {
 @media (min-width: 576px) {
 	#login {
 		margin-left: 0;
+	}
+	.tag-banner {
+    top: 40px;
 	}
 	.navbar-right {
 		/*flex-grow: 0;*/
