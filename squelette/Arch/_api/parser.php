@@ -67,7 +67,7 @@ function has_media($id, $text) {
 	          if ($ext == $mime) return true;
 	        }
 				}
-				if (filter_var($text, FILTER_VALIDATE_URL) !== false) return true;
+				if (filter_var(urldecode($text), FILTER_VALIDATE_URL) !== false) return true;
       }
     }
     return false;
@@ -154,14 +154,14 @@ class parser
 				$post['image'] = '';
 			} else {
 				if (!has_key('media_id',$params)) return raiseError(genError(325,'A media id was not found'));
-				$media_id = $params['media_id'];
+				$media_id = urldecode($params['media_id']);
 				if(!has_media($id, $media_id)) return raiseError(genError(324,'The validation of media ids failed'));
 				$post['media_id'] = $media_id;
 				$post['status'] = '';
 				// media_id = 98a665.... => image name
 			}
 			if (has_key('media_id',$params)) {
-				$media_id = $params['media_id'];
+				$media_id = urldecode($params['media_id']);
 				if(has_media($id, $media_id)) $post['image'] = $media_id;
 			}
 			$date = date("Y-m-d H:i:s");
@@ -201,7 +201,7 @@ class parser
 			if($r!=false)$post['id'] = $r[0]['max']+1;
 			$post['emetteur']=$id;
 			$post['destinataire']=(has_key('refer',$params) && is_user($params['refer']))?$params['refer']:1; //1 public ?
-			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:0;
+			$post['parent']=(has_key('reply',$params) && is_post($params['reply']))?$params['reply']:-1;
 			if (has_key('status',$params)) {
 				$status = $params['status'];
 				if(strlen($status)>254) return raiseError(genError(186,'Message is too long'));

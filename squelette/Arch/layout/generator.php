@@ -138,7 +138,7 @@ foreach ($imgExt as $k => $ext) {
         }
       }
     }
-    if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
+    if (filter_var($text, FILTER_VALIDATE_URL) !== false) return urldecode($text);
     if (file_exists('/nfs/nas02a_etudiants/inf/uapv1701704/public_html/'.$text)) return '../../~uapv1701704/'.$text;
   }
   return "images/ico/def.svg";
@@ -200,6 +200,13 @@ function genProfile($user, $editable=false, $small=false) { //$pid, $img, $likes
 
 function genChatCompose() {
   echo '<div class="card-body suggestions">
+    <div class="input-group media-chat-link hidden" style="padding: 8px 0;z-index: 9;">
+      <div class="input-group-prepend">
+        <span class="input-group-text">/</span>
+      </div>
+
+      <input type="text" class="form-control" id="media_chat_link">
+    </div>
     <div class="input-group">
       <div class="input-group-prepend dropup">
         <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -215,9 +222,9 @@ function genChatCompose() {
               <input type="file" name="media[]" id="mediaChat" class="file-input inputChat" tabindex="-1" accept="image/gif,image/jpeg,image/jpg,image/png">
             </label>
           </div>
-          <a id="linkChatAdd" class="dropdown-item" href="#">Embed link</a>
+          <a id="linkChatAdd" class="dropdown-item">Embed link</a>
           <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Cancel</a>
+          <a class="dropdown-item">Cancel</a>
         </div>
       </div>
       <input type="text" id="chat_in" class="form-control" aria-label="Enter your message">
