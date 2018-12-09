@@ -901,7 +901,7 @@ function a() {
       $('#home').addClass("selected");
       selected = $("#home");
       break;
-    case "listUsers":
+    case "users":
       $('#friends').addClass("selected");
       selected = $("#friends");
       break;
