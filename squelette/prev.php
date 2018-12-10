@@ -1,6 +1,6 @@
 <?php
 $received_url = $_GET["q"];
-header("Content-Type: text/html; charset=ISO-8859-1");
+header("Content-Type: text/html; charset=utf-8");
 $url = htmlspecialchars(trim($received_url), ENT_QUOTES, 'ISO-8859-1', TRUE);
 
 $host = '';
