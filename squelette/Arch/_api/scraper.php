@@ -8,16 +8,23 @@ class scraper
       header("Content-type: application/json; charset=utf-8");
       $url = htmlspecialchars(trim($received_url), ENT_QUOTES, 'ISO-8859-1', TRUE);
       $host = '';
+      if(strpos('w3.org/', $url) !== false) die("invalid");
+      //set_time_limit(3);
       if (!empty($url)) {
         $url_data = parse_url($url);
         $host = $url_data['host'];
-        if(($file = @fopen($url, 'r')) != false) {
+        $c = 0;
+        $context = stream_context_create(array('http'=>array('timeout'=>4)));
+        $file = @fopen($url, 'r', false, $context);
+        if($file) {
+          stream_set_timeout($file, 1);
           if (!$file) {
             exit();
           } else {
             $content = '';
-            while (!feof($file)) {
+            while (!feof($file) && $c<10) {
               $content .= fgets($file, 1024);
+              $c++;
             }
           }
           $meta_tags = get_meta_tags($url);
