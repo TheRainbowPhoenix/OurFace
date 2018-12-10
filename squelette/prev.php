@@ -8,7 +8,7 @@ $host = '';
 if (!empty($url)) {
     $url_data = parse_url($url);
     $host = $url_data['host'];
-    if(($file = fopen($url, 'r')) != false) {
+    if(($file = @fopen($url, 'r')) != false) {
       if (!$file) {
         exit();
       } else {
@@ -35,11 +35,14 @@ if (!empty($url)) {
             if (count($title[1]) > 0)
             $title = $title[1][0];
             else
-            $title = 'Title not found!';
+            $title = '';
           }
         }
 
         $title = ucfirst($title);
+        if($title == '') {
+          $title = $host;
+        }
 
         $desc = '';
 
@@ -85,16 +88,21 @@ if (!empty($url)) {
               }
             }
           }
+          if($img_url == '') {
+            $t = exif_imagetype($received_url);
+            if($t>=1 && $t<=3) $img_url = $received_url;
+            //var_dump(exif_imagetype($received_url));
+          }
         }
         $title = html_entity_decode($title, ENT_NOQUOTES, 'UTF-8' );
         $desc = html_entity_decode($desc, ENT_NOQUOTES, 'UTF-8' );
         //  {"title":"Google","description":"Nelly Sachs' 127th Birthday #GoogleDoodle","image":"https:\/\/www.google.com\/logos\/doodles\/2018\/nelly-sachs-127th-birthday-5191147935760384.2-2x.png","url":"https:\/\/www.google.com\/webhp"}
         $json = array('title' => $title, 'description' => $desc, 'image' => $img_url, 'url' => $url);
-        echo "<div>$title</div>";
-        if($img_url != "") echo "<div><img src='$img_url' alt='Preview image'></div>";
-        if($desc != "") echo "<div>$desc</div>";
-        echo "<div>$host</div>";
-        var_dump($json);
+        //echo "<div>$title</div>";
+        //if($img_url != "") echo "<div><img src='$img_url' alt='Preview image'></div>";
+      //  if($desc != "") echo "<div>$desc</div>";
+        //echo "<div>$host</div>";
+        //var_dump($json);
         echo json_encode($json);
         return;
       }
