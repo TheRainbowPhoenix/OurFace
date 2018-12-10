@@ -768,6 +768,25 @@ html, body {
 
 /* ends here */
 
+/* Embed rules */
+.embed-card .card-img-top {
+	height: 256px;
+	object-fit: cover;
+	opacity: .9;
+}
+
+.card-text .embed-card .card-img-top , .card-text .embed-card .card-body {
+	animation: fadeIn 0.6s ease forwards;
+}
+.card-text .embed-card {
+  animation: slide-down 0.6s ease forwards;
+}
+.card-text {
+	transition: .2s height all;
+}
+
+/* ends here */
+
 /* chat rules */
 
 .server-icon {

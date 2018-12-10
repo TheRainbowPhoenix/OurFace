@@ -193,6 +193,11 @@ class parser
 		}
 	}
 
+	public static function preview($params) {
+		$p = scraper::preview($params);
+		return $p;
+	}
+
 	public static function post($params) {
 		$id = is_logged($_SESSION);
 		if($id >=0) {

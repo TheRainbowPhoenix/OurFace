@@ -178,6 +178,7 @@ function loadNew(fr, id) {
     });
   }
   a();
+  genThumbs();
 }
 
 function loadMoar(fr, id) {
@@ -205,6 +206,7 @@ function loadMoar(fr, id) {
     });
   }
   a();
+  genThumbs();
 }
 
 var selected;
@@ -504,6 +506,8 @@ $( document ).ready(function () {
 		$(this).css('position', 'inherit');
 	}
   });
+  // thumbs
+  genThumbs();
 });
 
 var timeoutId;
@@ -881,6 +885,29 @@ function chatStuff() {
 
 function refreshPosts() {
   a();
+  genThumbs();
+}
+
+function genThumbs() {
+  $('.link-preview').each(function(i, e) {
+    if($(e).parents('.card-text').has('.embed-card').length ==0) {
+      var target = $(e).text();
+        $(e).parents('.card-text').append('<div class="embed-card card"><div class="card-body"><p class="card-text">Loading link . . .</p></div></div>');
+      $.ajax({
+        type: "GET",
+        url: "api.php/preview",
+        dataType: 'json',
+        data: {q: target, key: 'myKey'},
+        success: function (data) {
+          if(data.error == null) {
+            console.log(data);
+            $(e).parents('.card-text').find('.embed-card').html(((data.image!='')?'<img class="card-img-top" src="'+data.image+'" alt="Card image cap">':'')+'<div class="card-body">'+'<h5 class="card-title"><a href="'+data.url+'">'+data.title+'</a></h5>'+((data.description!='')?'<p class="card-text">'+data.description+'</p>':'')+'</div>');
+          } else {
+          }
+        }
+      });
+    }
+  });
 }
 
 function a() {
@@ -1051,22 +1078,4 @@ function a() {
        loadMoar(fmin(), -1);
     }
   });*/
-  $('.link-preview').each(function(i, e) {
-    if($(e).parents('.card-text').has('.embed-card').length ==0) {
-      var target = $(e).text();
-      $.ajax({
-        url: "https://api.linkpreview.net",
-        dataType: 'jsonp',
-        data: {q: target, key: '5c0ea0f9e2374ea70baf624affef1b67543c7c5949929'},
-        success: function (data) {
-          if(data.error == null) {
-            $(e).parents('.card-text').append('<div class="embed-card card">'+((data.image!='')?'<img class="card-img-top" src="'+data.image+'" alt="Card image cap">':'')+'<div class="card-body">'+'<h5 class="card-title"><a href="'+data.url+'">'+data.title+'</a></h5>'+((data.description!='')?'<p class="card-text">'+data.description+'</p>':'')+'</div>'+'</div>');
-          } else {
-            //console.log(data);
-          }
-        }
-      });
-    }
-});
-
 }
