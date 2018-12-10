@@ -374,7 +374,7 @@ function genCompose() {
             </div>
             <div class="name-container flex-grow-1">
                <h5 class="card-title"><a href="?action=profile&amp;id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a></h5>
-               <p class="card-subtitle mb-2">'.markup($msg).'</p>';
+               <p class="card-subtitle card-text mb-2">'.markup($msg).'</p>';
   if(isset($img) && ($img!='')) {
               echo '<div class="post-image">
                   <div class="post-image-align">

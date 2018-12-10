@@ -1051,5 +1051,17 @@ function a() {
        loadMoar(fmin(), -1);
     }
   });*/
+  $('.link-preview').each(function(i, e) {
+	var target = $(e).text();
+	$.ajax({
+	url: "https://api.linkpreview.net",
+	dataType: 'jsonp',
+	data: {q: target, key: '5c0ea0f9e2374ea70baf624affef1b67543c7c5949929'},
+	success: function (data) {
+		$(e).parents('.card-text').append('<div class="embed-card card">'+((data.image!='')?'<img class="card-img-top" src="'+data.image+'" alt="Card image cap">':'')+'<div class="card-body">'+'<h5 class="card-title">'+data.title+'</h5>'+((data.description!='')?'<p class="card-text">'+data.description+'</p>':'')+'</div>'+'</div>');
+		console.log(data);
+	}
+	});
+});
 
 }
