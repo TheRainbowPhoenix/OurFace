@@ -1062,7 +1062,7 @@ function a() {
           if(data.error == null) {
             $(e).parents('.card-text').append('<div class="embed-card card">'+((data.image!='')?'<img class="card-img-top" src="'+data.image+'" alt="Card image cap">':'')+'<div class="card-body">'+'<h5 class="card-title"><a href="'+data.url+'">'+data.title+'</a></h5>'+((data.description!='')?'<p class="card-text">'+data.description+'</p>':'')+'</div>'+'</div>');
           } else {
-            console.log(data);
+            //console.log(data);
           }
         }
       });
