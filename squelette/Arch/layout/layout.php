@@ -34,6 +34,10 @@ function renderPP($text, $id) {
   <meta name="author" content="name">
   <meta name="description" content="description here">
   <meta name="keywords" content="keywords,here">
+  <meta property="og:title" content="Ourface" />
+  <meta property="og:type" content="image/png" />
+  <meta property="og:url" content="https://pedago02a.univ-avignon.fr/~uapv1701795/squelette/" />
+  <meta property="og:image" content="images/favicon/of-192.png" />
 
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:200,300,400,500,700" type="text/css">
   <link href="bad/css/bootstrap.min.css" rel="stylesheet">

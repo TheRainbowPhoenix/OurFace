@@ -75,7 +75,7 @@ function markup($text) {
   $rep = array();
   foreach ($matches as $value=>$key) {
     if(filter_var($key[0], FILTER_VALIDATE_URL)) {
-      $rep[$value] = '<a href="'.$key[0].'">'.$key[0].'</a>';
+      $rep[$value] = '<a class="link-preview" href="'.$key[0].'">'.$key[0].'</a>';
     } else {
       $rep[$value] = $key[0];
     }
