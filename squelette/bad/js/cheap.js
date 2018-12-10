@@ -1059,8 +1059,11 @@ function a() {
         dataType: 'jsonp',
         data: {q: target, key: '5c0ea0f9e2374ea70baf624affef1b67543c7c5949929'},
         success: function (data) {
-          $(e).parents('.card-text').append('<div class="embed-card card">'+((data.image!='')?'<img class="card-img-top" src="'+data.image+'" alt="Card image cap">':'')+'<div class="card-body">'+'<h5 class="card-title"><a href="'+data.url+'">'+data.title+'</a></h5>'+((data.description!='')?'<p class="card-text">'+data.description+'</p>':'')+'</div>'+'</div>');
-          console.log(data);
+          if(data.error == null) {
+            $(e).parents('.card-text').append('<div class="embed-card card">'+((data.image!='')?'<img class="card-img-top" src="'+data.image+'" alt="Card image cap">':'')+'<div class="card-body">'+'<h5 class="card-title"><a href="'+data.url+'">'+data.title+'</a></h5>'+((data.description!='')?'<p class="card-text">'+data.description+'</p>':'')+'</div>'+'</div>');
+          } else {
+            console.log(data);
+          }
         }
       });
     }
