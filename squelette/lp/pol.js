@@ -1,11 +1,11 @@
 function getContent(id)
 {
-	var queryString = {'since_id' : id};
+	var queryString = {'from' : id};
 
 	$.ajax(
 		{
 			type: 'GET',
-			url: 'gistfile1.php',
+			url: '../api/poll.php',
 			data: queryString,
 			dataType: 'json',
 			success: function(data){
