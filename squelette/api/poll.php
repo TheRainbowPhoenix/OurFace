@@ -12,22 +12,13 @@ if (empty($_REQUEST['from'])) {
 	$id = (int)$_REQUEST['from'];
 }
 
+//PS : I REALLY TRIED - LIKE 5 times
+
 $dbc = new dbconnection();
 
-$db = new PDO('pgsql:host='.HOST.';dbname='.DB, USER, PASS, array(
-	PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-));
-
 function fetch($id = 0, $limit = 10) {
-	//global $db;
 	global $dbc;
-
 	return $dbc->doQuery("SELECT * FROM fredouil.post WHERE id > ".$id." ORDER BY id DESC LIMIT ".$limit);
-	/*$stmt = $db->prepare("SELECT * FROM fredouil.post WHERE id > ".$id." ORDER BY id DESC LIMIT ".$limit);
-	$stmt->execute();
-
-	return $stmt->fetchAll();*/
 }
 
 function output($val = array()) {
@@ -41,8 +32,8 @@ set_time_limit(45);
 $ret = fetch($id);
 
 if (empty($ret)) {
-	$db->exec('LISTEN post');
-	$r = $db->pgsqlGetNotify(PDO::FETCH_ASSOC, 30000);
+	$dbc->doRawExec('LISTEN post');
+	$r = $dbc->getNotify(30000);
 	if ($r === false) {
 		output();
 	}
