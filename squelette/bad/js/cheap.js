@@ -104,11 +104,26 @@ function uploadMedia(formdata){
 }
 
 function newChatNotif(data) {
+  console.log(data);
   if($("#chat-toggle").find(".new-chat").length == 0) {
+    var ml = $.parseHTML(data);
+    var text = $('.card-subtitle', ml).html();
+    var user = $('.card-title a', ml).html();
+    var pp = $('.avatar-image', ml).attr('src');
+
     $(".chat-posts").append(data);
     $("#chat-toggle").append('<span class="new-chat"></span>')
     $("#chat-toggle").prepend("<span class='ripple'></span>");
     $("#favicon").attr("href","images/favicon/of-n-16.png");
+    Push.create(''+user, {
+        body: ''+text,
+        icon: pp, //'images/favicon/of-48.png',
+        timeout: 8000,
+        vibrate: [100, 100, 100],
+        onClick: function() {
+            console.log(this);
+        }
+    });
   }
   $("#chat").addClass("unread");
   $(".ripple").addClass("rippleEffect");
@@ -508,6 +523,7 @@ $( document ).ready(function () {
 	}
   });
   // thumbs
+  Push.Permission.request();
   genThumbs();
 });
 

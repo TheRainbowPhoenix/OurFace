@@ -72,7 +72,7 @@ function renderPP($text, $id) {
     <script type="text/javascript" src="bad/js/jquery-ui.min.js"></script>
     <script src="bad/js/ekko-lightbox.js"></script>
     <script src="bad/js/cheap.js" type='text/javascript'></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
     <script>
     if (navigator.userAgent.indexOf("Chrome") == -1){ // Fuck you IE I hate you
       document.write("\<script src='bad/js/stickyfill.js' type='text/javascript'>\<\/script>");
