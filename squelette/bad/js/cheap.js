@@ -111,7 +111,7 @@ function newChatNotif(data) {
     var user = $('.card-title a', ml).first().text();
     var pp = $('.avatar-image', ml).attr('src');
 
-    $(".chat-posts").append(data);
+	  //$(".chat-posts").append(data);
     $("#chat-toggle").append('<span class="new-chat"></span>')
     $("#chat-toggle").prepend("<span class='ripple'></span>");
     $("#favicon").attr("href","images/favicon/of-n-16.png");
@@ -172,6 +172,7 @@ function loadChat(fr) {
     if(data != '') {
       newChatNotif(data);
       chatStuff();
+      updateChat(data);
       //console.log(data);
 
     }
@@ -829,7 +830,7 @@ function chatStuff() {
                 success: function(result) {
                   //console.log(result);
                   $('#chat_in').val('');
-                  //updateChat(result);
+		//updateChat(result);
                   //notify('Posted !');
                 },
                 error: function(result) {
@@ -883,7 +884,7 @@ function chatStuff() {
                  success: function(result) {
                    //console.log(result);
                    $('#chat_in').val('');
-                   updateChat(result);
+			 //updateChat(result);
                    //notify('Posted !');
                  },
                  error: function(result) {
@@ -907,7 +908,7 @@ function chatStuff() {
                    $('#chat_in').val('');
                    $("#media_chat_link").val('');
                    $(".media-chat-link").addClass('hidden');
-                   updateChat(result);
+			 //updateChat(result);
                  },
                  error: function(result) {
                    alert('error');

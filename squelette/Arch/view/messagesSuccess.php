@@ -7,11 +7,12 @@
 <script type="text/javascript">
   $( document ).ready(function () {
     //refresh posts
-    chkpst = setInterval(checkAll, 30000);
+    pollChat(cmax());
+    //chkpst = setInterval(checkAll, 30000);
   });
   //check new posts
   function checkAll() {
-    loadChat(cmax());
+    //loadChat(cmax());
   }
 </script>
 

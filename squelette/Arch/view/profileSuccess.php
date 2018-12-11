@@ -14,11 +14,12 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   <script type="text/javascript">
   $( document ).ready(function () {
     //refresh posts
+    pollChat(cmax());
     chkpst = setInterval(checkAll, 45000);
   });
   //check new posts
   function checkAll() {
-    loadChat(cmax());
+    //loadChat(cmax());
     loadNew(fmax(), <?php echo $context->id?>);
   }
   //If scrolled to bottom

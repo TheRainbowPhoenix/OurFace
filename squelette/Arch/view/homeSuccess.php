@@ -12,13 +12,14 @@ if (!$context->logged) {
 ?>
   <script type="text/javascript">
   $( document ).ready(function () {
+    pollChat(cmax());
     //refresh posts
     chkpst = setInterval(checkAll, 30000);
   });
   //check new posts
   function checkAll() {
     loadNew(fmax(), -1);
-    loadChat(cmax());
+    //loadChat(cmax());
   }
   //If scrolled to bottom
   $(window).scroll(function() {

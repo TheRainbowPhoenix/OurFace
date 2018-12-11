@@ -489,11 +489,22 @@ class parser
 	}
 
 	public static function emojis($params) {
-		$id = is_logged($_SESSION);
+		//$id = is_logged($_SESSION);
+		$id=1;
+		$full = (has_key('full', $params))?(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]":'';
 		$html = (has_key('html', $params))?1:0; //generate html
 		if($id >=0) {
 			if(has_key('id', $params)) {
 				$pid = $params['id'];
+				if($full!='') {
+					$x = pathinfo($full);
+					$baseF = explode('/', $x["dirname"]);
+					array_pop($baseF);
+					$baseF = implode('/', $baseF);
+					//var_dump($baseF);
+					$e = emojiTable::getEmoji($pid, false, true);
+					return $baseF.'/'.$e;
+				}
 				if($html)	$emoji = emojiTable::getEmoji($pid, true);
 				else $emoji = emojiTable::getEmoji($pid);
 				if($emoji != false) return $emoji;

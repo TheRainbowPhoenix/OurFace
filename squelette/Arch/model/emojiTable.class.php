@@ -13,7 +13,7 @@ class emojiTable extends basemodel {
     return $list;
   }
 
-  public function getEmoji($pid, $html=false)
+  public function getEmoji($pid, $html=false, $url=false)
   {
     if(isset($pid)) {
       $providers = emojiTable::getProviders();
@@ -24,7 +24,9 @@ class emojiTable extends basemodel {
           if (file_exists($dir.'/'.$pid.'.'.$ext)) {
             if($html) {
               return '<img class="emoji inline" src="'.$dir.'/'.$pid.'.'.$ext.'" alt="'.$pid.'" draggable="false">';
-            } else {
+	    } else if($url) {
+	      return $dir.'/'.$pid.'.'.$ext;
+	    } else {
               $rtrn = array('id' => $pid, 'src' => $dir.'/'.$pid.'.'.$ext);
               return json_encode($rtrn);
             }

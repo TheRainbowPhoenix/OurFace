@@ -75,7 +75,7 @@ public function listen() {
     $id = $connection->getLastInsertId("fredouil.".get_class($this)) ;
 
     /* Notify */
-    $connection->doRawExec('NOTIFY '.get_class($this));
+    $connection->doExec('NOTIFY '.get_class($this));
     /* ends here */
 
     return $id == false ? NULL : $id ;

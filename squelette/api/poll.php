@@ -19,6 +19,11 @@ if (empty($_REQUEST['from'])) {
 
 $dbc = new dbconnection();
 
+function fetchPost($id = 0) {
+	global $dbc;
+	return $dbc->doQueryObject("select * from fredouil.post where id='".$id."'", "post" );
+}
+
 function fetch($id = 0, $limit = 10) {
 	global $dbc;
 	global $trigger;
