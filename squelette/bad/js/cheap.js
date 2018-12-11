@@ -147,7 +147,7 @@ function pollChat(id) {
 
   $.ajax({
     type: 'GET',
-    url: '../api/poll.php',
+    url: 'api/poll.php',
     data: queryString,
     dataType: 'json',
     success: function(data){
