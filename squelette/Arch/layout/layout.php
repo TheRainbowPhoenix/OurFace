@@ -38,7 +38,17 @@ function renderPP($text, $id) {
   <meta property="og:type" content="image/png" />
   <meta property="og:url" content="https://pedago02a.univ-avignon.fr/~uapv1701795/squelette/" />
   <meta property="og:image" content="images/favicon/of-192.png" />
+  <meta property="og:site_name" content="OurFace" />
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <meta name="apple-mobile-web-app-title" content="OurFace">
+  <link rel="apple-touch-icon" href="images/favicon/of-192.png">
+  <meta name="msapplication-TileImage" content="images/favicon/of-144.png">
+  <meta name="msapplication-TileColor" content="#FBF9FB">
 
+  <link rel="mask-icon" sizes="any" href="images/favicon/of.svg" color="#FBF9FB">
+  <link id="favicon" rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:200,300,400,500,700" type="text/css">
   <link href="bad/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/icons.css" rel="stylesheet">
