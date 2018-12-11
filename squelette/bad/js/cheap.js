@@ -121,7 +121,7 @@ function newChatNotif(data) {
         timeout: 8000,
         vibrate: [100, 100, 100],
         onClick: function() {
-            console.log(this);
+            //console.log(this);
         }
     });
   }
