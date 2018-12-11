@@ -152,10 +152,10 @@ function pollChat(id) {
     dataType: 'json',
     success: function(data){
       $('#response').text(JSON.stringify(data, null, 2));
-      if($.isEmptyObject(data)) getContent(id);
+      if($.isEmptyObject(data)) pollChat(id);
       else {
         loadChat(data[data.length-1].id);
-        getContent(data[0].id);
+        pollChat(data[0].id);
       }
     }
   });
