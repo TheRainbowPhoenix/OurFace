@@ -154,7 +154,7 @@ function pollChat(id) {
       $('#response').text(JSON.stringify(data, null, 2));
       if($.isEmptyObject(data)) pollChat(id);
       else {
-        loadChat(data[data.length-1].id);
+        loadChat(data[data.length-1].id-1);
         pollChat(data[0].id);
       }
     }
