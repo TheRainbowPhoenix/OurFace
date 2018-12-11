@@ -37,6 +37,13 @@ abstract class basemodel
     return NULL;
   }
 
+public function listen() {
+  $connection = new dbconnection() ;
+  $connection->doRawExec('LISTEN '.get_called_class());
+  //$connection->doRawExec('NOTIFY '.get_called_class().', \'start listen\'');
+  return $connection->getNotify(30000);
+}
+
 /**
  * [save description]
  * @return [type] [description]

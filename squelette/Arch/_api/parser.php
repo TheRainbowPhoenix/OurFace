@@ -76,6 +76,26 @@ function has_media($id, $text) {
 class parser
 {
 
+	public static function poll($params) {
+		$id = is_logged($_SESSION);
+		$html = (has_key('html', $params))?1:0;
+		if($id >=0) {
+			set_time_limit(45);
+			$r = parser::chat($params);
+			if (empty($r) || strcmp($r, '[]') ==0) {
+				$ret = post::listen();
+				if($ret === false) {
+					return $ret;
+				}
+				$r = parser::chat($params);
+			} else {
+				return $r;
+			}
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
+	}
+
 	public static function chat($params) {
 		$id = is_logged($_SESSION);
 		$new = (has_key('new_items', $params) && $params['new_items']==true)?true:false;

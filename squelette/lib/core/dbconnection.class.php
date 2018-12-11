@@ -14,7 +14,7 @@ class dbconnection
     $this->link = null;
     $this->error = null;
     try{
-      $this->link = new PDO('pgsql:host='.HOST.';dbname='.DB, USER, PASS, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+      $this->link = new PDO('pgsql:host='.HOST.';dbname='.DB, USER, PASS, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
        // ici on crée une insance de l''objet PDO pour établir une connexion avec la base de données
        // cette nouvelle instnace sera assigné à $this->link
     }catch( PDOException $e ){
@@ -36,6 +36,11 @@ class dbconnection
   public function doRawExec( $sql )
   {
     return $this->link->exec( $sql );
+  }
+
+  public function getNotify($time)
+  {
+    return $this->link->pgsqlGetNotify(PDO::FETCH_ASSOC, ($time>10)?$time:30000);
   }
 
   public function doQuery( $sql )
