@@ -48,7 +48,7 @@ function renderPP($text, $id) {
   <meta name="msapplication-TileColor" content="#FBF9FB">
 
   <link rel="mask-icon" sizes="any" href="images/favicon/of.svg" color="#FBF9FB">
-  <link id="favicon" rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link id="favicon" rel="shortcut icon" href="images/favicon/of-16.png" type="image/x-icon">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:200,300,400,500,700" type="text/css">
   <link href="bad/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/icons.css" rel="stylesheet">
