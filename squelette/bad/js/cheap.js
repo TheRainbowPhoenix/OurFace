@@ -108,6 +108,7 @@ function newChatNotif(data) {
     $(".chat-posts").append(data);
     $("#chat-toggle").append('<span class="new-chat"></span>')
     $("#chat-toggle").prepend("<span class='ripple'></span>");
+    $("#favicon").attr("href","images/favicon/of-n-16.png");
   }
   $("#chat").addClass("unread");
   $(".ripple").addClass("rippleEffect");
@@ -720,6 +721,7 @@ function chatStuff() {
      if($._data($(e)[0], 'events')==null) {
        $(e).click(function(i) {
          $(".ripple").removeClass("rippleEffect");
+         $("#favicon").attr("href","images/favicon/of-16.png");
          $("#chat").removeClass("unread");
          $(".new-chat").remove();
        });
@@ -737,6 +739,7 @@ function chatStuff() {
        $(e).click(function(i) {
          $(".chat-container").toggleClass("hidden");
          $(".ripple").removeClass("rippleEffect");
+         $("#favicon").attr("href","images/favicon/of-16.png");
          $("#chat").removeClass("unread");
          $(".new-chat").remove();
        });
