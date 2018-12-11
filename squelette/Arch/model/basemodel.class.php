@@ -67,6 +67,10 @@ abstract class basemodel
     $connection->doExec($sql) ;
     $id = $connection->getLastInsertId("fredouil.".get_class($this)) ;
 
+    /* Notify */
+    $connection->exec('NOTIFY '.get_class($this));
+    /* ends here */
+
     return $id == false ? NULL : $id ;
   }
 
