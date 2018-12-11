@@ -1,10 +1,13 @@
 <?php
 require_once '../lib/core.php';
+//require_once '../Arch/model/postTable.class.php';
 
 /*
  * I ran into many problems of "blocking" with classes
  * the only solution was thoses good ol' functions 
  */
+
+$trigger = 'chat';
 
 if (empty($_REQUEST['from'])) {
 	$id = 0;
@@ -18,7 +21,8 @@ $dbc = new dbconnection();
 
 function fetch($id = 0, $limit = 10) {
 	global $dbc;
-	return $dbc->doQuery("SELECT * FROM fredouil.post WHERE id > ".$id." ORDER BY id DESC LIMIT ".$limit);
+	global $trigger;
+	return $dbc->doQuery("SELECT * FROM fredouil.".$trigger." WHERE id > ".$id." ORDER BY id DESC LIMIT ".$limit);
 }
 
 function output($val = array()) {
@@ -32,12 +36,12 @@ set_time_limit(45);
 $ret = fetch($id);
 
 if (empty($ret)) {
-	$dbc->doRawExec('LISTEN post');
+	$dbc->doRawExec('LISTEN '.$trigger);
 	$r = $dbc->getNotify(30000);
 	if ($r === false) {
-		output();
+		output(); // []
 	}
 	$ret = fetch($id);
 }
-
+//$p = postTable::getPostById($id); TODO: Fix this !
 output($ret);
