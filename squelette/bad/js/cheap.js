@@ -107,8 +107,8 @@ function newChatNotif(data) {
   console.log(data);
   if($("#chat-toggle").find(".new-chat").length == 0) {
     var ml = $.parseHTML(data);
-    var text = $('.card-subtitle', ml).html();
-    var user = $('.card-title a', ml).html();
+    var text = $('.card-subtitle', ml).text();
+    var user = $('.card-title a', ml).text();
     var pp = $('.avatar-image', ml).attr('src');
 
     $(".chat-posts").append(data);
