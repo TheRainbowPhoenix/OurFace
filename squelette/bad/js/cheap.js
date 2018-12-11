@@ -142,7 +142,7 @@ function newNotif() {
 var html;
 var newhtml;
 
-function pollChat(fr) {
+function pollChat(id) {
   var queryString = {'from' : id};
 
   $.ajax({
