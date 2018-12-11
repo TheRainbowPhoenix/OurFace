@@ -141,6 +141,26 @@ function newNotif() {
 
 var html;
 var newhtml;
+
+function pollChat(fr) {
+  var queryString = {'from' : id};
+
+  $.ajax({
+    type: 'GET',
+    url: '../api/poll.php',
+    data: queryString,
+    dataType: 'json',
+    success: function(data){
+      $('#response').text(JSON.stringify(data, null, 2));
+      if($.isEmptyObject(data)) getContent(id);
+      else {
+        loadChat(data[data.length-1].id);
+        getContent(data[0].id);
+      }
+    }
+  });
+}
+
 function loadChat(fr) {
   $.ajax({
     method: "GET",
