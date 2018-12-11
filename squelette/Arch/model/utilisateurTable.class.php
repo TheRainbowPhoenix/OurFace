@@ -43,9 +43,8 @@ class utilisateurTable
  * @param  id $id id
  * @return user     user
  */
-  public static function getUserById($id)
-  {
-    $connection = new dbconnection() ;
+  public static function getUserById($id, $conn=null) {
+    $connection = ($conn==null)?new dbconnection():$conn;
     $sql = "select * from fredouil.utilisateur where id='".$id."'" ;
     $res = $connection->doQueryObject( $sql, "utilisateur" );
     return ($res===false)?false:$res;

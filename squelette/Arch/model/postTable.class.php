@@ -8,9 +8,8 @@ class postTable
  * @param  id $id id
  * @return post     post
  */
-  public function getPostById($id)
-  {
-    $connection = new dbconnection() ;
+  public function getPostById($id, $conn=null) {
+    $connection = ($conn==null)?new dbconnection():$conn;
     $sql = "select * from fredouil.post where id='".$id."'" ;
     $res = $connection->doQueryObject( $sql, "post" );
     return ($res==false)?false:$res;

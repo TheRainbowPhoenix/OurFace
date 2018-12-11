@@ -28,8 +28,8 @@ class chatTable
     return (is_array($res))?$res:false;
   }
 
-  public function getNewChatMessage($id) {
-    $connection = new dbconnection() ;
+  public function getNewChatMessage($id, $conn=null) {
+    $connection = ($conn==null)?new dbconnection():$conn;
     $sql = "select * from fredouil.chat where id>".$id." order by id desc limit 5;";
     $res = $connection->doQueryObject( $sql, "chat"  );
     return ($res);
