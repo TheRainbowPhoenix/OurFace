@@ -609,6 +609,19 @@ html, body {
 	transition: .2s all ease-in-out;
 }
 
+.timestamp {
+	font-size: 0.75rem;
+	font-weight: 400;
+/*	margin-left: .5rem;*/
+	line-height: 1.5rem;
+	opacity: .8;
+}
+
+.load-msg {
+	padding: 2rem;
+	text-align: center;
+}
+
 .floating-card {
 	width: 18rem;
 	position: absolute;

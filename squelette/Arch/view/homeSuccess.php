@@ -101,7 +101,7 @@ if (!$context->logged) {
   <div class="row fixed-chats ">
     <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
     <div class="col col-lg-auto servers-container" id="_genchat">
-      <h5>Chat loading . . .</h5>
+      <h5 class="load-msg">Chat loading . . .</h5>
 
     </div>
   </div>

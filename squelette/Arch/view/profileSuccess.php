@@ -96,7 +96,7 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
 <div class="col-lg-3" id="chats">
 <div class="row fixed-chats ">
   <div class="col col-lg-auto servers-container" id="_genchat">
-    <h5>Chat loading . . .</h5>
+    <h5 class="load-msg">Chat loading . . .</h5>
   </div>
 </div>
 </div>

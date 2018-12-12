@@ -359,8 +359,9 @@ function genCompose() {
     </div>';
   }
 
-  function getChat($pid, $img, $thumb, $id, $usr, $msg) {
-    //var_dump($usr);
+  function getChat($pid, $img, $thumb, $id, $usr, $msg, $dat='') {
+	  //var_dump($usr);
+	  $date = ($dat!='')?explode(" ", $dat)[1]:'';
   echo '<li class="list-group-item card-body">
          <div class="d-flex chat" data-user-id="'.$id.'" data-id="'.$pid.'">
             <div class="avatar-container">
@@ -373,7 +374,7 @@ function genCompose() {
                echo '" alt="">
             </div>
             <div class="name-container flex-grow-1">
-               <h5 class="card-title"><a href="?action=profile&amp;id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a></h5>
+               <h5 class="card-title"><a href="?action=profile&amp;id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a><time class="timestamp text-muted float-right">'.escape($date).'</time></h5>
                <p class="card-subtitle card-text mb-2">'.markup($msg).'</p>';
   if(isset($img) && ($img!='')) {
               echo '<div class="post-image">

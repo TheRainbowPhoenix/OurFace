@@ -126,10 +126,11 @@ class parser
 				        } else {
 				          $img = null;
 				          $thumb = null;
-				        }
+					}
+					$dat = $_pst[0]->date;
 				        $msg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
 				        $usr = $_emtr[0];
-				        getChat($pid, $img, $thumb, $id, $usr, $msg);
+				        getChat($pid, $img, $thumb, $id, $usr, $msg, $dat);
 				        /*$tmp = new Compose($chat, $_pst, $_emtr);
 				        array_push($cstack, $tmp);*/
 				      }
@@ -203,7 +204,8 @@ class parser
 				}
 				$usr = utilisateurTable::getUserById($_C->emetteur)[0];
 				$msg = $post['status'];
-				getChat($pid, $img, $thumb, $_C->emetteur, $usr, $msg);
+				$dat = $post['date'];
+				getChat($pid, $img, $thumb, $_C->emetteur, $usr, $msg, $dat);
 			} else {
 				return json_encode($_C);
 			}

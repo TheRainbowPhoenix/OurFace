@@ -60,5 +60,5 @@
 </nav>
 
 <div class="col" id="_genchat">
-    <h5>Chat loading . . .</h5>
+    <h5 class="load-msg">Chat loading . . .</h5>
 </div>

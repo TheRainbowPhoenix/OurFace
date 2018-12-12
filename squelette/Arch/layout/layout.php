@@ -129,7 +129,7 @@ function renderPP($text, $id) {
                 <div class="name-container flex-grow-1">
                   <h5 class="card-title"><?php echo $_SESSION['user_var']['prenom']; ?></h5>
                 </div>
-                <div class="avatar-container">
+		<div class="avatar-container" id="user-id" data-id="<?php echo $_SESSION['user_var']['id']; ?>">
                   <img class="avatar-image" src="<?php echo genPP($_SESSION['user_var']['avatar'], $_SESSION['user_var']['id'])?>" alt="">
                 </div>
               </a>

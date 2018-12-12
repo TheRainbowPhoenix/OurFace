@@ -69,8 +69,9 @@ class maker
           $thumb = null;
         }
         $msg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
-        $usr = $_emtr[0];
-        getChat($pid, $img, $thumb, $id, $usr, $msg);
+	$usr = $_emtr[0];
+	$dat = $_pst[0]->date;
+        getChat($pid, $img, $thumb, $id, $usr, $msg, $dat);
         /*$tmp = new Compose($chat, $_pst, $_emtr);
         array_push($cstack, $tmp);*/
       }

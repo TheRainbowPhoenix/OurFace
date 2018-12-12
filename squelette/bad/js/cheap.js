@@ -104,13 +104,18 @@ function uploadMedia(formdata){
 }
 
 function newChatNotif(data) {
-  console.log(data);
+	//console.log(data);
   if($("#chat-toggle").find(".new-chat").length == 0) {
     var ml = $.parseHTML(data);
     var text = $('.card-subtitle', ml).first().text();
     var user = $('.card-title a', ml).first().text();
     var pp = $('.avatar-image', ml).attr('src');
+    
+    var _id = $("#user-id").data('id');
+    var id = $('.d-flex.chat', ml).data('user-id');
+	  //console.log(cnt);
 
+    if(cnt>0 && _id != id) {
 	  //$(".chat-posts").append(data);
     $("#chat-toggle").append('<span class="new-chat"></span>')
     $("#chat-toggle").prepend("<span class='ripple'></span>");
@@ -124,9 +129,14 @@ function newChatNotif(data) {
             //console.log(this);
         }
     });
+    $("#chat").addClass("unread");
+    $(".ripple").addClass("rippleEffect");
+    cnt = 1;
+    } else {
+        cnt = 1;
+    }
   }
-  $("#chat").addClass("unread");
-  $(".ripple").addClass("rippleEffect");
+  
   //console.log(newhtml);
 }
 
@@ -141,6 +151,7 @@ function newNotif() {
 
 var html;
 var newhtml;
+var cnt = 0;
 
 function pollChat(id) {
   var queryString = {'from' : id};
@@ -352,7 +363,7 @@ $( document ).ready(function () {
              notify('Error');
            }
          });
-         console.log(r_id);
+	       //console.log(r_id);
        });
      }
    });
@@ -831,7 +842,9 @@ function chatStuff() {
                   //console.log(result);
                   $('#chat_in').val('');
 		//updateChat(result);
-                  //notify('Posted !');
+			//notify('Posted !');
+			//cnt = 0;
+			//console.log(cnt);
                 },
                 error: function(result) {
                   alert('error');
@@ -865,7 +878,8 @@ function chatStuff() {
                    $('#chat_in').val('');
                    $("#media_chat_link").val('');
                    $(".media-chat-link").addClass('hidden');
-                   //updateChat(result);
+			 //cnt = 0;
+			 //updateChat(result);
                  },
                  error: function(result) {
                    alert('error');
@@ -885,7 +899,8 @@ function chatStuff() {
                    //console.log(result);
                    $('#chat_in').val('');
 			 //updateChat(result);
-                   //notify('Posted !');
+			 //notify('Posted !');
+			 //cnt = 0;
                  },
                  error: function(result) {
                    alert('error');
@@ -909,6 +924,7 @@ function chatStuff() {
                    $("#media_chat_link").val('');
                    $(".media-chat-link").addClass('hidden');
 			 //updateChat(result);
+			 //cnt = 0;
                  },
                  error: function(result) {
                    alert('error');
@@ -940,7 +956,7 @@ function genThumbs() {
         data: {q: target, key: 'myKey'},
         success: function (data) {
           if(data.error == null) {
-            console.log(data);
+		  //console.log(data);
             $(e).parents('.card-text').find('.embed-card').html(((data.image!='')?'<img class="card-img-top" src="'+data.image+'" alt="Card image cap">':'')+'<div class="card-body">'+'<h5 class="card-title"><a href="'+data.url+'">'+data.title+'</a></h5>'+((data.description!='')?'<p class="card-text">'+data.description+'</p>':'')+'</div>');
           } else {
           }
@@ -1095,7 +1111,7 @@ function a() {
              notify('Error');
            }
          });
-         console.log(r_id);
+	       //console.log(r_id);
        });
      }
    });
