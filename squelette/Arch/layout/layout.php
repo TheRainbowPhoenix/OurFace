@@ -53,6 +53,7 @@ function renderPP($text, $id) {
   <link href="bad/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/icons.css" rel="stylesheet">
   <link href="bad/css/bad.css" rel="stylesheet">
+<?php if(isset($_COOKIE['night_mode']) && $_COOKIE['night_mode']==1) echo '<link id="night_mode_css" href="bad/css/bad_night.css" rel="stylesheet">' ?>
   <link href="bad/css/ekko-lightbox.css" rel="stylesheet">
   </head>
   <body>
@@ -72,6 +73,7 @@ function renderPP($text, $id) {
     <script type="text/javascript" src="bad/js/jquery-ui.min.js"></script>
     <script src="bad/js/ekko-lightbox.js"></script>
     <script src="bad/js/cheap.js" type='text/javascript'></script>
+    <script src="bad/js/js.cookie-2.2.0.min.js" type='text/javascript'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
     <script>
     if (navigator.userAgent.indexOf("Chrome") == -1){ // Fuck you IE I hate you
@@ -81,6 +83,8 @@ function renderPP($text, $id) {
         Stickyfill.add($('.affix-top'));
       });
     }
+	var night_mode = (Cookies.get('night_mode') == 1)?1:0;
+	//if(night_mode == 1) $('head').append('<link id="night_mode_css" href="bad/css/bad_night.css" rel="stylesheet">');
     </script>
     <!-- nav -->
     <nav class="navbar navbar-light fixed-top bg-light flex-md-nowrap p-0 shadow">
@@ -135,7 +139,7 @@ function renderPP($text, $id) {
               </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileLinks">
-              <a class="dropdown-item" href="?action=listMessages">Messages</a>
+              <a class="dropdown-item" href="?action=messages">Messages</a>
               <a class="dropdown-item" href="?action=profile">Profile</a>
               <a class="dropdown-item" href="?action=logout">Logout</a>
             </div>

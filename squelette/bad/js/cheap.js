@@ -152,6 +152,7 @@ function newNotif() {
 var html;
 var newhtml;
 var cnt = 0;
+var night_mode = 0;
 
 function pollChat(id) {
   var queryString = {'from' : id};
@@ -265,6 +266,10 @@ var chkpst;
 $( document ).ready(function () {
   a();
   var refer = Get('id');
+
+	//night_mode = (Cookies.get('night_mode') == 1)?1:0;
+	//processPage();
+
   //make chat
   if($("#_genchat").length != 0) {
     $.ajax({
@@ -556,7 +561,10 @@ $( document ).ready(function () {
   });
   // thumbs
   Push.Permission.request();
+  
+  
   genThumbs();
+
 });
 
 var timeoutId;
@@ -603,6 +611,12 @@ function ppclck() {
   $("#profile-picture").click(function(e) {
     //$("#profile-picture").append('<div>edit</div>');
   });
+}
+
+function processPage() {
+  if($('head').find('#night_mode_css').length == 0) {
+    $('head').append('<link id="night_mode_css" href="bad/css/bad_night.css" rel="stylesheet">');
+  }
 }
 
 /*

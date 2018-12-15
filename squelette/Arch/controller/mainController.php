@@ -181,6 +181,7 @@ class mainController
 			if(!is_null($_msgs) && !empty($_msgs)) {
 				foreach ($_msgs as $msg) {
 					//var_dump($msg);
+					if($msg->post == NULL) continue;
 					$_pst = postTable::getPostById($msg->post);
 					$cnt = $msg->id;
 					$_emtr = utilisateurTable::getUserById($msg->emetteur);

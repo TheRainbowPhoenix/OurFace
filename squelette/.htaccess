@@ -1,5 +1,20 @@
 DirectoryIndex monApplication.php
 
+<ifModule mod_headers.c>
+# YEAR
+<FilesMatch "\.(ico|gif|jpg|jpeg|png|flv|pdf)$">
+  Header set Cache-Control "max-age=29030400"
+</FilesMatch>
+# WEEK
+<FilesMatch "\.(js|css|swf)$">
+  Header set Cache-Control "max-age=604800"
+</FilesMatch>
+# 45 MIN
+<FilesMatch "\.(html|htm|txt)$">
+  Header set Cache-Control "max-age=2700"
+</FilesMatch>
+</ifModule>
+
 #Options +MultiViews
 #RewriteEngine On
 

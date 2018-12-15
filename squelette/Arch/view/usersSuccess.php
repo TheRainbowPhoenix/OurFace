@@ -21,7 +21,7 @@
 
       </ul>
       <div class="card-body suggestions">
-        <a href="?action=listUsers" class="card-link">View more</a>
+        <a href="?action=users" class="card-link">View more</a>
       </div>
     </div>
   </div>
