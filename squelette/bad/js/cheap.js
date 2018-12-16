@@ -1196,3 +1196,43 @@ function a() {
     }
   });*/
 }
+
+function cleanKonami(cnt) {
+	if(cnt == 0) {
+		$('.K-t span').text('Arch');
+		$('.K-t span').shuffleLetters();
+		setTimeout(function() {cleanKonami(1);}, 2000);
+	} else if(cnt == 1) {
+		$('body').children('.K-c').addClass('clean');
+		 setTimeout(function() {cleanKonami(2);}, 1000);
+	} else if(cnt == 2) {
+		$('body').children('.K-c').remove();
+		$('body').children('#kon').remove();
+		$('body').children('#konl').remove();
+	}
+}
+
+function doKonami() {
+  if(n === k.length) {
+	  //alert('Konami >o<');
+	  $('body').append('<script id="konl" src="bad/js/jquery.shuffleLetters.js"></script>');
+	  $('body').append('<div class="K-c"><div class="K-cr"></div><div class="K-cr"></div><div class="K-cr"></div><div class="K-cr"></div> </div>');
+	  $('.K-c').append('<div class="K-t"><span>Arch</span></div>');
+	  $('head').append('<link id="kon" href="bad/css/k.css" rel="stylesheet">');
+  	setTimeout(function() {cleanKonami(0);}, 1600);
+  }
+}
+
+var k = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
+n = 0;
+$(document).keydown(function (e) {
+  if (e.keyCode === k[n++]) {
+	  if (n === k.length) {
+		  doKonami();
+      n = 0;
+      return false;
+    }
+  } else {
+    n = 0;
+  }
+});

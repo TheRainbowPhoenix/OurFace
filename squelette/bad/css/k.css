@@ -1,0 +1,112 @@
+.K-cr {
+	position: relative;
+	width: 100%;
+	height: 25%;
+	transform: translateX(-100%);
+}
+
+.K-c {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10000;
+}
+
+.K-t {
+	display: block;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background: #292626;
+	animation: slide-down 0.4s ease 1.2s forwards;
+	transform: translateY(-100%);
+}
+
+.K-c.clean {
+	transform: scale(1);
+	transform: rotateZ(0deg);
+}
+
+.K-c.clean .K-t {
+	animation: shrink 0.6s ease .4s forwards;
+	transform: scale(1);
+	transform: rotateZ(0deg);
+}
+
+
+.K-c.clean .K-t span {
+	animation: shrink 0.6s ease 0s forwards;
+	transform: scale(1);
+	transform: rotateZ(0deg);
+}
+
+.K-c.clean .K-cr:nth-child(1) {
+	animation: slide-right-out 0.4s ease .4s forwards;
+}
+.K-c.clean .K-cr:nth-child(2) {
+	animation: slide-right-out 0.4s ease .5s forwards;
+}
+.K-c.clean .K-cr:nth-child(3) {
+	animation: slide-right-out 0.4s ease .6s forwards;
+}
+.K-c.clean .K-cr:nth-child(4) {
+	animation: slide-right-out 0.4s ease .7s forwards;
+}
+
+
+.K-t span {
+	opacity: 0;
+	font-size: 25vw;
+	margin: 0 auto;
+	text-align: center;
+	position: relative;
+	width: 100%;
+	display: block;
+	line-height: 100vh;
+	animation: slide-down 0.4s ease 1.4s forwards;
+	transform: translateY(-100%);
+}
+
+.K-cr:nth-child(1) {
+	background: #01BADB;
+	animation: slide-right 0.4s ease .5s forwards;
+}
+.K-cr:nth-child(2) {
+	background: #F20089;
+	animation: slide-right 0.4s ease .6s forwards;
+}
+.K-cr:nth-child(3) {
+	background: #F4E500;
+	animation: slide-right 0.4s ease .7s forwards;
+}
+.K-cr:nth-child(4) {
+	background: #081122;
+	animation: slide-right 0.4s ease .8s forwards;
+}
+
+@keyframes shrink {
+	from { transform: scale(1) rotateZ(0deg); opacity: 1; border-radius: 0;}
+	to {	transform: scale(.1) rotateZ(-60deg); opacity: 0; border-radius: 50%;}
+}
+
+@keyframes slide-down {
+	form {transform: translateY(-100%);}
+	to {transform: translateY(0%); opacity: 1;}
+}
+
+@keyframes slide-right {
+	from {
+	transform: translateX(-100%); }
+	to {
+	transform: translateX(0%); }
+}
+
+@keyframes slide-right-out {
+	from {
+	transform: translateX(0%); }
+	to {
+	transform: translateX(100%); }
+}
