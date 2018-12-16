@@ -106,6 +106,10 @@ a:hover {
 .modal-content {
 	background-color: #363036;
 }
+.action-button {
+	background: #4b444b;
+	border: 1px solid #4b444b;
+}
 .profile-desc-edit {
 	background: #4b444b;
 	color: rgba(255,255,255,.7);
@@ -114,3 +118,56 @@ a:hover {
 .navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand {
 	color: rgba(255,255,255,.9);
 }
+.avatar-image {
+	background: #4b444b;
+}
+#composeModal .modal-content {
+	background-color: #3e383e;
+}
+.ui-resizable-handle:after {
+	background: #3e383e;
+	box-shadow: 0 10px 0 #3e383e, 0 20px 0 #3e383e;
+}
+.upload-handler {
+	border: 1px solid #4b444b;
+}
+body::-webkit-scrollbar-track {
+
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+background-color: #1d1b1d;}
+
+body::-webkit-scrollbar {
+	width: 12px;
+background-color: #3e383e; }
+
+body::-webkit-scrollbar-thumb {
+	background-color: #3e383e;
+	outline: 1px solid #3e383e;
+}
+.list-group::-webkit-scrollbar {
+	width: 12px;
+	background-color: #3e383e;
+}
+.list-group::-webkit-scrollbar-track {
+	background-color: #3e383e;
+}
+.list-group::-webkit-scrollbar {
+	width: 12px;
+	background-color: #3e383e;
+}
+.list-group::-webkit-scrollbar-thumb {
+	background-color: #4b444b;
+	outline: 1px solid #3e383e;
+}
+.emoji-block::-webkit-scrollbar {
+	width: 12px;
+	background-color: #3e383e;
+}
+.emoji-block::-webkit-scrollbar-track {
+	background-color: #4b444b;
+}
+.emoji-block::-webkit-scrollbar-thumb {
+	background-color: #6c606c;
+	outline: 1px solid #3e383e;
+}
+
