@@ -371,7 +371,40 @@ $( document ).ready(function () {
 	       //console.log(r_id);
        });
      }
-   });
+  });
+  //Moar click
+  if($(".moar-toggle").length != 0) {
+    $.ajax({
+	    type: "GET",
+	    url: "api.php/moar",
+	    dataType: "html",
+	    success: function(data) {
+		    $("#moarHere").html(data);
+		    $("#night_mode").prop('checked', night_mode);
+		    setSwitch();
+	    }
+    });
+	  $("#night_mode").val(this.checked);
+  }
+	  $("#night_mode").change(function(e) {
+          if(this.checked) {
+                $('head').append('<link id="night_mode_css" href="bad/css/bad_night.css" rel="stylesheet">');
+                  Cookies.set('night_mode', 1);
+          } else {
+                 $('head').find('#night_mode_css').remove();
+                 Cookies.set('night_mode', 0);
+          }
+    });
+	  
+    $(".moar-toggle").click(function(e) {
+    if($(".moar-toggle.open").length == 0) {
+	    $(".moar-toggle").addClass("open");
+	    $("#moarHere").removeClass("hidden");
+	        } else {
+	    $(".moar-toggle").removeClass("open");
+	    $("#moarHere").addClass("hidden");
+    }
+  });
   //chats click
   $("#chat").click(function(e) {
     if (winsz < 1100 && selected != $("#chat") && ($("#chats").length > 0) && 0) { //DISABLED ATM
@@ -561,7 +594,8 @@ $( document ).ready(function () {
   });
   // thumbs
   Push.Permission.request();
-  
+  console.log("aaa");
+	setSwitch();  
   
   genThumbs();
 
@@ -617,6 +651,19 @@ function processPage() {
   if($('head').find('#night_mode_css').length == 0) {
     $('head').append('<link id="night_mode_css" href="bad/css/bad_night.css" rel="stylesheet">');
   }
+}
+
+function setSwitch() {
+  $("#night_mode").change(function(e) {
+     if(this.checked) {
+        $('head').append('<link id="night_mode_css" href="bad/css/bad_night.css" rel="stylesheet">');
+        Cookies.set('night_mode', 1);
+     } else {
+        $('head').find('#night_mode_css').remove();
+        Cookies.set('night_mode', 0);
+     }
+  });
+
 }
 
 /*

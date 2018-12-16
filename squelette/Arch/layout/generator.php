@@ -187,12 +187,14 @@ function genProfile($user, $editable=false, $small=false) { //$pid, $img, $likes
       </div>';
       if($editable) echo '<a href="#" id="profile-desc">';
       echo '<p class="card-text" id="profile-desc-text">'.escape($user->statut).'</p>';
-      if($editable) echo '</a>';
+      if($editable) echo '</a><div id="moarHere" class="hidden"></div>';
       echo '</div>';
       if(!$small) {
-        echo '<div class="card-footer">
-        <small class="text-muted">Born the '.genDate(escape($user->date_de_naissance)).'</small>
-        </div>';
+        echo '<div class="card-footer d-flex">
+	<small class="text-muted date-f-text">Born the '.genDate(escape($user->date_de_naissance)).'</small>';
+	if($editable) { echo '<div class="moar-toggle"><svg id="MenuIndicator" viewBox="0 0 24 24"><path fill="rgba(210,210,210,.9)" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path></svg></div>';
+	}
+	echo'</div>';
 
       }
   }

@@ -96,6 +96,16 @@ class parser
 		}
 	}
 
+	public static function moar($params) {
+		$id = is_logged($_SESSION);
+		if($id >=0) {
+			$r = '<div class="options-container"><ul class="list-group"><li class="list-group-item d-flex justify-content-between align-items-center"><span>Night mode</span><label class="switch nightS"><input id="night_mode" type="checkbox" data-toggle="toggle"><span class="slider round"></span></label></li></ul></div>';
+			return $r;
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
+	}
+
 	public static function chat($params) {
 		$id = is_logged($_SESSION);
 		$new = (has_key('new_items', $params) && $params['new_items']==true)?true:false;
