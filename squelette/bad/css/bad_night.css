@@ -6,6 +6,9 @@ html, body {
 a:hover {
 	color: #8f80c3;
 }
+.verified {
+	background: #5e5973;
+}
 .bg-light {
 	background-color: #3e383e!important;
 }
@@ -39,6 +42,9 @@ a:hover {
 	background-color: hsla(300, 5%, 23%, 1);
 	border: 1px solid rgba(42, 39, 42, .5);
 }
+.new-posts:hover {
+	background-color: #4b444b;
+}
 .form-control {
 	background-color: #4b444b;
 	border: 1px solid #4b444b;
@@ -49,8 +55,23 @@ a:hover {
 	border: #4e464e;
 	color: rgba(255,255,255,.7);
 }
+.badge-warning {
+	color: #a58f4a;
+	background: rgba(234, 190, 57, 0.1);
+	border-color: rgba(250, 194, 25, 0.1);
+}
+.markup {
+	background: hsla(276, 9%, 4%, 0.4);
+	border-color: hsla(276, 9%, 4%, 0.6);
+}
 .icon:before {
 	color:#d8d7d8;
+}
+.list-group-item a {
+	color: rgba(255,255,255,0.8);
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+	color: rgba(255,255,255,0.8);
 }
 .server-list {
 	background-color: rgb(42, 39, 42);

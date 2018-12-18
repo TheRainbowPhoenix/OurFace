@@ -45,8 +45,8 @@ class utilisateurTable
  */
   public static function getUserById($id, $conn=null) {
     $connection = ($conn==null)?new dbconnection():$conn;
-    $sql = "select * from fredouil.utilisateur where id='".$id."'" ;
-    $res = $connection->doQueryObject( $sql, "utilisateur" );
+    $sql = "select *, CASE WHEN EXISTS(select id from verified V where V.id=F.id) THEN '1' ELSE '0' END AS verified from fredouil.utilisateur F where id='".$id."'" ;
+    $res = $connection->doQueryObject( $sql, "utilisateur" ); 
     return ($res===false)?false:$res;
   }
 
@@ -80,7 +80,7 @@ class utilisateurTable
   public static function getUsersV2()
   {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.utilisateur" ;
+    $sql = "select *, CASE WHEN EXISTS(select id from verified V where V.id=F.id) THEN '1' ELSE '0' END AS verified from fredouil.utilisateur F" ;
     $res = $connection->doQueryObject( $sql, "utilisateur" );
     if($res === FALSE || is_null($res)) return false;
 
@@ -91,7 +91,7 @@ class utilisateurTable
   {
     $connection = new dbconnection() ;
     if(!is_numeric($id) || $id<0) $id=0;
-    $sql = " select * from fredouil.utilisateur where id between ".$id." and ".($id+18)." order by id" ;
+    $sql = " select *, CASE WHEN EXISTS(select id from verified V where V.id=F.id) THEN '1' ELSE '0' END AS verified from fredouil.utilisateur F where id between ".$id." and ".($id+18)." order by id" ;
     $res = $connection->doQueryObject( $sql, "utilisateur" );
     if($res === FALSE || is_null($res)) return false;
     return $res;
@@ -110,8 +110,10 @@ class utilisateurTable
   public static function getRandomUsers()
   {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.utilisateur ORDER BY RANDOM() LIMIT 3" ;
+    $sql = "select *, CASE WHEN EXISTS(select id from verified V where V.id=F.id) THEN '1' ELSE '0' END AS verified from fredouil.utilisateur F ORDER BY RANDOM() LIMIT 3;" ;
+    //$sql = "select * from fredouil.utilisateur ORDER BY RANDOM() LIMIT 3" ;
     $res = $connection->doQueryObject( $sql, "utilisateur" );
+    //var_dump($res);
     if($res === FALSE || is_null($res)) return false;
 
     return $res;

@@ -637,7 +637,7 @@ function cmax() {
 }
 
 function descnrml(text) {
-  $("#profile-desc").html('<p class="card-text" id="profile-desc-text">'+text+'</p>');
+  $("#profile-desc").html('<p class="card-text" id="profile-desc-text">'+(text!="")?text:'Click to edit.'+'</p>');
   desclck();
 }
 

@@ -29,7 +29,7 @@ class postTable
   }
   public function getHashTag($tag) {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.post where texte like '%#".$tag."%'";
+    $sql = "select * from fredouil.post where texte like '%#".$tag."%' order by id desc";
     $res = $connection->doQueryObject( $sql, "message" );
     return $res;
   }

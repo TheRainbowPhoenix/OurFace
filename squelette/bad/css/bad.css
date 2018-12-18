@@ -19,6 +19,20 @@ html, body {
 	color: rgba(0,0,0,0.8);
 }
 
+.verified {
+	border-radius: 16px;
+	background: #9a92b8;
+	height: 24px;
+	width: 24px;
+	display: inherit;
+	position: absolute;
+	margin-left: 8px;
+}
+
+.verified::before {
+	content: "\2713 ";
+	padding-left: 4px;
+}
 .bg-light {
 	background-color: #fbf9fb!important;
 }
@@ -42,6 +56,13 @@ html, body {
 
 .dashboard-left.mob-hidden {
 	display: none;
+}
+
+.APIBar {
+	position: sticky;
+	top: 4rem;
+	z-index: 1000;
+	height: calc(100vh - 4rem);
 }
 
 .BProfile {
@@ -176,7 +197,7 @@ html, body {
 	height: 32px;
 	/* background: #eee; */
 	border-radius: 16px;
-	    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .switch input {
@@ -234,8 +255,8 @@ html, body {
 }
 
 .options-container {
-	    margin-top: 16px;
-    }
+	margin-top: 16px;
+}
 
 .compose {
 	margin-top: 8px;
@@ -260,6 +281,11 @@ html, body {
 .notifier-footer .alert {
 	width: 100%;
 	animation: slide-up 0.4s ease;
+}
+
+.require.alert {
+	display: block;
+	padding: .3rem 1rem;
 }
 
 .nav-avatar {

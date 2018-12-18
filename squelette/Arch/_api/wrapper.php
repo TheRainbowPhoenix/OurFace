@@ -23,7 +23,11 @@ class wrapper
   }
 
   public function parse($func, $params) {
-    return ((method_exists('parser',$func))?(parser::$func($params)):(false));
+	  if(method_exists('parser',$func)) {
+
+	header('Content-Type: application/json;charset=utf-8');
+	return parser::$func($params);
+	  } else return false;
 
   }
 

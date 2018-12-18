@@ -34,7 +34,8 @@
       ?>
     <div class="col-lg-4">
       <div class="card-deck">
-        <div class="card">
+	<div class="card">
+		
           <?php genProfile($user, false, true) ?>
         </div>
       </div>

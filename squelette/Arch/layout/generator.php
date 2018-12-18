@@ -165,7 +165,7 @@ function genProfile($user, $editable=false, $small=false) { //$pid, $img, $likes
       <div class="d-flex account-small">
         <div class="avatar-container">';
         if($editable) echo '<a href="#" id="profile-picture" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">';
-          echo '<img class="avatar-image" src="'.genPP($user->avatar, $user->id) .'" alt="">';
+          echo '<img class="avatar-image" src="'.genPP($user->avatar, $user->id) .'" alt="" onerror="this.src=\'images/ico/def.svg\'">';
           if($editable) echo '</a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <div class="dropdown-item image-selector">
@@ -181,7 +181,9 @@ function genProfile($user, $editable=false, $small=false) { //$pid, $img, $likes
 
         echo '</div>
         <div class="name-container flex-grow-1">
-          <h5 class="card-title"><a href="?action=profile&id='.escape($user->id).'">'.escape($user->prenom).' '.escape($user->nom).'</a></h5>
+	  <h5 class="card-title"><a href="?action=profile&id='.escape($user->id).'">'.escape($user->prenom).' '.escape($user->nom);
+		if($user->verified == '1') echo '<span class="verified"></span>';
+	echo '</a></h5>
           <h6 class="card-subtitle mb-2 text-muted">@'.escape($user->identifiant).'</h6>
         </div>
       </div>';
@@ -373,16 +375,18 @@ function genCompose() {
                } else {
                  echo 'images/ico/def.svg';
                }
-               echo '" alt="">
+               echo '" alt="" onerror="this.src=\'images/ico/def.svg\'">
             </div>
             <div class="name-container flex-grow-1">
-               <h5 class="card-title"><a href="?action=profile&amp;id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a><time class="timestamp text-muted float-right">'.escape($date).'</time></h5>
+	       <h5 class="card-title"><a href="?action=profile&amp;id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom);
+		if($usr->verified == "1") echo '<span class="verified"></span>';
+		echo '</a><time class="timestamp text-muted float-right">'.escape($date).'</time></h5>
                <p class="card-subtitle card-text mb-2">'.markup($msg).'</p>';
   if(isset($img) && ($img!='')) {
               echo '<div class="post-image">
                   <div class="post-image-align">
                      <div class="post-image-contain">
-                        <a href="'.$img.'" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="-1" data-com="-1"><img class="post-img card-img-top img-fluid lazy" alt="img" src="'.$img.'">
+                        <a href="'.$img.'" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="-1" data-com="-1"><img class="post-img card-img-top img-fluid lazy" alt="img" src="'.$img.'" onerror="this.src=\'images/ico/def.svg\'">
                         </a>
                      </div>
                   </div>
@@ -404,7 +408,7 @@ function genCompose() {
             <div class="post-image-contain">
               <a href="'.$img.'" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="'.$likes.'" data-com="'.$com.'">';
                 if($protected==1) echo '<img class="overlay" src="images/ico/bg.svg"/>';
-                echo '<img class="post-img card-img-top img-fluid lazy" alt="img" src="'.$thumb.'" data-src="'.$img.'">
+                echo '<img class="post-img card-img-top img-fluid lazy" alt="img" onerror="this.src=\'images/ico/def.svg\'" src="'.$thumb.'" data-src="'.$img.'">
               </a>
             </div>
           </div>
@@ -419,10 +423,12 @@ function genCompose() {
       } else {
         echo 'images/ico/def.svg';
       }
-      echo '" alt="">
+      echo '" alt="" onerror="this.src=\'images/ico/def.svg\'">
         </div>
         <div class="name-container flex-grow-1">
-          <h5 class="card-title"><a href="?action=profile&id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom).'</a></h5>
+	  <h5 class="card-title"><a href="?action=profile&id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom);
+	if($usr->verified == "1") echo '<span class="verified"></span>';
+      echo '</a></h5>
           <h6 class="card-subtitle mb-2 text-muted">@'.escape($usr->identifiant).'</h6>
         </div>
         <div class="floating-card" style="width: 18rem;"></div>
@@ -447,7 +453,7 @@ function genCompose() {
     foreach ($sug as $id => $user) {
       echo '<li class="list-group-item card-body">
       <div class="d-flex account-small" data-user-id="'.$user->id.'"/><div class="avatar-container">
-        <img class="avatar-image" src="'.genPP($user->avatar, $user->id).'" alt="">
+        <img class="avatar-image" src="'.genPP($user->avatar, $user->id).'" alt="" onerror="this.src=\'images/ico/def.svg\'">
       </div>
       <div class="name-container flex-grow-1">
         <h5 class="card-title"><a href="?action=profile&id='.escape($user->id).'">'.escape($user->prenom).' '.escape($user->nom).'</a></h5>

@@ -1,7 +1,6 @@
 <?php
 $nameApp = "Arch";
 
-header('Content-Type: application/json;charset=utf-8');
 
 require_once 'lib/core.php';
 require_once $nameApp.'/layout/generator.php';
@@ -40,6 +39,7 @@ foreach ($params as $param => $val) {
 
 if(isset($baseF)) {
 	$reponse=$api->parse($baseF, $funcs);
+	if($reponse) header('Content-Type: application/json;charset=utf-8');
 } else {
 	$reponse = false;
 }
@@ -47,8 +47,9 @@ if(isset($baseF)) {
 
 if($reponse===false)
 {
-	echo '{}';
-	die;
+	include("api/index.php");
+	//echo '{}';
+	//die;
 }
 
 else {

@@ -10,7 +10,8 @@ class utilisateur extends basemodel implements JsonSerializable {
             'prenom' => $this->prenom,
             'date_de_naissance' => $this->date_de_naissance,
             'statut' => $this->statut,
-            'avatar' => $this->avatar
+	    'avatar' => $this->avatar, 
+	    'verified' => ($this->verified)?1:0
         ];
     }
 

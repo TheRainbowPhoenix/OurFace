@@ -92,7 +92,7 @@ class parser
 				return $r;
 			}
 		} else {
-			return raiseError(genError(215,'Bad Authentication data.'));
+			return ($html)?'<!-- ERROR : 215 -->':raiseError(genError(215,'Bad Authentication data.'));
 		}
 	}
 
@@ -221,7 +221,7 @@ class parser
 			}
 				//var_dump($_C);
 			} else {
-			return raiseError(genError(215,'Bad Authentication data.'));
+			return ($html)?'<!-- ERROR : 215 -->':raiseError(genError(215,'Bad Authentication data.'));
 		}
 	}
 
@@ -367,7 +367,7 @@ class parser
 				}
 			}
 		} else {
-			return raiseError(genError(215,'Bad Authentication data.'));
+			return ($html)?'<!-- ERROR : 215 -->':raiseError(genError(215,'Bad Authentication data.'));
 		}
 	}
 
@@ -426,7 +426,7 @@ class parser
 			}
 			foreach ($_msgs as $msg) {
 				//var_dump($msg);
-				if(!is_null($msg->post)) {
+				if(!is_null($msg->post) && !is_null($msg->emetteur)) {
 					$_pst = postTable::getPostById($msg->post);
 					$_emtr = utilisateurTable::getUserById($msg->emetteur);
 					$_more = array('Reply' => messageTable::getMessagesReply($msg->post), 'Repost' => messageTable::getMessagesRepost($msg->post));
@@ -515,7 +515,8 @@ class parser
 					$baseF = implode('/', $baseF);
 					//var_dump($baseF);
 					$e = emojiTable::getEmoji($pid, false, true);
-					return $baseF.'/'.$e;
+					
+					return ($e != '')?$baseF.'/'.$e:'';
 				}
 				if($html)	$emoji = emojiTable::getEmoji($pid, true);
 				else $emoji = emojiTable::getEmoji($pid);
@@ -552,10 +553,10 @@ class parser
 					//var_dump($provider);
 				}
 			} else {
-				return raiseError(genError(400,'Invalid avatar'));
+				return ($html)?'<!-- ERROR : 400 -->':raiseError(genError(400,'Invalid avatar'));
 			}
 		} else {
-			return raiseError(genError(215,'Bad Authentication data.'));
+			return ($html)?'<!-- ERROR : 215 -->':raiseError(genError(215,'Bad Authentication data.'));
 		}
 	}
 
