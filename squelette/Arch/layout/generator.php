@@ -363,20 +363,22 @@ function genCompose() {
     </div>';
   }
 
-  function getChat($pid, $img, $thumb, $id, $usr, $msg, $dat='') {
+  function getChat($pid, $img, $thumb, $id, $usr, $msg, $dat='', $reported=0) {
 	  //var_dump($usr);
 	  $date = ($dat!='')?explode(" ", $dat)[1]:'';
   echo '<li class="list-group-item card-body">
          <div class="d-flex chat" data-user-id="'.$id.'" data-id="'.$pid.'">
-            <div class="avatar-container">
-               <img class="avatar-image" src="';
+            <div class="avatar-container">';
+            if($reported != "1") {
+            echo '<img class="avatar-image" src="';
                if (isset($usr)) {
                  echo genPP($usr->avatar, $id);
                } else {
                  echo 'images/ico/def.svg';
                }
-               echo '" alt="" onerror="this.src=\'images/ico/def.svg\'">
-            </div>
+               echo '" alt="" onerror="this.src=\'images/ico/def.svg\'">';
+               }
+               echo '</div>
             <div class="name-container flex-grow-1">
 	       <h5 class="card-title"><a href="?action=profile&amp;id='.escape($usr->id).'">'.escape($usr->prenom).' '.escape($usr->nom);
 		if($usr->verified == "1") echo '<span class="verified"></span>';
@@ -398,19 +400,21 @@ function genCompose() {
       </li>';
   }
 
-  function getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, $protected=0)
+  function getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, $protected=0, $reported=0)
   {
     echo '<div class="card post" data-id="'.$pid.'">';
     if($protected==1) echo '<div class="mini-logo"></div>';
     if($img!=null) {
     echo'<div class="post-image">
           <div class="post-image-align">
-            <div class="post-image-contain">
-              <a href="'.$img.'" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="'.$likes.'" data-com="'.$com.'">';
+            <div class="post-image-contain">';
+            if($reported !== "1" ) {
+            echo '<a href="'.$img.'" data-type="image" data-toggle="lightbox" data-max-width="600" data-likes="'.$likes.'" data-com="'.$com.'">';
                 if($protected==1) echo '<img class="overlay" src="images/ico/bg.svg"/>';
                 echo '<img class="post-img card-img-top img-fluid lazy" alt="img" onerror="this.src=\'images/ico/def.svg\'" src="'.$thumb.'" data-src="'.$img.'">
-              </a>
-            </div>
+              </a>';
+              }
+              echo '</div>
           </div>
         </div>';
       }
@@ -432,9 +436,11 @@ function genCompose() {
           <h6 class="card-subtitle mb-2 text-muted">@'.escape($usr->identifiant).'</h6>
         </div>
         <div class="floating-card" style="width: 18rem;"></div>
-      </div>
-      <p class="card-text">'.markup($msg).'</p>
-    </div>
+      </div>';
+      if($reported) echo '<div class="report"><span class="report-message">REPORTED'.'</span>';
+      echo '<p class="card-text">'.markup($msg).'</p>';
+      if($reported) echo '</div>';
+      echo'</div>
     <div class="card-footer">';
       echo genFoot($likes, $com, $rt,$pid, $date, $protected);
       echo '</div></div>';

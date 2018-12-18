@@ -58,7 +58,7 @@ class maker
     foreach (array_reverse($_chats) as $chat) {
       $_pst = postTable::getPostById($chat->post);
       $_emtr = utilisateurTable::getUserById($chat->emetteur);
-      if(isset($_pst) && isset($_emtr)) {
+      if($chat->post && isset($_pst) && isset($_emtr)) {
         $pid = $chat->id;
         $id = $chat->emetteur;
         if($_pst[0]->image != null) {
@@ -71,7 +71,8 @@ class maker
         $msg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
 	$usr = $_emtr[0];
 	$dat = $_pst[0]->date;
-        getChat($pid, $img, $thumb, $id, $usr, $msg, $dat);
+        $reported = $_pst[0]->reported;
+        getChat($pid, $img, $thumb, $id, $usr, $msg, $dat, $reported);
         /*$tmp = new Compose($chat, $_pst, $_emtr);
         array_push($cstack, $tmp);*/
       }

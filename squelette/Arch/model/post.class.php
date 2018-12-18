@@ -6,7 +6,8 @@ class post extends basemodel implements JsonSerializable {
             'id' => $this->id,
             'texte' => $this->texte,
             'date' => $this->date,
-            'image' => $this->image
+            'image' => $this->image,
+            'reported' => $this->reported
         ];
     }
 

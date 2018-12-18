@@ -177,6 +177,12 @@ class mainController
 			if($usr == false) goIndex();
 			$cnt = 0;
 			$stack = array();
+			
+			$with_replies = (array_key_exists('with_replies', $request)&&isset($request['with_replies']))?1:0;
+			$medias =  (array_key_exists('medias', $request)&&isset($request['medias']))?1:0;
+
+			$context->type = ($medias)?2:(($with_replies)?1:0);
+
 			$_msgs = (isset($id))?messageTable::getMessagesOnProfile($id):messageTable::getMessages();
 			if(!is_null($_msgs) && !empty($_msgs)) {
 				foreach ($_msgs as $msg) {

@@ -27,12 +27,32 @@ html, body {
 	display: inherit;
 	position: absolute;
 	margin-left: 8px;
+	color: #fbf9fb;
 }
 
 .verified::before {
 	content: "\2713 ";
 	padding-left: 4px;
 }
+
+.ekko-lightbox-container>div.ekko-lightbox-item {
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.report {
+	border: 1px solid rgba(0,0,0,0.2);
+	padding: .75rem;
+	border-radius: .25rem;
+	color: #a58f4a;
+	background: rgba(234, 190, 57, 0.1);
+	border-color: rgba(250, 194, 25, 0.1);
+}
+
+.report .card-text {
+	display: none;
+}
+
 .bg-light {
 	background-color: #fbf9fb!important;
 }
@@ -187,6 +207,11 @@ html, body {
 .profiles {
 	margin: 0 -9px;
 	margin-bottom: 16px;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	color: #fbf9fb;
+	background-color: #9a92b8;
 }
 
 

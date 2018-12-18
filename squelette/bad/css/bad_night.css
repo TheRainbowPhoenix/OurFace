@@ -136,6 +136,15 @@ a:hover {
 	color: rgba(255,255,255,.7);
 	border-color: #5e5973;
 }
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	color: #d8d7d8;
+	background-color: #5e5973;
+}
+
+.nav-pills .nav-link {
+	color: #bbb3bb;
+}
+
 .navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand {
 	color: rgba(255,255,255,.9);
 }

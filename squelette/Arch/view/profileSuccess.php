@@ -61,6 +61,14 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
 
   <div class="col posts-main">
     <?php genCompose(); ?>
+    <nav class="nav nav-pills nav-justified">
+	<?php 
+		$view = 'profile';
+		echo '<a class="nav-link'.(($context->type==0)?' active':'').'" href="?action='.$view.'&id='.$context->user->id.'">Messages</a>';
+		echo '<a class="nav-link'.(($context->type==1)?' active':'').'" href="?action='.$view.'&id='.$context->user->id.'&with_replies=1">Messages and Replies</a>';
+		echo '<a class="nav-link'.(($context->type==2)?' active':'').'" href="?action='.$view.'&id='.$context->user->id.'&medias=1">Medias</a>';
+      ?>
+    </nav>
     <div id="posts">
 
   <?php
@@ -84,7 +92,8 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
       $date = (isset($message->second[0]))?genTimeDiff($message->second[0]->date):'times ago';
       $usr = $message->third[0];
-      echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date);
+      $reported = $message->second[0]->reported;
+      echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, 0, $reported);
 
     }
     //var_dump($message);

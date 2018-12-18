@@ -447,8 +447,9 @@ class parser
 							$mesg = (isset($_pst[0]))?escape($_pst[0]->texte):'';
 							$date = (isset($_pst[0]))?genTimeDiff($_pst[0]->date):'times ago';
 							$usr = $_emtr[0];
+							$reported = $_pst[0]->reported;
 							//var_dump($_emtr);
-							echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $mesg, $date);
+							echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $mesg, $date, 0, $reported);
 							//echo '<!-- id='.$msg->id.'-->';
 							//var_dump($msg);
 							//var_dump($_pst);
@@ -464,6 +465,22 @@ class parser
 				}
 			}
 		return ($html)?'':json_encode($stack);
+	}
+
+	public static function report($params) {
+		$id = is_logged($_SESSION);
+		if($id >=0) {
+			if(has_key('message', $params)) {
+				if(is_numeric($params['message'])) {
+					$rtrn = report::messageID($params['message']);
+					//var_dump($rtrn);
+					return json_encode($rtrn);
+				}
+				return raiseError(genError(50,'User not found'));
+			}
+		} else {
+			return raiseError(genError(215,'Bad Authentication data.'));
+		}
 	}
 
 	public static function setProfile($params) {
@@ -515,7 +532,7 @@ class parser
 					$baseF = implode('/', $baseF);
 					//var_dump($baseF);
 					$e = emojiTable::getEmoji($pid, false, true);
-					
+
 					return ($e != '')?$baseF.'/'.$e:'';
 				}
 				if($html)	$emoji = emojiTable::getEmoji($pid, true);

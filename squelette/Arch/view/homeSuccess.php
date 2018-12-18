@@ -76,7 +76,9 @@ if (!$context->logged) {
       $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
       $date = (isset($message->second[0]))?($message->second[0]->date):'times ago';
       $usr = $message->third[0];
-      echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date);
+      $reported = $message->second[0]->reported;
+      echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, $reported);
+      //var_dump($message->second[0]->reported);
     } else {
       if(isset($message->second[0]) && isset($message->first)) {
         $pid = $message->first->id;
@@ -87,7 +89,9 @@ if (!$context->logged) {
         $msg = (isset($message->second[0]))?escape($message->second[0]->texte):'';
         $date = (isset($message->second[0]))?($message->second[0]->date):'times ago';
         $usr = $message->third[0];
-        echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date);
+        $reported = $message->second[0]->reported;
+        echo getPost($pid, $img, $likes, $com, $rt, $thumb, $id, $usr, $msg, $date, 0, $reported);
+        //var_dump($message->second[0]->reported);
       }
     }
     //var_dump($message);
