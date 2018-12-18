@@ -192,13 +192,13 @@ function loadChat(fr) {
     //$("#posts").append( data );
   });
 }
-function loadNew(fr, id) {
+function loadNew(fr, id, tp = 1) {
   if(id<0) {
     $.ajax({
       method: "GET",
       async: false,
       url: "api.php/messages",
-      data: {from: fr, html: '1', new_items: true},
+      data: {from: fr, type: tp, html: '1', new_items: true},
       dataType: "html"
     }).done(function(data) {
       if(data != '') {
@@ -213,7 +213,7 @@ function loadNew(fr, id) {
       method: "GET",
       async: false,
       url: "api.php/messages",
-      data: {from: fr, user_id: id, html: '1', new_items: true},
+      data: {from: fr, user_id: id, type: tp, html: '1', new_items: true},
       dataType: "html"
     }).done(function(data) {
       if(data != '') {
@@ -230,13 +230,13 @@ function loadNew(fr, id) {
   genThumbs();
 }
 
-function loadMoar(fr, id) {
+function loadMoar(fr, id, tp = 1) {
   if(id<0) {
     $.ajax({
       method: "GET",
       async: false,
       url: "api.php/messages",
-      data: {from: fr, html: '1'},
+      data: {from: fr, type: tp, html: '1'},
       dataType: "html"
     }).done(function(data) {
       html = data;
@@ -247,7 +247,7 @@ function loadMoar(fr, id) {
       method: "GET",
       async: false,
       url: "api.php/messages",
-      data: {from: fr, user_id: id, html: '1'},
+      data: {from: fr, user_id: id, type: tp, html: '1'},
       dataType: "html"
     }).done(function(data) {
       html = data;

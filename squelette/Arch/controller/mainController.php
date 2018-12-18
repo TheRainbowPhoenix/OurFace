@@ -181,9 +181,9 @@ class mainController
 			$with_replies = (array_key_exists('with_replies', $request)&&isset($request['with_replies']))?1:0;
 			$medias =  (array_key_exists('medias', $request)&&isset($request['medias']))?1:0;
 
-			$context->type = ($medias)?2:(($with_replies)?1:0);
+			$type = ($medias)?2:(($with_replies)?1:0);
 
-			$_msgs = (isset($id))?messageTable::getMessagesOnProfile($id):messageTable::getMessages();
+			$_msgs = (isset($id))?messageTable::getMessagesOnProfile($id, $type):messageTable::getMessages();
 			if(!is_null($_msgs) && !empty($_msgs)) {
 				foreach ($_msgs as $msg) {
 					//var_dump($msg);
@@ -201,6 +201,7 @@ class mainController
 			}
 			$context->c_id = $_SESSION['user_var']['id'];
 			$context->messages = $stack;
+			$context->type = $type;
 			$context->user = utilisateurTable::getUserById($id)[0];
 			$context->sug = utilisateurTable::getRandomUsers();
 			$context->last_id = $cnt;

@@ -79,10 +79,11 @@ class messageTable
     return $res;
   }
 
-  public function getMessagesOnProfile($id)
+  public function getMessagesOnProfile($id, $type=1)
   {
     $connection = new dbconnection() ;
-    $sql = "select * from fredouil.message where destinataire='".$id."' or emetteur='".$id."' order by id desc limit 10" ;
+    if($type == 2) $sql = "select message.id, emetteur, destinataire, parent, post, aime, image from fredouil.message INNER JOIN fredouil.post ON message.post = post.id where emetteur='".$id."' and image != '' order by post.id desc limit 10";
+    else $sql = "select * from fredouil.message where ".(($type == 1)?"destinataire='".$id."' or ":"")."emetteur='".$id."' order by id desc limit 10" ;
     $res = $connection->doQueryObject( $sql, "message" );
     return $res;
   }
@@ -102,11 +103,16 @@ class messageTable
     return $res;
   }
 
-  public static function getMessagesOnProfileSinceId($id, $em, $new=false) {
+  public static function getMessagesOnProfileSinceId($id, $em, $new=false, $type=1) {
     $connection = new dbconnection() ;
     if(!is_numeric($id) || $id<0) $id=0;
-      if($em<0) $sql = "select * from fredouil.message where id ".(($new)?">":"<")." ".$id." order by id desc limit 10" ;
-      else $sql = "select * from fredouil.message where id ".(($new)?">":"<")." ".$id." and (emetteur=".$em." or destinataire=".$em.") order by id desc limit 10" ;
+    if($em<0) {
+      $sql = "select * from fredouil.message where id ".(($new)?">":"<")." ".$id." order by id desc limit 10" ;
+      if($type == 2) $sql = "select message.id, emetteur, destinataire, parent, post, aime, image from fredouil.message INNER JOIN fredouil.post ON message.post = post.id where message.id ".(($new)?">":"<")." ".$id." and image != '' order by post.id desc limit 10";
+    } else {
+        if($type == 2) $sql = "select message.id, emetteur, destinataire, parent, post, aime, image from fredouil.message INNER JOIN fredouil.post ON message.post = post.id where message.id ".(($new)?">":"<")." ".$id." and emetteur='".$em."' and image != '' order by post.id desc limit 10";
+        else $sql = "select * from fredouil.message where id ".(($new)?">":"<")." ".$id." and (".(($type == 1)?"destinataire=".$em." or ":"")."emetteur=".$em.") order by id desc limit 10" ;	  
+      }	    
       $res = $connection->doQueryObject( $sql, "message" );
       if($res === FALSE || is_null($res)) return false;
       return $res;

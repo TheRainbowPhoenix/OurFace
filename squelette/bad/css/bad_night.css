@@ -73,6 +73,9 @@ a:hover {
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
 	color: rgba(255,255,255,0.8);
 }
+.K-t {
+	background: #292626 !important;
+}
 .server-list {
 	background-color: rgb(42, 39, 42);
 }

@@ -29,7 +29,7 @@ class postTable
   }
   public function getHashTag($tag) {
     $connection = new dbconnection() ;
-    $sql = "select *, CASE WHEN EXISTS(select id from reported R where R.id=F.id) THEN '1' ELSE '0' END AS reported from fredouil.post F from fredouil.post where texte like '%#".$tag."%' order by id desc";
+    $sql = "select *, CASE WHEN EXISTS(select id from reported R where R.id=F.id) THEN '1' ELSE '0' END AS reported from fredouil.post F where texte like '%#".$tag."%' order by id desc";
     $res = $connection->doQueryObject( $sql, "message" );
     return $res;
   }

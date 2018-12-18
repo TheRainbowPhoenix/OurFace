@@ -393,7 +393,7 @@ class parser
 			if(has_key('from', $params)){
 				if(is_numeric($params['from'])) {
 					if(has_key('user_id', $params) && is_numeric($params['user_id'])){
-						$_msgs = messageTable::getMessagesOnProfileSinceId($params['from'], $params['user_id'], $new);
+						$_msgs = messageTable::getMessagesOnProfileSinceId($params['from'], $params['user_id'], $new, ((has_key('type', $params) && is_numeric($params['type']) && $params['type']>=0 && $params['type']<4)?$params['type']:1));
 					} else {
 						$_msgs = messageTable::getMessagesSinceId($params['from'], -1, $new);
 					}

@@ -20,13 +20,13 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
   //check new posts
   function checkAll() {
     //loadChat(cmax());
-    loadNew(fmax(), <?php echo $context->id?>);
+    loadNew(fmax(), <?php echo $context->id.', '.$context->type?>);
   }
   //If scrolled to bottom
   $(window).scroll(function() {
     if((fmin()-1)==0) return;
     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-       loadMoar(fmin(), <?php echo $context->id?>);
+       loadMoar(fmin(), <?php echo $context->id.', '.$context->type?>);
     }
   });
   </script>
