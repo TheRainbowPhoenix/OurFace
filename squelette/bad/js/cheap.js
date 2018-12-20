@@ -110,7 +110,7 @@ function newChatNotif(data) {
     var text = $('.card-subtitle', ml).first().text();
     var user = $('.card-title a', ml).first().text();
     var pp = $('.avatar-image', ml).attr('src');
-    
+
     var _id = $("#user-id").data('id');
     var id = $('.d-flex.chat', ml).data('user-id');
 	  //console.log(cnt);
@@ -136,7 +136,7 @@ function newChatNotif(data) {
         cnt = 1;
     }
   }
-  
+
   //console.log(newhtml);
 }
 
@@ -395,7 +395,7 @@ $( document ).ready(function () {
                  Cookies.set('night_mode', 0);
           }
     });
-	  
+
     $(".moar-toggle").click(function(e) {
     if($(".moar-toggle.open").length == 0) {
 	    $(".moar-toggle").addClass("open");
@@ -594,9 +594,8 @@ $( document ).ready(function () {
   });
   // thumbs
   Push.Permission.request();
-  console.log("aaa");
-	setSwitch();  
-  
+	setSwitch();
+
   genThumbs();
 
 });
@@ -637,7 +636,7 @@ function cmax() {
 }
 
 function descnrml(text) {
-  $("#profile-desc").html('<p class="card-text" id="profile-desc-text">'+(text!="")?text:'Click to edit.'+'</p>');
+  $("#profile-desc").html('<p class="card-text" id="profile-desc-text">'+((text!="")?text:'Click to edit.')+'</p>');
   desclck();
 }
 
@@ -796,7 +795,7 @@ function chatMedia(data) {
       dataType: "html"
     }).done(function(data) {
       notify("Succes !");
-      updateChat(data);
+      //updateChat(data);
     });
   }
 }

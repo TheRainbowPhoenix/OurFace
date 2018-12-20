@@ -61,13 +61,15 @@ if (!isset($_SESSION['logged']) || !$_SESSION['logged']) {
 
   <div class="col posts-main">
     <?php genCompose(); ?>
-    <nav class="nav nav-pills nav-justified">
-	<?php 
+    <nav class="nav nav-pills nav-justified list-types">
+      <div class="row">
+	<?php
 		$view = 'profile';
 		echo '<a class="nav-link'.(($context->type==0)?' active':'').'" href="?action='.$view.'&id='.$context->user->id.'">Messages</a>';
 		echo '<a class="nav-link'.(($context->type==1)?' active':'').'" href="?action='.$view.'&id='.$context->user->id.'&with_replies=1">Messages and Replies</a>';
 		echo '<a class="nav-link'.(($context->type==2)?' active':'').'" href="?action='.$view.'&id='.$context->user->id.'&medias=1">Medias</a>';
       ?>
+    </div>
     </nav>
     <div id="posts">
 

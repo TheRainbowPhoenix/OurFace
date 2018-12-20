@@ -328,8 +328,19 @@ html, body {
 }
 
 .card-title {
-	max-height: 28px;
+	max-height: 24px;
 	overflow: hidden;
+}
+
+.list-types {
+	overflow-x: auto;
+	white-space: nowrap;
+	flex-wrap: nowrap;
+	padding-left: 16px;
+}
+
+.list-types .row {
+	flex-wrap: nowrap;
 }
 
 .nav-avatar .card-title {
@@ -664,6 +675,10 @@ html, body {
 
 .modal-footer {
 	border-top: none;
+}
+
+.modal.show .modal-dialog {
+	min-width: 128px;
 }
 
 #composeModal .modal-content {

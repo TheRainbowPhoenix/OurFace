@@ -97,6 +97,10 @@ function markup($text) {
 }
 
 function genPP($text, $id) {
+  if (is_numeric($id)) {
+    $f = 'profile-image/'.$id.'_400x400.jpg';
+    if(file_exists($f)) return $f;
+  }
   if(isset($text) && !is_null($text)) {
     if(file_exists('profile-image/'.$text)) return 'profile-image/'.$text;
     if (filter_var($text, FILTER_VALIDATE_URL) !== false) return $text;
@@ -107,10 +111,6 @@ function genPP($text, $id) {
         if ($ext == $mime) return 'media/'.$text;
       }
     }
-  }
-  if (is_numeric($id)) {
-    $f = 'profile-image/'.$id.'_400x400.jpg';
-    if(file_exists($f)) return $f;
   }
   return "images/ico/def.svg";
 }
@@ -252,10 +252,10 @@ function genCompose() {
             </button>
             <div class="dropdown-menu">
               <a id="mediaAdd" class="dropdown-item" href="#">Add media</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <!--a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
               <div role="separator" class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
+              <a class="dropdown-item" href="#">Separated link</a -->
             </div>
           </div>
         </div>
@@ -456,13 +456,15 @@ function genCompose() {
   }
 
   function genSuggestions($sug) {
-    foreach ($sug as $id => $user) {
+	  foreach ($sug as $id => $user) {
       echo '<li class="list-group-item card-body">
       <div class="d-flex account-small" data-user-id="'.$user->id.'"/><div class="avatar-container">
         <img class="avatar-image" src="'.genPP($user->avatar, $user->id).'" alt="" onerror="this.src=\'images/ico/def.svg\'">
       </div>
       <div class="name-container flex-grow-1">
-        <h5 class="card-title"><a href="?action=profile&id='.escape($user->id).'">'.escape($user->prenom).' '.escape($user->nom).'</a></h5>
+	<h5 class="card-title"><a href="?action=profile&id='.escape($user->id).'">'.escape($user->prenom).' '.escape($user->nom);
+      	if($user->verified == '1') echo '<span class="verified"></span>';
+      	echo '</a></h5>
         <h6 class="card-subtitle mb-2 text-muted">@'.escape($user->identifiant).'</h6>
       </div>
       <div class="floating-card" style="width: 18rem;"></div>

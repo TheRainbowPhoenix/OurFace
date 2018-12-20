@@ -15,7 +15,15 @@ a:hover {
 .svg-icon-home-1, .svg-icon-home-2, .svg-icon-chats-1, .svg-icon-chats-2, .svg-icon-friends-1, .svg-icon-friends-2 {
 	fill: #d8d7d8;
 }
-
+.atmention b {
+  color: #7669a5;
+}
+.atmention {
+	text-decoration-color: #7669a5;
+}
+.atmention:hover {
+  color: #8f80c3;
+}
 .nav-icon.selected:hover {
 	border-bottom: 4px solid rgba(255, 255, 255, 0.1);
 }
@@ -203,4 +211,3 @@ body::-webkit-scrollbar-thumb {
 	background-color: #6c606c;
 	outline: 1px solid #3e383e;
 }
-
